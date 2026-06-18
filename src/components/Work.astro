@@ -1,78 +1,96 @@
 ---
+// Portfolio carousel — 2 cards wide (Splide.js style, static render)
 const projects = [
   {
     title: 'The Butterfly CFI',
     src: '/assets/images/69d55440de29525bb5ec52a8_the_butterfly_cfi_logo_mock_up.jpg',
-    tags: ['Branding', 'Logo'],
+    tag: 'Branding & Identity',
   },
   {
     title: 'Spencer Grey Art',
     src: '/assets/images/69d555693be7d4ffefb2a937_spencer_grey_website_on_pixel_jones_portfolio_site.jpg',
-    tags: ['Web Design', 'E-Commerce'],
+    tag: 'Web Design & Dev',
   },
   {
     title: 'DSC Family Reunion',
     src: '/assets/images/69d55e6c12ad0b79a8a3f9ae_dsc_family_reunion_pixel_jones.jpg',
-    tags: ['Web Design'],
+    tag: 'Web Design',
   },
   {
     title: 'Tremulant',
     src: '/assets/images/69d55fe73960cc20e9554315_tremulant_poster_pixel_jones.jpg',
-    tags: ['Print', 'Poster Design'],
+    tag: 'Print & Poster Design',
   },
 ];
+
+// Work list (vertical) — shown alongside the carousel
+const listItems = [
+  { thumb: '/assets/images/672319b9b8617a6a9afb4534_Screenshot_2024-10-30_224619.avif', title: 'Zoo Tube', tag: 'design & development' },
+  { thumb: '/assets/images/61d38d6eaedc7a746c70281a_The_breakfast_club_poster_mockup_11x17_15ONE.avif', title: 'TBC', tag: 'design & development' },
+  { thumb: '/assets/images/61d38d75eac6788290cc902e_the-breakfast-club_poster_mockup.avif', title: 'TBC Alt', tag: 'poster design' },
+  { thumb: '/assets/images/62e5a05a9afb7e144c871ffa_crystal_method_poster_webonly.avif', title: 'Crystal Method', tag: 'poster design' },
+];
 ---
-<section id="work" class="relative bg-brand-dark py-24 overflow-hidden">
-  <!-- watermark -->
-  <div class="absolute inset-0 flex items-center overflow-hidden pointer-events-none select-none">
-    <span class="font-display font-black uppercase text-brand-lavender/5 whitespace-nowrap" style="font-size: clamp(4rem, 15vw, 12rem); letter-spacing: -0.02em;">
-      MY WORK &nbsp; MY WORK &nbsp; MY WORK
-    </span>
-  </div>
 
-  <div class="relative z-10 max-w-6xl mx-auto px-8">
-    <p class="font-display text-xs uppercase tracking-widest text-brand-lavender/50 mb-8">Recent Work</p>
+<section id="work" style="background-color:var(--background-blue);padding:5em 0;">
+  <div style="max-width:100em;margin:0 auto;padding:0 6em;position:relative;">
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-brand-mid/20">
-      {projects.slice(0, 3).map(project => (
-        <div class="relative group overflow-hidden bg-brand-navy aspect-square">
-          <img
-            src={project.src}
-            alt={project.title}
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-transparent"></div>
-          <div class="absolute bottom-0 left-0 p-6">
-            <h3 class="font-display font-black uppercase text-white tracking-wide" style="font-size: clamp(1rem, 2vw, 1.25rem);">
-              {project.title}
-            </h3>
-            <div class="flex gap-2 mt-2">
-              {project.tags.map(tag => (
-                <span class="text-xs text-brand-lavender/70 uppercase tracking-widest">{tag}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
+    <!-- watermark -->
+    <div style="position:absolute;top:0;left:0;right:0;overflow:hidden;pointer-events:none;z-index:0;">
+      <span style="font-family:'Mortend Outline',sans-serif;font-weight:800;font-size:11em;color:var(--font-light);opacity:0.04;white-space:nowrap;text-transform:uppercase;letter-spacing:-0.02em;display:block;">MY WORK MY WORK MY WORK</span>
     </div>
 
-    <!-- 4th card full width -->
-    <div class="relative group overflow-hidden bg-brand-navy mt-px h-64">
-      <img
-        src={projects[3].src}
-        alt={projects[3].title}
-        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-transparent"></div>
-      <div class="absolute bottom-0 left-0 p-6">
-        <h3 class="font-display font-black uppercase text-white tracking-wide text-xl">{projects[3].title}</h3>
-        <div class="flex gap-2 mt-2">
-          {projects[3].tags.map(tag => (
-            <span class="text-xs text-brand-lavender/70 uppercase tracking-widest">{tag}</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative;z-index:1;">
+      <!-- left: work list -->
+      <div>
+        <div style="margin-top:4.13em;padding-bottom:0;">
+          <p style="opacity:0.37;text-transform:uppercase;padding-left:2em;font-size:1.1em;font-weight:700;font-family:Mortend,sans-serif;letter-spacing:0.08em;color:var(--font-light);margin-bottom:1em;">Recent Work</p>
+          <div class="nav-divider" style="margin-bottom:0;"></div>
+
+          {listItems.map(item => (
+            <div style="border-bottom:1px solid rgba(192,179,203,0.15);">
+              <div style="display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;width:100%;padding-bottom:2.2rem;padding-top:1rem;">
+                <!-- image -->
+                <div style="padding-right:0.2rem;">
+                  <img src={item.thumb} alt={item.title} style="width:9vw;aspect-ratio:1;object-fit:cover;border-radius:1rem;" loading="lazy" />
+                </div>
+                <!-- title -->
+                <div style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;">
+                  <div style="position:relative;padding-right:2rem;">
+                    <h2 style="font-family:Mortend,sans-serif;font-weight:800;font-size:4.6em;line-height:1;color:var(--font-light);margin:0;text-transform:uppercase;">{item.title}</h2>
+                  </div>
+                  <p style="font-family:Poppins,sans-serif;font-size:0.9em;color:var(--font-light);opacity:0.6;margin:0;">{item.tag}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
+      </div>
+
+      <!-- right: portfolio cards -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1em;padding:4em 0 0 3em;">
+        {projects.map(proj => (
+          <div style="position:relative;border-radius:1rem;overflow:hidden;width:100%;height:32.7rem;">
+            <img src={proj.src} alt={proj.title} style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+            <!-- gradient overlay -->
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(7,4,25,0.85) 0%, transparent 50%);"></div>
+            <!-- title -->
+            <h5 style="
+              position:absolute;
+              bottom:0;
+              left:0;
+              right:0;
+              padding:1.5rem;
+              font-family:Mortend,sans-serif;
+              font-weight:800;
+              font-size:1.2em;
+              color:var(--font-light);
+              text-transform:uppercase;
+              letter-spacing:0.04em;
+              margin:0;
+            ">{proj.title}</h5>
+          </div>
+        ))}
       </div>
     </div>
   </div>

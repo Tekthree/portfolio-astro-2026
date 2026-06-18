@@ -1,57 +1,121 @@
 ---
 ---
-<section id="about" class="relative bg-brand-lavender/20 py-24 overflow-hidden">
-  <!-- watermark -->
-  <div class="absolute inset-0 flex items-center overflow-hidden pointer-events-none select-none">
-    <span class="font-display font-black uppercase text-brand-lavender/10 whitespace-nowrap" style="font-size: clamp(4rem, 15vw, 12rem); letter-spacing: -0.02em;">
-      ABOUT ME &nbsp; ABOUT ME &nbsp; ABOUT ME
-    </span>
-  </div>
+<section id="about" style="background-color:var(--font-plum);padding:7.7em 0 10.6em;">
+  <div style="max-width:100em;margin:0 auto;padding:0 6em;">
 
-  <div class="relative z-10 max-w-5xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-    <!-- photo -->
-    <div class="relative">
-      <img
-        src="/assets/images/65668aff757fdbce76749800_tek.avif"
-        alt="Tek Jones"
-        class="w-full max-w-md mx-auto rounded-sm object-cover"
-        style="aspect-ratio: 3/4; object-position: top;"
-      />
+    <!-- top blurb -->
+    <div style="margin-bottom:7.6em;position:relative;max-width:38em;">
+      <h1 style="font-family:Mortend,sans-serif;font-weight:800;font-size:2.2em;line-height:1.2;color:var(--background-blue);text-transform:uppercase;">
+        My <em style="font-style:italic;color:var(--submt-purple);">mission</em> is to solve user challenges and convert them into loyal customers.
+      </h1>
     </div>
 
-    <!-- text -->
-    <div>
-      <h2 class="font-display font-black uppercase text-brand-dark leading-tight mb-6" style="font-size: clamp(2rem, 5vw, 3.5rem);">
-        Hello,<br />My Name Is Tek
-      </h2>
-      <p class="text-brand-dark/80 text-base leading-relaxed mb-8">
-        Whether it's building a website, creating a mobile app, or designing a logo, I have the skills and vision to bring your ideas to life. With a strong focus on user experience and a dedication to staying current on the latest industry trends, I'm confident in my ability to bring value to any project.
-      </p>
-      <a
-        href="https://linkedin.com/in/ryan-jones-54b39562"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-block bg-brand-purple hover:bg-brand-mid text-white font-display font-bold uppercase tracking-widest text-sm px-8 py-4 transition-colors"
-      >
-        Jump to CV
-      </a>
-    </div>
-  </div>
+    <!-- main about split -->
+    <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;width:100%;position:relative;">
 
-  <!-- stats -->
-  <div class="relative z-10 max-w-5xl mx-auto px-8 mt-16 grid grid-cols-3 gap-4">
-    {[
-      { num: '12+', label: 'Years of design experience' },
-      { num: '3x', label: 'Graduate from Code Fellows' },
-      { num: '5K+', label: 'Completed projects' },
-    ].map(stat => (
-      <div class="bg-brand-lavender/30 border border-brand-lavender/20 p-6 flex items-center gap-4">
-        <div class="w-12 h-12 border-2 border-brand-mid/50 flex-shrink-0"></div>
-        <div>
-          <div class="font-display font-black text-brand-dark text-2xl">{stat.num}</div>
-          <div class="text-brand-dark/60 text-sm">{stat.label}</div>
+      <!-- left: photo -->
+      <div style="width:50%;position:relative;z-index:100;">
+        <!-- "about me" outline watermark -->
+        <h1 style="
+          font-family:'Mortend Outline',sans-serif;
+          font-weight:800;
+          font-size:6.9em;
+          color:var(--submt-purple);
+          opacity:0.18;
+          white-space:nowrap;
+          position:absolute;
+          top:-0.69em;
+          left:-63%;
+          z-index:10;
+          pointer-events:none;
+          text-transform:uppercase;
+        ">about me about me about me</h1>
+
+        <div style="
+          background-color:var(--font-plum);
+          border-radius:1rem;
+          display:flex;
+          justify-content:center;
+          align-items:stretch;
+          height:auto;
+          padding-right:3.91em;
+          position:relative;
+          overflow:hidden;
+        ">
+          <img
+            src="/assets/images/6881cb528375b87c1cf2b7e3_outline_tek_jones.avif"
+            alt="Tek Jones"
+            style="height:30.8em;flex:0 auto;margin-top:-2.9em;transform:rotateY(180deg);"
+            loading="lazy"
+          />
         </div>
       </div>
-    ))}
+
+      <!-- right: text -->
+      <div style="width:50%;">
+        <div style="padding:0 3.54em 4.74em;">
+          <h1 style="
+            font-family:Mortend,sans-serif;
+            font-weight:800;
+            font-size:2.9em;
+            line-height:1;
+            color:rgba(12,4,44,0.84);
+            text-transform:uppercase;
+            margin-bottom:0.38em;
+            max-width:12.8em;
+          ">hello, <br>my name is tek</h1>
+
+          <p style="font-family:Poppins,sans-serif;font-size:1em;color:var(--background-blue);line-height:1.6;margin-bottom:1.3em;opacity:0.85;">
+            Whether it's building a website, creating a mobile app, or designing a logo, I have the skills and vision to bring your ideas to life. With a strong focus on user experience and a dedication to staying up-to-date on the latest industry trends, I'm confident in my ability to bring value to any project.
+          </p>
+
+          <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" style="
+            display:inline-block;
+            background-color:var(--submt-purple);
+            color:var(--font-light);
+            font-family:Mortend,sans-serif;
+            font-weight:800;
+            font-size:0.9em;
+            letter-spacing:0.08em;
+            text-transform:uppercase;
+            padding:1em 2.5em;
+            text-decoration:none;
+          ">jump to cv</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- stats bar -->
+    <div style="
+      background-color:#c7bbd0;
+      border-radius:1rem;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-top:5.73em;
+      padding:2.5em 3em;
+    ">
+      {[
+        { num: '12', suffix: '+', label: 'Years of design\nexperience' },
+        { num: '3', suffix: '+', label: 'graduate from\ncode fellows' },
+        { num: '5', suffix: 'k+', label: 'completed\nprojects' },
+      ].map((stat, i) => (
+        <>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex:1;padding:0 2em;overflow:hidden;">
+            <div style="flex-shrink:0;">
+              <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="" style="width:4em;height:4em;object-fit:contain;" />
+            </div>
+            <div style="padding-left:1em;">
+              <h5 style="font-family:Mortend,sans-serif;font-weight:800;font-size:2.5em;color:var(--background-blue);margin:0;line-height:1;">
+                {stat.num}<span style="font-size:0.7em;">{stat.suffix}</span>
+              </h5>
+              <p style="font-family:Poppins,sans-serif;font-size:0.85em;color:var(--background-blue);opacity:0.75;margin:0;white-space:pre-line;">{stat.label}</p>
+            </div>
+          </div>
+          {i < 2 && <div style="width:1px;height:4em;background:rgba(66,15,109,0.3);flex-shrink:0;"></div>}
+        </>
+      ))}
+    </div>
+
   </div>
 </section>

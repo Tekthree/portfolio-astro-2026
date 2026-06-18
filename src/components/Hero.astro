@@ -1,31 +1,80 @@
 ---
 ---
-<section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-  <!-- background pattern -->
-  <div class="absolute inset-0 z-0">
-    <img
-      src="/assets/images/61ccdb0d6c8c4a063f67c23b_hero-background-pattern.avif"
-      alt=""
-      class="w-full h-full object-cover opacity-60"
-    />
-    <img
-      src="/assets/images/61ccdb9520976e21b4e3b387_619165385dfed2318d6046fa_noise-transparent-intense.png"
-      alt=""
-      class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay"
-    />
-  </div>
+<section style="
+  background-image: url('/assets/images/61ccdb0d6c8c4a063f67c23b_hero-background-pattern.avif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: block;
+">
+  <!-- side art images -->
+  <img src="/assets/images/62f6c3e27640277a801c55cc_left-art.avif" alt="" style="
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    opacity: 0.65;
+    width: 15.1em;
+    pointer-events: none;
+  " />
+  <img src="/assets/images/62f6c3cffd7b99342f2f8896_right-art.avif" alt="" style="
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    opacity: 0.65;
+    width: 15.1em;
+    pointer-events: none;
+  " />
 
-  <!-- content -->
-  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-    <h1 class="font-display font-black uppercase leading-none tracking-tighter text-brand-lavender mb-4" style="font-size: clamp(3rem, 10vw, 8rem);">
-      A Creative<br />Developer <span class="text-brand-accent">&amp;</span><br />Designer+
+  <div style="
+    max-width: 100em;
+    margin: 0 auto;
+    padding: 13.6em 6em;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  ">
+    <h1 style="
+      font-family: Mortend, sans-serif;
+      font-weight: 800;
+      font-size: 5.5em;
+      line-height: 1.1;
+      text-align: center;
+      color: var(--font-light);
+      margin: 0 0 0.4em;
+      text-transform: uppercase;
+      overflow: hidden;
+    ">
+      <span style="display:block;">a creative</span>
+      <span style="display:block;">developer <span style="color:var(--highlight-yellow);font-family:'Mortend Outline',sans-serif;">&amp;</span></span>
+      <span style="display:block;">designer+</span>
     </h1>
-    <p class="text-brand-lavender/70 text-lg mb-10">Seasoned creator of innovative digital experiences</p>
-    <a
-      href="#contact"
-      class="inline-block bg-brand-mid hover:bg-brand-purple text-white font-display font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors"
-    >
-      Let's Chat &#9889;
-    </a>
+
+    <p style="
+      font-family: Poppins, sans-serif;
+      font-size: 1.4em;
+      text-align: center;
+      color: var(--font-light);
+      margin-bottom: 2.5em;
+    ">Seasoned creator of innovative digital experiences</p>
+
+    <a href="#contact" style="
+      display: inline-block;
+      background-color: var(--submt-purple);
+      color: var(--font-light);
+      font-family: Mortend, sans-serif;
+      font-weight: 800;
+      font-size: 1em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1.2em 3em;
+      border-radius: 0;
+      transition: background-color 0.2s;
+      text-decoration: none;
+    ">let's chat🤙🏾</a>
   </div>
 </section>

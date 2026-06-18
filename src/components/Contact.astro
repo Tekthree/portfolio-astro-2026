@@ -2,67 +2,111 @@
 const faqs = [
   {
     q: 'What services do you offer?',
-    a: 'Full stack web development, UI/UX design, branding and logo design, print design, and event flyer creation. I work across the full project lifecycle — from concept to shipped.',
+    a: 'Full stack web development, UI/UX design, branding and logo design, print design, and event flyer creation. I work across the full project lifecycle from concept to shipped.',
   },
   {
     q: 'How does your Air Force experience benefit projects?',
-    a: 'Six years in logistics taught me how to manage competing priorities, hit hard deadlines, and communicate clearly with people at every level. That discipline shows up in how I run projects.',
+    a: 'Six years in logistics taught me how to manage competing priorities, hit hard deadlines, and communicate clearly across all levels. That discipline carries into how I run projects.',
   },
   {
     q: 'What do you do in your free time?',
-    a: 'I DJ under the name Tek Jones — you can catch me spinning at Shameless events around Seattle. I also build side projects, play with whatever AI tools just dropped, and try to keep an N64 running.',
+    a: 'I DJ under the name Tek Jones at Shameless events around Seattle. I also build side projects, follow the AI space closely, and try to keep an N64 running.',
   },
 ];
----
-<section id="contact" class="relative bg-brand-lavender/20 py-24 overflow-hidden">
-  <div class="max-w-5xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-    <!-- left: FAQ -->
-    <div>
-      <h2 class="font-display font-black uppercase text-brand-dark leading-tight mb-10" style="font-size: clamp(2rem, 4vw, 3rem);">
-        Got Questions?<br />Let's Go!
-      </h2>
 
-      <div class="space-y-0 border-t border-brand-dark/20">
-        {faqs.map((faq, i) => (
-          <details class="group border-b border-brand-dark/20">
-            <summary class="flex items-center justify-between py-4 cursor-pointer list-none">
-              <span class="font-display text-xs font-bold uppercase tracking-widest text-brand-dark/70">{faq.q}</span>
-              <span class="text-brand-dark/50 group-open:rotate-180 transition-transform">&#8964;</span>
-            </summary>
-            <p class="pb-4 text-brand-dark/70 text-sm leading-relaxed">{faq.a}</p>
-          </details>
-        ))}
+// current work stream thumbnails
+const stream = [
+  '/assets/images/67e3a3b69c71ee1001a7d6de_473055189_1232004684567859_4183718407854290834_n.jpeg',
+  '/assets/images/67e3a545925e116abea32fcd_472974058_2035336776894147_3898270347369743547_n.avif',
+  '/assets/images/67e3a545dd9fe0dad75cf621_466381292_1273748096998172_5187508347495176669_n.avif',
+  '/assets/images/67e3b3cac4d8577789681cbd_473055189_1232004684567859_4183718407854290834_n.avif',
+  '/assets/images/6881dc72a12b39532697f0cd_Screenshot_2025-07-24_000936.avif',
+  '/assets/images/6881dcfee52d43ae2ba5a170_Screenshot_2025-07-24_001242.avif',
+  '/assets/images/6881dd39f62b061a6e246c06_Screenshot_2025-07-24_001343.avif',
+  '/assets/images/69d55440de29525bb5ec52a8_the_butterfly_cfi_logo_mock_up.jpg',
+];
+
+// logo strip
+const logos = [
+  { src: '/assets/images/61ce62d38a51817beb399519_tremulant.avif', alt: 'Tremulant' },
+  { src: '/assets/images/61ce621dbdaf70e870d06cd0_mms_gardens.avif', alt: 'MMS Gardens' },
+  { src: '/assets/images/61ce628e7e4e911c6a16be96_sorted.avif', alt: 'Sorted' },
+  { src: '/assets/images/61ce6273a26d7cd80b2a2e96_sirius_logo.avif', alt: 'Sirius' },
+  { src: '/assets/images/61ce6256b9b69834df814f94_plantingrice_logo.avif', alt: 'Planting Rice' },
+  { src: '/assets/images/61ce62af8bd4f571397c5e2d_theCrystalMethod.avif', alt: 'Crystal Method' },
+  { src: '/assets/images/61ce61f9a7e1e58687cda897_KT_Logo.avif', alt: 'KT' },
+  { src: '/assets/images/61ce618a8a5181f282398932_Shameless_logo.avif', alt: 'Shameless' },
+  { src: '/assets/images/61ce61bc8d36f1ec57bb65d4_greenworks.avif', alt: 'Greenworks' },
+  { src: '/assets/images/61ce61dc5599ff4df0279aea_home_logo.avif', alt: 'Home' },
+  { src: '/assets/images/61ce6238b29eb0152bf044b8_nyx_productions.avif', alt: 'Nyx' },
+];
+---
+
+<section id="contact" style="background-color:var(--font-plum);padding:7em 0 5em;">
+  <div style="max-width:100em;margin:0 auto;padding:0 6em;">
+
+    <!-- FAQ + photo -->
+    <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;gap:4em;">
+      <!-- left: FAQ -->
+      <div style="flex:1;">
+        <h1 style="font-family:Mortend,sans-serif;font-weight:800;font-size:3.5em;line-height:1.1;color:var(--background-blue);text-transform:uppercase;margin-bottom:1.5em;">
+          got questions?<br>let's go!
+        </h1>
+
+        <div>
+          {faqs.map(faq => (
+            <details style="border-bottom:1px solid rgba(66,15,109,0.3);">
+              <summary style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                padding:1.2em 0;
+                cursor:pointer;
+                list-style:none;
+                font-family:Mortend,sans-serif;
+                font-size:0.8em;
+                font-weight:800;
+                letter-spacing:0.1em;
+                text-transform:uppercase;
+                color:var(--background-blue);
+                opacity:0.7;
+              ">
+                {faq.q}
+                <span style="font-size:1.4em;margin-left:1em;">⌄</span>
+              </summary>
+              <p style="font-family:Poppins,sans-serif;font-size:0.95em;color:var(--background-blue);opacity:0.75;padding-bottom:1.2em;line-height:1.6;margin:0;">{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <!-- right: photo -->
+      <div style="flex:0 0 auto;width:38%;">
+        <img
+          src="/assets/images/65668aff757fdbce76749800_tek.avif"
+          alt="Tek Jones"
+          style="width:100%;border-radius:1rem;object-fit:cover;"
+          loading="lazy"
+        />
       </div>
     </div>
 
-    <!-- right: photo -->
-    <div class="relative">
-      <img
-        src="/assets/images/65668aff757fdbce76749800_tek.avif"
-        alt="Tek Jones"
-        class="w-full rounded-sm object-cover"
-        style="aspect-ratio: 3/4; object-position: top;"
-        loading="lazy"
-      />
+    <!-- current work stream -->
+    <div style="margin-top:5em;">
+      <div style="display:flex;gap:0.5em;overflow-x:auto;padding-bottom:0.5em;">
+        {stream.map(src => (
+          <img src={src} alt="" style="flex:none;width:7em;height:7em;object-fit:cover;border-radius:0.5rem;" loading="lazy" />
+        ))}
+      </div>
+      <p style="font-family:Mortend,sans-serif;font-weight:800;font-size:0.75em;letter-spacing:0.15em;text-transform:uppercase;color:var(--background-blue);opacity:0.5;margin-top:0.8em;">Current Work Stream</p>
     </div>
+
   </div>
 
-  <!-- client logo strip -->
-  <div class="max-w-5xl mx-auto px-8 mt-20">
-    <p class="font-display text-xs uppercase tracking-widest text-brand-dark/40 mb-6">Current Work</p>
-    <div class="flex flex-wrap gap-6 items-center">
-      {[
-        { src: '/assets/images/61ce6238b29eb0152bf044b8_nyx_productions.avif', alt: 'Nyx Productions' },
-        { src: '/assets/images/61ce628e7e4e911c6a16be96_sorted.avif', alt: 'Sorted' },
-        { src: '/assets/images/61ce6273a26d7cd80b2a2e96_sirius_logo.avif', alt: 'Sirius' },
-        { src: '/assets/images/61ce6256b9b69834df814f94_plantingrice_logo.avif', alt: 'Planting Rice' },
-        { src: '/assets/images/61ce62af8bd4f571397c5e2d_theCrystalMethod.avif', alt: 'The Crystal Method' },
-        { src: '/assets/images/61ce62d38a51817beb399519_tremulant.avif', alt: 'Tremulant' },
-        { src: '/assets/images/61ce61f9a7e1e58687cda897_KT_Logo.avif', alt: 'KT' },
-        { src: '/assets/images/61ce621dbdaf70e870d06cd0_mms_gardens.avif', alt: 'MMS Gardens' },
-      ].map(logo => (
-        <img src={logo.src} alt={logo.alt} class="h-8 w-auto object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all" loading="lazy" />
-      ))}
-    </div>
+  <!-- logo strip -->
+  <div style="background-color:var(--ashy-black);margin-top:5em;padding:1.8em 6em;display:flex;align-items:center;gap:3.5em;overflow-x:auto;">
+    {logos.map(logo => (
+      <img src={logo.src} alt={logo.alt} style="height:2.2em;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.55;flex:none;" loading="lazy" />
+    ))}
   </div>
 </section>

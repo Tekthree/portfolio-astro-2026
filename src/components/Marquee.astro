@@ -1,0 +1,43 @@
+---
+// The horizontal scrolling poster strip below the hero
+const images = [
+  { src: '/assets/images/62e5a8bf5d99644d3ee17ee8_the-breakfast-club_flyer_mockup.avif', alt: 'The Breakfast Club' },
+  { src: '/assets/images/62e5a7d32fdfe161c16a7bb2_sorted_7_poster.avif', alt: 'Sorted 7' },
+  { src: '/assets/images/62e5a08fdd3aac6e54184ba5_siriusmockup.avif', alt: 'Sirius' },
+  { src: '/assets/images/62e5a05a9afb7e144c871ffa_crystal_method_poster_webonly.avif', alt: 'Crystal Method' },
+  { src: '/assets/images/61d38d6eaedc7a746c70281a_The_breakfast_club_poster_mockup_11x17_15ONE.avif', alt: 'TBC Poster' },
+  { src: '/assets/images/62e5a078f5e1735608d6196e_poster-design-minimal-copy.avif', alt: 'Minimal Poster' },
+  { src: '/assets/images/61d38d80e8e6e23546bf9b51_tremulant_nikki_poster_mockup.avif', alt: 'Tremulant' },
+];
+---
+
+<div style="position:relative;overflow:hidden;background:var(--ashy-black);">
+  <!-- Happy Clients badge -->
+  <img
+    src="/assets/images/6587b2a1d6c777d8c225b483_happy_clients_three.svg"
+    alt="Happy Clients"
+    style="position:absolute;left:1.5em;top:50%;transform:translateY(-50%);z-index:10;width:7.5em;height:7.5em;"
+  />
+
+  <!-- scrolling track -->
+  <div class="marquee-track" style="display:flex;width:max-content;">
+    {[...images, ...images].map(img => (
+      <div style="flex:none;width:27.6em;height:18em;overflow:hidden;">
+        <img src={img.src} alt={img.alt} style="width:100%;height:100%;object-fit:cover;border-radius:1rem;padding:0.6em;" loading="lazy" />
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    animation: marquee 30s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+</style>

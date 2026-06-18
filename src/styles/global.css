@@ -4,23 +4,64 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Mortend';
+  src: url('/fonts/mortend-extrabold.woff2') format('woff2');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Mortend';
+  src: url('/fonts/mortend-regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Mortend Outline';
+  src: url('/fonts/mortend-extrabold-outline.woff2') format('woff2');
+  font-weight: 800;
+}
+
 :root {
-  --color-dark: #0C042C;
-  --color-navy: #09003F;
-  --color-purple: #420F6D;
-  --color-mid: #6D62B4;
-  --color-lavender: #C0B3CB;
-  --color-accent: #DBDD3A;
+  --ashy-black: #070419;
+  --font-light: #c0b3cb;
+  --background-blue: #0c042c;
+  --submt-purple: #420f6d;
+  --highlight-yellow: #dbdd3a;
+  --plum-lighter: #aa97bb;
+  --font-plum: #a58fb8;
+  --midnight-blue: #09003f;
+  --slate-blue: #6d62b4;
 }
 
-html {
-  background-color: var(--color-dark);
-  color: white;
-  scroll-behavior: smooth;
-}
-
-body {
+html, body {
+  background-color: var(--background-blue);
+  color: var(--font-light);
   font-family: 'Poppins', sans-serif;
-  background-color: var(--color-dark);
+  font-size: 16px;
   overflow-x: hidden;
 }
+
+/* noise grain overlay — fixed on top of everything */
+.design-grain {
+  pointer-events: none;
+  z-index: 2000;
+  opacity: 0.34;
+  background-image: url('/assets/images/61ccdb9520976e21b4e3b387_619165385dfed2318d6046fa_noise-transparent-intense.png');
+  background-position: 0 0;
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: fixed;
+  inset: 0;
+}
+
+/* nav divider */
+.nav-divider {
+  height: 1px;
+  background-color: rgba(192, 179, 203, 0.15);
+  width: 100%;
+}
+
+a { color: inherit; text-decoration: none; }
