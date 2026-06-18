@@ -1,0 +1,39 @@
+---
+const images = [
+  { src: '/assets/images/61d38d6eaedc7a746c70281a_The_breakfast_club_poster_mockup_11x17_15ONE.avif', alt: 'The Breakfast Club' },
+  { src: '/assets/images/61d38d80e8e6e23546bf9b51_tremulant_nikki_poster_mockup.avif', alt: 'Tremulant' },
+  { src: '/assets/images/62e5a05a9afb7e144c871ffa_crystal_method_poster_webonly.avif', alt: 'Crystal Method' },
+  { src: '/assets/images/61d38d75eac6788290cc902e_the-breakfast-club_poster_mockup.avif', alt: 'Breakfast Club Alt' },
+  { src: '/assets/images/62e5a078f5e1735608d6196e_poster-design-minimal-copy.avif', alt: 'Minimal Poster' },
+];
+---
+<div class="relative w-full overflow-hidden bg-brand-dark py-2">
+  <!-- badge -->
+  <div class="absolute left-4 top-1/2 -translate-y-1/2 z-10">
+    <div class="relative w-28 h-28">
+      <svg viewBox="0 0 120 120" class="w-full h-full animate-spin-slow fill-brand-lavender/20 stroke-brand-lavender" style="animation-duration:20s;">
+        <path id="circle" d="M 60,60 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" fill="none"/>
+        <text class="text-xs font-display uppercase tracking-widest fill-brand-lavender">
+          <textPath href="#circle" startOffset="0">HAPPY CLIENTS • HAPPY CLIENTS • </textPath>
+        </text>
+      </svg>
+      <span class="absolute inset-0 flex items-center justify-center text-brand-lavender font-display font-black text-xs uppercase text-center leading-tight">Happy<br/>Clients</span>
+    </div>
+  </div>
+
+  <div class="flex">
+    {images.map(img => (
+      <div class="flex-shrink-0 w-64 h-48 overflow-hidden">
+        <img src={img.src} alt={img.alt} class="w-full h-full object-cover" loading="lazy" />
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+</style>

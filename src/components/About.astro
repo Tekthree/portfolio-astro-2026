@@ -1,0 +1,57 @@
+---
+---
+<section id="about" class="relative bg-brand-lavender/20 py-24 overflow-hidden">
+  <!-- watermark -->
+  <div class="absolute inset-0 flex items-center overflow-hidden pointer-events-none select-none">
+    <span class="font-display font-black uppercase text-brand-lavender/10 whitespace-nowrap" style="font-size: clamp(4rem, 15vw, 12rem); letter-spacing: -0.02em;">
+      ABOUT ME &nbsp; ABOUT ME &nbsp; ABOUT ME
+    </span>
+  </div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <!-- photo -->
+    <div class="relative">
+      <img
+        src="/assets/images/65668aff757fdbce76749800_tek.avif"
+        alt="Tek Jones"
+        class="w-full max-w-md mx-auto rounded-sm object-cover"
+        style="aspect-ratio: 3/4; object-position: top;"
+      />
+    </div>
+
+    <!-- text -->
+    <div>
+      <h2 class="font-display font-black uppercase text-brand-dark leading-tight mb-6" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        Hello,<br />My Name Is Tek
+      </h2>
+      <p class="text-brand-dark/80 text-base leading-relaxed mb-8">
+        Whether it's building a website, creating a mobile app, or designing a logo, I have the skills and vision to bring your ideas to life. With a strong focus on user experience and a dedication to staying current on the latest industry trends, I'm confident in my ability to bring value to any project.
+      </p>
+      <a
+        href="https://linkedin.com/in/ryan-jones-54b39562"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-brand-purple hover:bg-brand-mid text-white font-display font-bold uppercase tracking-widest text-sm px-8 py-4 transition-colors"
+      >
+        Jump to CV
+      </a>
+    </div>
+  </div>
+
+  <!-- stats -->
+  <div class="relative z-10 max-w-5xl mx-auto px-8 mt-16 grid grid-cols-3 gap-4">
+    {[
+      { num: '12+', label: 'Years of design experience' },
+      { num: '3x', label: 'Graduate from Code Fellows' },
+      { num: '5K+', label: 'Completed projects' },
+    ].map(stat => (
+      <div class="bg-brand-lavender/30 border border-brand-lavender/20 p-6 flex items-center gap-4">
+        <div class="w-12 h-12 border-2 border-brand-mid/50 flex-shrink-0"></div>
+        <div>
+          <div class="font-display font-black text-brand-dark text-2xl">{stat.num}</div>
+          <div class="text-brand-dark/60 text-sm">{stat.label}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

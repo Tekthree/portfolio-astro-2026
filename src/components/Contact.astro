@@ -1,0 +1,68 @@
+---
+const faqs = [
+  {
+    q: 'What services do you offer?',
+    a: 'Full stack web development, UI/UX design, branding and logo design, print design, and event flyer creation. I work across the full project lifecycle — from concept to shipped.',
+  },
+  {
+    q: 'How does your Air Force experience benefit projects?',
+    a: 'Six years in logistics taught me how to manage competing priorities, hit hard deadlines, and communicate clearly with people at every level. That discipline shows up in how I run projects.',
+  },
+  {
+    q: 'What do you do in your free time?',
+    a: 'I DJ under the name Tek Jones — you can catch me spinning at Shameless events around Seattle. I also build side projects, play with whatever AI tools just dropped, and try to keep an N64 running.',
+  },
+];
+---
+<section id="contact" class="relative bg-brand-lavender/20 py-24 overflow-hidden">
+  <div class="max-w-5xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+    <!-- left: FAQ -->
+    <div>
+      <h2 class="font-display font-black uppercase text-brand-dark leading-tight mb-10" style="font-size: clamp(2rem, 4vw, 3rem);">
+        Got Questions?<br />Let's Go!
+      </h2>
+
+      <div class="space-y-0 border-t border-brand-dark/20">
+        {faqs.map((faq, i) => (
+          <details class="group border-b border-brand-dark/20">
+            <summary class="flex items-center justify-between py-4 cursor-pointer list-none">
+              <span class="font-display text-xs font-bold uppercase tracking-widest text-brand-dark/70">{faq.q}</span>
+              <span class="text-brand-dark/50 group-open:rotate-180 transition-transform">&#8964;</span>
+            </summary>
+            <p class="pb-4 text-brand-dark/70 text-sm leading-relaxed">{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+
+    <!-- right: photo -->
+    <div class="relative">
+      <img
+        src="/assets/images/65668aff757fdbce76749800_tek.avif"
+        alt="Tek Jones"
+        class="w-full rounded-sm object-cover"
+        style="aspect-ratio: 3/4; object-position: top;"
+        loading="lazy"
+      />
+    </div>
+  </div>
+
+  <!-- client logo strip -->
+  <div class="max-w-5xl mx-auto px-8 mt-20">
+    <p class="font-display text-xs uppercase tracking-widest text-brand-dark/40 mb-6">Current Work</p>
+    <div class="flex flex-wrap gap-6 items-center">
+      {[
+        { src: '/assets/images/61ce6238b29eb0152bf044b8_nyx_productions.avif', alt: 'Nyx Productions' },
+        { src: '/assets/images/61ce628e7e4e911c6a16be96_sorted.avif', alt: 'Sorted' },
+        { src: '/assets/images/61ce6273a26d7cd80b2a2e96_sirius_logo.avif', alt: 'Sirius' },
+        { src: '/assets/images/61ce6256b9b69834df814f94_plantingrice_logo.avif', alt: 'Planting Rice' },
+        { src: '/assets/images/61ce62af8bd4f571397c5e2d_theCrystalMethod.avif', alt: 'The Crystal Method' },
+        { src: '/assets/images/61ce62d38a51817beb399519_tremulant.avif', alt: 'Tremulant' },
+        { src: '/assets/images/61ce61f9a7e1e58687cda897_KT_Logo.avif', alt: 'KT' },
+        { src: '/assets/images/61ce621dbdaf70e870d06cd0_mms_gardens.avif', alt: 'MMS Gardens' },
+      ].map(logo => (
+        <img src={logo.src} alt={logo.alt} class="h-8 w-auto object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all" loading="lazy" />
+      ))}
+    </div>
+  </div>
+</section>

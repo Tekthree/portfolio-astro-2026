@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900|Poppins:300,400,500,600,700');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-dark: #0C042C;
+  --color-navy: #09003F;
+  --color-purple: #420F6D;
+  --color-mid: #6D62B4;
+  --color-lavender: #C0B3CB;
+  --color-accent: #DBDD3A;
+}
+
+html {
+  background-color: var(--color-dark);
+  color: white;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-dark);
+  overflow-x: hidden;
+}

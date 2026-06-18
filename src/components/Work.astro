@@ -1,0 +1,79 @@
+---
+const projects = [
+  {
+    title: 'The Butterfly CFI',
+    src: '/assets/images/69d55440de29525bb5ec52a8_the_butterfly_cfi_logo_mock_up.jpg',
+    tags: ['Branding', 'Logo'],
+  },
+  {
+    title: 'Spencer Grey Art',
+    src: '/assets/images/69d555693be7d4ffefb2a937_spencer_grey_website_on_pixel_jones_portfolio_site.jpg',
+    tags: ['Web Design', 'E-Commerce'],
+  },
+  {
+    title: 'DSC Family Reunion',
+    src: '/assets/images/69d55e6c12ad0b79a8a3f9ae_dsc_family_reunion_pixel_jones.jpg',
+    tags: ['Web Design'],
+  },
+  {
+    title: 'Tremulant',
+    src: '/assets/images/69d55fe73960cc20e9554315_tremulant_poster_pixel_jones.jpg',
+    tags: ['Print', 'Poster Design'],
+  },
+];
+---
+<section id="work" class="relative bg-brand-dark py-24 overflow-hidden">
+  <!-- watermark -->
+  <div class="absolute inset-0 flex items-center overflow-hidden pointer-events-none select-none">
+    <span class="font-display font-black uppercase text-brand-lavender/5 whitespace-nowrap" style="font-size: clamp(4rem, 15vw, 12rem); letter-spacing: -0.02em;">
+      MY WORK &nbsp; MY WORK &nbsp; MY WORK
+    </span>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-8">
+    <p class="font-display text-xs uppercase tracking-widest text-brand-lavender/50 mb-8">Recent Work</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-brand-mid/20">
+      {projects.slice(0, 3).map(project => (
+        <div class="relative group overflow-hidden bg-brand-navy aspect-square">
+          <img
+            src={project.src}
+            alt={project.title}
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <h3 class="font-display font-black uppercase text-white tracking-wide" style="font-size: clamp(1rem, 2vw, 1.25rem);">
+              {project.title}
+            </h3>
+            <div class="flex gap-2 mt-2">
+              {project.tags.map(tag => (
+                <span class="text-xs text-brand-lavender/70 uppercase tracking-widest">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- 4th card full width -->
+    <div class="relative group overflow-hidden bg-brand-navy mt-px h-64">
+      <img
+        src={projects[3].src}
+        alt={projects[3].title}
+        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        loading="lazy"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-6">
+        <h3 class="font-display font-black uppercase text-white tracking-wide text-xl">{projects[3].title}</h3>
+        <div class="flex gap-2 mt-2">
+          {projects[3].tags.map(tag => (
+            <span class="text-xs text-brand-lavender/70 uppercase tracking-widest">{tag}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+---
+---
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5">
+  <a href="/">
+    <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="Pixel Jones" class="h-14 w-auto" />
+  </a>
+  <button id="menu-toggle" class="flex flex-col gap-1.5 p-2" aria-label="Menu">
+    <span class="block w-6 h-0.5 bg-brand-lavender"></span>
+    <span class="block w-6 h-0.5 bg-brand-lavender"></span>
+    <span class="block w-6 h-0.5 bg-brand-lavender"></span>
+  </button>
+</nav>
+
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-brand-dark/95 flex flex-col items-center justify-center gap-8 hidden">
+  <button id="menu-close" class="absolute top-6 right-8 text-brand-lavender text-3xl">×</button>
+  <a href="#about" class="font-display text-3xl font-bold uppercase tracking-widest text-white hover:text-brand-accent transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">About</a>
+  <a href="#work" class="font-display text-3xl font-bold uppercase tracking-widest text-white hover:text-brand-accent transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Work</a>
+  <a href="#contact" class="font-display text-3xl font-bold uppercase tracking-widest text-white hover:text-brand-accent transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Contact</a>
+</div>
+
+<script>
+  document.getElementById('menu-toggle')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.remove('hidden');
+  });
+  document.getElementById('menu-close')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.add('hidden');
+  });
+</script>
