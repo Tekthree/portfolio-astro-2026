@@ -1,0 +1,43 @@
+---
+const logos = [
+  { src: '/assets/images/61ce62d38a51817beb399519_tremulant.avif', alt: 'Tremulant' },
+  { src: '/assets/images/61ce621dbdaf70e870d06cd0_mms_gardens.avif', alt: 'MMS Gardens' },
+  { src: '/assets/images/61ce628e7e4e911c6a16be96_sorted.avif', alt: 'Sorted' },
+  { src: '/assets/images/61ce6273a26d7cd80b2a2e96_sirius_logo.avif', alt: 'Sirius' },
+  { src: '/assets/images/61ce6256b9b69834df814f94_plantingrice_logo.avif', alt: 'Planting Rice' },
+  { src: '/assets/images/61ce62af8bd4f571397c5e2d_theCrystalMethod.avif', alt: 'Crystal Method' },
+  { src: '/assets/images/61ce61f9a7e1e58687cda897_KT_Logo.avif', alt: 'KT' },
+  { src: '/assets/images/61ce618a8a5181f282398932_Shameless_logo.avif', alt: 'Shameless' },
+  { src: '/assets/images/61ce61bc8d36f1ec57bb65d4_greenworks.avif', alt: 'Greenworks' },
+  { src: '/assets/images/61ce61dc5599ff4df0279aea_home_logo.avif', alt: 'Home' },
+  { src: '/assets/images/61ce6238b29eb0152bf044b8_nyx_productions.avif', alt: 'Nyx' },
+];
+---
+
+<section style="background-color:var(--background-blue);">
+  <div style="background-color:var(--ashy-black);max-width:none;padding:0;overflow:hidden;">
+    <div class="logo-marquee-track" style="display:flex;width:max-content;align-items:center;padding-top:2.08em;padding-bottom:2.08em;">
+      {[...logos, ...logos].map(logo => (
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          style="height:3.4em;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.68;flex:none;margin-right:7.1em;"
+          loading="lazy"
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes logo-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .logo-marquee-track {
+    animation: logo-scroll 35s linear infinite;
+  }
+  .logo-marquee-track:hover {
+    animation-play-state: paused;
+  }
+</style>

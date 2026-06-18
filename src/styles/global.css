@@ -59,9 +59,28 @@ html, body {
 
 /* nav divider */
 .nav-divider {
-  height: 1px;
-  background-color: rgba(192, 179, 203, 0.15);
+  background-color: var(--submt-purple);
   width: 100%;
+  height: 3px;
+  display: block;
 }
 
 a { color: inherit; text-decoration: none; }
+
+/* work section carousel */
+.work-carousel {
+  display: flex;
+  gap: 1.5em;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4em;
+}
+.work-carousel::-webkit-scrollbar { display: none; }
+
+/* marquee animation */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

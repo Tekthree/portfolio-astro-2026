@@ -44,12 +44,12 @@ const listItems = [
       <!-- left: work list -->
       <div>
         <div style="margin-top:4.13em;padding-bottom:0;">
-          <p style="opacity:0.37;text-transform:uppercase;padding-left:2em;font-size:1.1em;font-weight:700;font-family:Mortend,sans-serif;letter-spacing:0.08em;color:var(--font-light);margin-bottom:1em;">Recent Work</p>
+          <p style="opacity:0.37;text-transform:uppercase;padding-left:2em;font-size:1.1em;font-weight:700;font-family:Poppins,sans-serif;color:var(--font-light);margin-bottom:1em;">Recent Work</p>
           <div class="nav-divider" style="margin-bottom:0;"></div>
 
           {listItems.map(item => (
-            <div style="border-bottom:1px solid rgba(192,179,203,0.15);">
-              <div style="display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;width:100%;padding-bottom:2.2rem;padding-top:1rem;">
+            <div>
+              <div style="display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;width:100%;padding-bottom:2.2rem;margin-top:2.2rem;">
                 <!-- image -->
                 <div style="padding-right:0.2rem;">
                   <img src={item.thumb} alt={item.title} style="width:9vw;aspect-ratio:1;object-fit:cover;border-radius:1rem;" loading="lazy" />
@@ -62,35 +62,34 @@ const listItems = [
                   <p style="font-family:Poppins,sans-serif;font-size:0.9em;color:var(--font-light);opacity:0.6;margin:0;">{item.tag}</p>
                 </div>
               </div>
+              <div class="nav-divider"></div>
             </div>
           ))}
         </div>
       </div>
 
-      <!-- right: portfolio cards -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1em;padding:4em 0 0 3em;">
-        {projects.map(proj => (
-          <div style="position:relative;border-radius:1rem;overflow:hidden;width:100%;height:32.7rem;">
-            <img src={proj.src} alt={proj.title} style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
-            <!-- gradient overlay -->
-            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(7,4,25,0.85) 0%, transparent 50%);"></div>
-            <!-- title -->
-            <h5 style="
-              position:absolute;
-              bottom:0;
-              left:0;
-              right:0;
-              padding:1.5rem;
-              font-family:Mortend,sans-serif;
-              font-weight:800;
-              font-size:1.2em;
-              color:var(--font-light);
-              text-transform:uppercase;
-              letter-spacing:0.04em;
-              margin:0;
-            ">{proj.title}</h5>
-          </div>
-        ))}
+      <!-- right: portfolio cards — horizontal scroll carousel, clips left edge only -->
+      <div style="clip-path:inset(-4rem -100vw -4rem 0);padding:4em 0 0 3em;">
+        <div class="work-carousel">
+          {projects.map(proj => (
+            <div style="flex:none;width:31vw;height:32.7rem;position:relative;border-radius:1rem;overflow:hidden;scroll-snap-align:start;">
+              <img src={proj.src} alt={proj.title} style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+              <div style="position:absolute;inset:0 0 0;background-image:linear-gradient(5deg,#2a0946eb,rgba(255,255,255,0) 99%);height:100%;"></div>
+              <h5 style="
+                font-size:clamp(22px,2vw,32px);
+                line-height:0.95;
+                position:absolute;
+                inset:auto 0% 7% 4%;
+                font-family:Mortend,sans-serif;
+                font-weight:800;
+                color:var(--font-light);
+                text-transform:uppercase;
+                letter-spacing:0.04em;
+                margin:0;
+              ">{proj.title}</h5>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>

@@ -26,50 +26,35 @@ const stream = [
   '/assets/images/69d55440de29525bb5ec52a8_the_butterfly_cfi_logo_mock_up.jpg',
 ];
 
-// logo strip
-const logos = [
-  { src: '/assets/images/61ce62d38a51817beb399519_tremulant.avif', alt: 'Tremulant' },
-  { src: '/assets/images/61ce621dbdaf70e870d06cd0_mms_gardens.avif', alt: 'MMS Gardens' },
-  { src: '/assets/images/61ce628e7e4e911c6a16be96_sorted.avif', alt: 'Sorted' },
-  { src: '/assets/images/61ce6273a26d7cd80b2a2e96_sirius_logo.avif', alt: 'Sirius' },
-  { src: '/assets/images/61ce6256b9b69834df814f94_plantingrice_logo.avif', alt: 'Planting Rice' },
-  { src: '/assets/images/61ce62af8bd4f571397c5e2d_theCrystalMethod.avif', alt: 'Crystal Method' },
-  { src: '/assets/images/61ce61f9a7e1e58687cda897_KT_Logo.avif', alt: 'KT' },
-  { src: '/assets/images/61ce618a8a5181f282398932_Shameless_logo.avif', alt: 'Shameless' },
-  { src: '/assets/images/61ce61bc8d36f1ec57bb65d4_greenworks.avif', alt: 'Greenworks' },
-  { src: '/assets/images/61ce61dc5599ff4df0279aea_home_logo.avif', alt: 'Home' },
-  { src: '/assets/images/61ce6238b29eb0152bf044b8_nyx_productions.avif', alt: 'Nyx' },
-];
 ---
 
-<section id="contact" style="background-color:var(--font-plum);padding:7em 0 5em;">
+<section id="contact" style="background-color:#d9cfe0;padding:7em 0 5em;">
   <div style="max-width:100em;margin:0 auto;padding:0 6em;">
 
     <!-- FAQ + photo -->
     <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;gap:4em;">
       <!-- left: FAQ -->
       <div style="flex:1;">
-        <h1 style="font-family:Mortend,sans-serif;font-weight:800;font-size:3.5em;line-height:1.1;color:var(--background-blue);text-transform:uppercase;margin-bottom:1.5em;">
+        <h1 style="font-family:Mortend,sans-serif;font-weight:800;font-size:2.9em;line-height:1;color:rgba(12,4,44,0.84);text-transform:uppercase;margin-bottom:1.5rem;max-width:12.8em;">
           got questions?<br>let's go!
         </h1>
 
         <div>
           {faqs.map(faq => (
-            <details style="border-bottom:1px solid rgba(66,15,109,0.3);">
+            <details style="border-bottom:4px solid #9c8aaf;">
               <summary style="
                 display:flex;
                 justify-content:space-between;
                 align-items:center;
-                padding:1.2em 0;
+                padding:1rem 0;
                 cursor:pointer;
                 list-style:none;
-                font-family:Mortend,sans-serif;
-                font-size:0.8em;
-                font-weight:800;
-                letter-spacing:0.1em;
+                font-family:Poppins,sans-serif;
+                font-size:1.125rem;
+                font-weight:700;
                 text-transform:uppercase;
                 color:var(--background-blue);
-                opacity:0.7;
+                opacity:0.74;
               ">
                 {faq.q}
                 <span style="font-size:1.4em;margin-left:1em;">⌄</span>
@@ -93,20 +78,20 @@ const logos = [
 
     <!-- current work stream -->
     <div style="margin-top:5em;">
-      <div style="display:flex;gap:0.5em;overflow-x:auto;padding-bottom:0.5em;">
+      <div style="display:flex;gap:0.8em;overflow-x:auto;padding-bottom:0.5em;">
         {stream.map(src => (
-          <img src={src} alt="" style="flex:none;width:7em;height:7em;object-fit:cover;border-radius:0.5rem;" loading="lazy" />
+          <img src={src} alt="" style="flex:none;width:10rem;height:10rem;object-fit:cover;border-radius:1rem;" loading="lazy" />
         ))}
       </div>
-      <p style="font-family:Mortend,sans-serif;font-weight:800;font-size:0.75em;letter-spacing:0.15em;text-transform:uppercase;color:var(--background-blue);opacity:0.5;margin-top:0.8em;">Current Work Stream</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2em;">
+        <p style="font-family:Poppins,sans-serif;font-weight:300;font-size:1.6em;text-transform:uppercase;color:var(--font-plum);margin:0;max-width:17ch;">Current Work Stream</p>
+        <div style="display:flex;gap:1rem;align-items:center;">
+          <a href="#" style="background-color:var(--font-plum);border-radius:8rem;padding:0 57px;font-size:2.2em;font-weight:600;color:var(--background-blue);display:inline-block;line-height:1.6;text-decoration:none;">&lt;</a>
+          <a href="#" style="background-color:var(--font-plum);border-radius:8rem;padding:0 57px;font-size:2.2em;font-weight:600;color:var(--background-blue);display:inline-block;line-height:1.6;text-decoration:none;">&gt;</a>
+        </div>
+      </div>
     </div>
 
   </div>
 
-  <!-- logo strip -->
-  <div style="background-color:var(--ashy-black);margin-top:5em;padding:1.8em 6em;display:flex;align-items:center;gap:3.5em;overflow-x:auto;">
-    {logos.map(logo => (
-      <img src={logo.src} alt={logo.alt} style="height:2.2em;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.55;flex:none;" loading="lazy" />
-    ))}
-  </div>
 </section>

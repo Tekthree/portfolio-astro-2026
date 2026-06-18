@@ -11,21 +11,23 @@ const images = [
 ];
 ---
 
-<div style="position:relative;overflow:hidden;background:var(--ashy-black);">
-  <!-- Happy Clients badge -->
+<div style="position:relative;background:var(--background-blue);padding-top:2.69em;padding-bottom:2.69em;z-index:200;">
+  <!-- Happy Clients badge — overlaps hero above -->
   <img
     src="/assets/images/6587b2a1d6c777d8c225b483_happy_clients_three.svg"
     alt="Happy Clients"
-    style="position:absolute;left:1.5em;top:50%;transform:translateY(-50%);z-index:10;width:7.5em;height:7.5em;"
+    style="position:absolute;z-index:50;width:13.7em;left:12%;top:-6%;"
   />
 
-  <!-- scrolling track -->
-  <div class="marquee-track" style="display:flex;width:max-content;">
-    {[...images, ...images].map(img => (
-      <div style="flex:none;width:27.6em;height:18em;overflow:hidden;">
-        <img src={img.src} alt={img.alt} style="width:100%;height:100%;object-fit:cover;border-radius:1rem;padding:0.6em;" loading="lazy" />
-      </div>
-    ))}
+  <!-- scrolling track — overflow hidden here to clip horizontal animation -->
+  <div style="overflow:hidden;">
+    <div class="marquee-track" style="display:flex;width:max-content;">
+      {[...images, ...images].map(img => (
+        <div style="flex:none;width:29.7em;height:22.1em;overflow:hidden;">
+          <img src={img.src} alt={img.alt} style="width:100%;height:100%;object-fit:cover;border-radius:1rem;padding:0.6em;" loading="lazy" />
+        </div>
+      ))}
+    </div>
   </div>
 </div>
 

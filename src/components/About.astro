@@ -1,6 +1,6 @@
 ---
 ---
-<section id="about" style="background-color:var(--font-plum);padding:7.7em 0 10.6em;">
+<section id="about" style="background-color:var(--font-light);padding:7.7em 0 10.6em;min-height:52.08em;position:relative;">
   <div style="max-width:100em;margin:0 auto;padding:0 6em;">
 
     <!-- top blurb -->
@@ -40,7 +40,6 @@
           height:auto;
           padding-right:3.91em;
           position:relative;
-          overflow:hidden;
         ">
           <img
             src="/assets/images/6881cb528375b87c1cf2b7e3_outline_tek_jones.avif"
@@ -74,11 +73,12 @@
             background-color:var(--submt-purple);
             color:var(--font-light);
             font-family:Mortend,sans-serif;
-            font-weight:800;
-            font-size:0.9em;
+            font-weight:400;
+            font-size:1.25em;
             letter-spacing:0.08em;
             text-transform:uppercase;
-            padding:1em 2.5em;
+            padding:0.9em 1.74em 0.67em;
+            border-radius:0.4em;
             text-decoration:none;
           ">jump to cv</a>
         </div>
@@ -93,7 +93,6 @@
       justify-content:center;
       align-items:center;
       margin-top:5.73em;
-      padding:2.5em 3em;
     ">
       {[
         { num: '12', suffix: '+', label: 'Years of design\nexperience' },
@@ -101,18 +100,18 @@
         { num: '5', suffix: 'k+', label: 'completed\nprojects' },
       ].map((stat, i) => (
         <>
-          <div style="display:flex;align-items:center;justify-content:space-between;flex:1;padding:0 2em;overflow:hidden;">
-            <div style="flex-shrink:0;">
-              <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="" style="width:4em;height:4em;object-fit:contain;" />
+          <div style="display:flex;justify-content:space-between;border-radius:0.5em;overflow:hidden;">
+            <div style="flex:0 auto;justify-content:center;align-items:center;padding:0.94em 1.2em;display:flex;">
+              <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="" style="width:5vw;height:5vw;object-fit:contain;" />
             </div>
-            <div style="padding-left:1em;">
-              <h5 style="font-family:Mortend,sans-serif;font-weight:800;font-size:2.5em;color:var(--background-blue);margin:0;line-height:1;">
-                {stat.num}<span style="font-size:0.7em;">{stat.suffix}</span>
+            <div style="flex:0 auto;padding:1.32em;">
+              <h5 style="font-family:Mortend,sans-serif;font-weight:800;font-size:3.4em;color:var(--background-blue);opacity:0.74;margin:0;line-height:1;text-transform:none;">
+                {stat.num}<span style="font-size:0.6em;color:var(--highlight-yellow);">{stat.suffix}</span>
               </h5>
-              <p style="font-family:Poppins,sans-serif;font-size:0.85em;color:var(--background-blue);opacity:0.75;margin:0;white-space:pre-line;">{stat.label}</p>
+              <p style="font-family:Poppins,sans-serif;font-size:1.1em;font-weight:400;color:var(--background-blue);margin:0;line-height:1.3;white-space:pre-line;">{stat.label}</p>
             </div>
           </div>
-          {i < 2 && <div style="width:1px;height:4em;background:rgba(66,15,109,0.3);flex-shrink:0;"></div>}
+          {i < 2 && <div style="flex:0 auto;background-color:#baaac8;width:4px;height:10.1em;margin-left:2.76em;margin-right:2.76em;"></div>}
         </>
       ))}
     </div>
