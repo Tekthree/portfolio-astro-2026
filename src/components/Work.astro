@@ -1,5 +1,4 @@
 ---
-// Portfolio carousel — 2 cards wide (Splide.js style, static render)
 const projects = [
   {
     title: 'The Butterfly CFI',
@@ -23,43 +22,47 @@ const projects = [
   },
 ];
 
-// Work list (vertical) — shown alongside the carousel
 const listItems = [
   { thumb: '/assets/images/672319b9b8617a6a9afb4534_Screenshot_2024-10-30_224619.avif', title: 'Zoo Tube', tag: 'design & development' },
   { thumb: '/assets/images/61d38d6eaedc7a746c70281a_The_breakfast_club_poster_mockup_11x17_15ONE.avif', title: 'TBC', tag: 'design & development' },
-  { thumb: '/assets/images/61d38d75eac6788290cc902e_the-breakfast-club_poster_mockup.avif', title: 'TBC Alt', tag: 'poster design' },
-  { thumb: '/assets/images/62e5a05a9afb7e144c871ffa_crystal_method_poster_webonly.avif', title: 'Crystal Method', tag: 'poster design' },
+  { thumb: '/assets/images/61d38d75eac6788290cc902e_the-breakfast-club_poster_mockup.avif', title: 'TBC', tag: 'poster design' },
+  { thumb: '/assets/images/61d38d80e8e6e23546bf9b51_tremulant_nikki_poster_mockup.avif', title: 'Tremulant', tag: 'poster design' },
 ];
 ---
 
-<section id="work" style="background-color:var(--background-blue);padding:5em 0;">
-  <div style="max-width:100em;margin:0 auto;padding:0 6em;position:relative;">
+<section id="work" class="work-sec">
+  <!-- decorative art — left side, matches Webflow image-6 -->
+  <img
+    src="/assets/images/62f6c3cffd7b99342f2f8896_right-art.avif"
+    alt=""
+    class="work-art-left"
+    aria-hidden="true"
+  />
+  <div class="work-container">
 
     <!-- watermark -->
-    <div style="position:absolute;top:0;left:0;right:0;overflow:hidden;pointer-events:none;z-index:0;">
-      <span style="font-family:'Mortend Outline',sans-serif;font-weight:800;font-size:11em;color:var(--font-light);opacity:0.04;white-space:nowrap;text-transform:uppercase;letter-spacing:-0.02em;display:block;">MY WORK MY WORK MY WORK</span>
+    <div class="work-watermark" aria-hidden="true">
+      <span class="work-watermark-text">MY WORK MY WORK MY WORK</span>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative;z-index:1;">
+    <div class="work-grid">
       <!-- left: work list -->
-      <div>
-        <div style="margin-top:4.13em;padding-bottom:0;">
-          <p style="opacity:0.37;text-transform:uppercase;padding-left:2em;font-size:1.1em;font-weight:700;font-family:Poppins,sans-serif;color:var(--font-light);margin-bottom:1em;">Recent Work</p>
-          <div class="nav-divider" style="margin-bottom:0;"></div>
+      <div class="work-list-col">
+        <div class="work-list-inner">
+          <p class="work-recent-label">Recent Work</p>
+          <div class="nav-divider"></div>
 
           {listItems.map(item => (
-            <div>
-              <div style="display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;width:100%;padding-bottom:2.2rem;margin-top:2.2rem;">
-                <!-- image -->
-                <div style="padding-right:0.2rem;">
-                  <img src={item.thumb} alt={item.title} style="width:9vw;aspect-ratio:1;object-fit:cover;border-radius:1rem;" loading="lazy" />
+            <div class="work-item">
+              <div class="work-item-row">
+                <div class="work-item-thumb">
+                  <img src={item.thumb} alt={item.title} class="work-thumb-img" loading="lazy" />
                 </div>
-                <!-- title -->
-                <div style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;">
-                  <div style="position:relative;padding-right:2rem;">
-                    <h2 style="font-family:Mortend,sans-serif;font-weight:800;font-size:4.6em;line-height:1;color:var(--font-light);margin:0;text-transform:uppercase;">{item.title}</h2>
+                <div class="work-item-text">
+                  <div class="work-title-group">
+                    <h2 class="work-title">{item.title}</h2>
                   </div>
-                  <p style="font-family:Poppins,sans-serif;font-size:0.9em;color:var(--font-light);opacity:0.6;margin:0;">{item.tag}</p>
+                  <p class="work-tag">{item.tag}</p>
                 </div>
               </div>
               <div class="nav-divider"></div>
@@ -68,25 +71,14 @@ const listItems = [
         </div>
       </div>
 
-      <!-- right: portfolio cards — horizontal scroll carousel, clips left edge only -->
-      <div style="clip-path:inset(-4rem -100vw -4rem 0);padding:4em 0 0 3em;">
+      <!-- right: carousel (bleeds off right edge) -->
+      <div class="work-carousel-col">
         <div class="work-carousel">
           {projects.map(proj => (
-            <div style="flex:none;width:31vw;height:32.7rem;position:relative;border-radius:1rem;overflow:hidden;scroll-snap-align:start;">
-              <img src={proj.src} alt={proj.title} style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
-              <div style="position:absolute;inset:0 0 0;background-image:linear-gradient(5deg,#2a0946eb,rgba(255,255,255,0) 99%);height:100%;"></div>
-              <h5 style="
-                font-size:clamp(22px,2vw,32px);
-                line-height:0.95;
-                position:absolute;
-                inset:auto 0% 7% 4%;
-                font-family:Mortend,sans-serif;
-                font-weight:800;
-                color:var(--font-light);
-                text-transform:uppercase;
-                letter-spacing:0.04em;
-                margin:0;
-              ">{proj.title}</h5>
+            <div class="work-card">
+              <img src={proj.src} alt={proj.title} class="work-card-img" loading="lazy" />
+              <div class="work-card-overlay"></div>
+              <h5 class="work-card-title">{proj.title}</h5>
             </div>
           ))}
         </div>
@@ -94,3 +86,213 @@ const listItems = [
     </div>
   </div>
 </section>
+
+<style>
+.work-sec {
+  background-color: var(--background-blue);
+  padding: 5em 0 11.1em;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Decorative art image — left side, matches Webflow image-6 */
+.work-art-left {
+  position: absolute;
+  top: 43%;
+  left: 0;
+  height: 31.7em;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.work-container {
+  max-width: 100em;
+  margin: 0 auto;
+  padding: 0 6em;
+  position: relative;
+}
+
+/* watermark */
+.work-watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.work-watermark-text {
+  font-family: 'Mortend Outline', sans-serif;
+  font-weight: 800;
+  font-size: 11em;
+  color: var(--font-light);
+  opacity: 0.04;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  display: block;
+}
+
+/* 2-col grid: left list ~50% (matches Webflow flex-row 50/50), right carousel */
+.work-grid {
+  display: grid;
+  grid-template-columns: 47% 1fr;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* left column */
+.work-list-col { }
+
+.work-list-inner { margin-top: 4.13em; }
+
+.work-recent-label {
+  opacity: 0.37;
+  text-transform: uppercase;
+  padding-left: 2em;
+  font-size: 1.1em;
+  font-weight: 700;
+  font-family: Poppins, sans-serif;
+  color: var(--font-light);
+  margin-bottom: 1em;
+}
+
+.work-item { }
+
+.work-item-row {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 2.2rem;
+  margin-top: 2.2rem;
+}
+
+.work-item-thumb { padding-right: 0.2rem; }
+
+.work-thumb-img {
+  width: 9vw;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.work-item-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0; /* allow flex shrink so long titles wrap instead of overflow */
+}
+
+.work-title-group { position: relative; padding-right: 2rem; }
+
+.work-title {
+  font-family: Mortend, sans-serif;
+  font-weight: 800;
+  font-size: 4.6em;
+  line-height: 1;
+  color: var(--font-light);
+  margin: 0;
+}
+
+.work-tag {
+  font-family: Poppins, sans-serif;
+  font-size: 0.9em;
+  color: var(--font-light);
+  opacity: 0.6;
+  margin: 0;
+}
+
+/* right column — clips only on left, overflows right */
+.work-carousel-col {
+  clip-path: inset(-4rem -100vw -4rem 0);
+  padding: 4em 0 0 3em;
+}
+
+.work-carousel {
+  display: flex;
+  gap: 1.5em;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4em;
+}
+.work-carousel::-webkit-scrollbar { display: none; }
+
+.work-card {
+  flex: none;
+  width: 23vw;
+  height: 32.7rem;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+.work-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.work-card-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(5deg, #2a0946eb, rgba(255,255,255,0) 99%);
+}
+
+.work-card-title {
+  font-size: clamp(22px, 2vw, 32px);
+  line-height: 0.95;
+  position: absolute;
+  inset: auto 0% 7% 4%;
+  font-family: Mortend, sans-serif;
+  font-weight: 800;
+  color: var(--font-light);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* Tablet: shrink fonts, narrower left */
+@media screen and (max-width: 991px) {
+  .work-container { padding: 0 3vw; }
+  .work-grid { grid-template-columns: 47% 1fr; }
+  .work-title { font-size: 3.4em; }
+  .work-thumb-img { width: 12vw; }
+  .work-card { width: 40vw; height: 26rem; }
+  .work-art-left { height: 23.5em; top: 89%; }
+}
+
+/* Mobile: stack list on top, carousel below */
+@media screen and (max-width: 767px) {
+  .work-art-left { height: 23.5em; top: 94%; }
+  .work-sec { padding: 2em 0 5em; }
+  .work-container { padding: 0 5vw; }
+  .work-grid { grid-template-columns: 1fr; }
+  .work-title { font-size: 2.1em; }
+  .work-thumb-img { width: 20vw; }
+  .work-watermark-text { font-size: 5em; }
+
+  .work-carousel-col {
+    clip-path: none;
+    padding: 2em 0 0;
+    overflow: hidden;
+  }
+  .work-card { width: 70vw; height: 22rem; }
+}
+
+/* Small mobile */
+@media screen and (max-width: 479px) {
+  .work-title { font-size: 1.9em; }
+  .work-card  { width: 80vw; height: 20rem; }
+  .work-art-left { height: 13.6em; left: -7%; }
+}
+</style>

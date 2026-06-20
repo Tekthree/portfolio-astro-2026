@@ -1,7 +1,44 @@
 ---
 ---
-<div class="nav-divider" style="position:fixed;top:0;left:0;right:0;z-index:1000;"></div>
-<nav style="
+<div class="nav-divider nav-top-bar"></div>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="Pixel Jones" class="nav-logo-icon" />
+    <div class="nav-wordmark">pixel<br>JONES</div>
+  </a>
+
+  <button id="menu-btn" class="nav-menu-btn" aria-label="Menu">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+</nav>
+
+<div id="nav-overlay" class="nav-overlay">
+  <button id="menu-close" class="nav-close">×</button>
+  <a href="#work"  onclick="document.getElementById('nav-overlay').style.display='none'" class="nav-overlay-link">WORK</a>
+  <a href="#about" onclick="document.getElementById('nav-overlay').style.display='none'" class="nav-overlay-link">ABOUT</a>
+  <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" class="nav-overlay-link">RESUME</a>
+</div>
+
+<script>
+  const btn     = document.getElementById('menu-btn');
+  const overlay = document.getElementById('nav-overlay');
+  const close   = document.getElementById('menu-close');
+  btn?.addEventListener('click',  () => { overlay.style.display = 'flex'; });
+  close?.addEventListener('click', () => { overlay.style.display = 'none'; });
+</script>
+
+<style>
+.nav-top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.nav {
   position: fixed;
   top: 1px;
   left: 0;
@@ -12,29 +49,97 @@
   align-items: center;
   justify-content: space-between;
   background: linear-gradient(to bottom, rgba(7,4,25,0.85) 0%, transparent 100%);
-">
-  <a href="/" style="display:flex;align-items:center;gap:0.75em;text-decoration:none;">
-    <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="Pixel Jones" style="height:3.5em;width:auto;" />
-    <div style="font-family:Mortend,sans-serif;font-size:1.1em;font-weight:800;color:var(--font-light);line-height:1;letter-spacing:0.05em;text-transform:uppercase;">pixel<br>JONES</div>
-  </a>
+}
 
-  <button id="menu-btn" style="background:none;border:none;cursor:pointer;padding:0.5em;display:flex;flex-direction:column;gap:5px;" aria-label="Menu">
-    <span style="display:block;width:1.5em;height:2px;background:var(--font-light);"></span>
-    <span style="display:block;width:1.5em;height:2px;background:var(--font-light);"></span>
-  </button>
-</nav>
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  text-decoration: none;
+}
 
-<div id="nav-overlay" style="position:fixed;inset:0;z-index:998;background:rgba(7,4,25,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:3em;">
-  <button id="menu-close" style="position:absolute;top:2em;right:2em;background:none;border:none;cursor:pointer;color:var(--font-light);font-size:2em;">×</button>
-  <a href="#work" onclick="document.getElementById('nav-overlay').style.display='none'" style="font-family:Mortend,sans-serif;font-size:3em;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--font-light);">WORK</a>
-  <a href="#about" onclick="document.getElementById('nav-overlay').style.display='none'" style="font-family:Mortend,sans-serif;font-size:3em;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--font-light);">ABOUT</a>
-  <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" style="font-family:Mortend,sans-serif;font-size:3em;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--font-light);">RESUME</a>
-</div>
+.nav-logo-icon {
+  height: 3.5em;
+  width: auto;
+}
 
-<script>
-  const btn = document.getElementById('menu-btn');
-  const overlay = document.getElementById('nav-overlay');
-  const close = document.getElementById('menu-close');
-  btn?.addEventListener('click', () => { overlay.style.display = 'flex'; });
-  close?.addEventListener('click', () => { overlay.style.display = 'none'; });
-</script>
+.nav-wordmark {
+  font-family: Mortend, sans-serif;
+  font-size: 1.1em;
+  font-weight: 800;
+  color: var(--font-light);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nav-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-line {
+  display: block;
+  width: 1.5em;
+  height: 2px;
+  background: var(--font-light);
+}
+
+/* overlay */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background: rgba(7,4,25,0.97);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+}
+
+.nav-close {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--font-light);
+  font-size: 2em;
+}
+
+.nav-overlay-link {
+  font-family: Mortend, sans-serif;
+  font-size: 3em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--font-light);
+  text-decoration: none;
+}
+
+/* Tablet/mobile adjustments */
+@media screen and (max-width: 991px) {
+  .nav { padding: 2.4em 6vw; }
+  .nav-logo-icon { height: 3.3em; }
+  .nav-wordmark  { font-size: 1.5em; }
+}
+
+@media screen and (max-width: 767px) {
+  .nav { padding: 2.9em 6vw; }
+  .nav-logo-icon { height: 2.8em; }
+  .nav-wordmark  { font-size: 1.3em; }
+}
+
+@media screen and (max-width: 479px) {
+  .nav { padding: 2.2em 2.1em; }
+  .nav-logo-icon { height: 2.5em; }
+  .nav-wordmark  { font-size: 1.2em; margin-left: 8px; }
+}
+</style>

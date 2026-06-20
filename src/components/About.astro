@@ -1,120 +1,334 @@
 ---
 ---
-<section id="about" style="background-color:var(--font-light);padding:7.7em 0 10.6em;min-height:52.08em;position:relative;">
-  <div style="max-width:100em;margin:0 auto;padding:0 6em;">
+<section id="about" class="about-sec">
+  <!-- decorative art — top-right of about section -->
+  <img
+    src="/assets/images/62f6c3e27640277a801c55cc_left-art.avif"
+    alt=""
+    class="about-art-right"
+    aria-hidden="true"
+  />
 
-    <!-- top blurb -->
-    <div style="margin-bottom:7.6em;position:relative;max-width:38em;">
-      <h1 style="font-family:Mortend,sans-serif;font-weight:800;font-size:2.2em;line-height:1.2;color:var(--background-blue);text-transform:uppercase;">
-        My <em style="font-style:italic;color:var(--submt-purple);">mission</em> is to solve user challenges and convert them into loyal customers.
+  <div class="about-container">
+
+    <!-- blurb -->
+    <div class="about-blurb-wrap">
+      <h1 class="about-blurb-heading">
+        My <em class="about-italic">mission</em> is to solve user challenges and convert them into loyal customers.
       </h1>
     </div>
 
-    <!-- main about split -->
-    <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;width:100%;position:relative;">
+    <!-- photo + text row -->
+    <div class="about-split">
 
       <!-- left: photo -->
-      <div style="width:50%;position:relative;z-index:100;">
-        <!-- "about me" outline watermark -->
-        <h1 style="
-          font-family:'Mortend Outline',sans-serif;
-          font-weight:800;
-          font-size:6.9em;
-          color:var(--submt-purple);
-          opacity:0.18;
-          white-space:nowrap;
-          position:absolute;
-          top:-0.69em;
-          left:-63%;
-          z-index:10;
-          pointer-events:none;
-          text-transform:uppercase;
-        ">about me about me about me</h1>
-
-        <div style="
-          background-color:var(--font-plum);
-          border-radius:1rem;
-          display:flex;
-          justify-content:center;
-          align-items:stretch;
-          height:auto;
-          padding-right:3.91em;
-          position:relative;
-        ">
+      <div class="about-left">
+        <h1 class="about-outline-text">about me about me about me</h1>
+        <div class="about-photo-card">
           <img
             src="/assets/images/6881cb528375b87c1cf2b7e3_outline_tek_jones.avif"
             alt="Tek Jones"
-            style="height:30.8em;flex:0 auto;margin-top:-2.9em;transform:rotateY(180deg);"
+            class="about-photo"
             loading="lazy"
           />
         </div>
       </div>
 
       <!-- right: text -->
-      <div style="width:50%;">
-        <div style="padding:0 3.54em 4.74em;">
-          <h1 style="
-            font-family:Mortend,sans-serif;
-            font-weight:800;
-            font-size:2.9em;
-            line-height:1;
-            color:rgba(12,4,44,0.84);
-            text-transform:uppercase;
-            margin-bottom:0.38em;
-            max-width:12.8em;
-          ">hello, <br>my name is tek</h1>
-
-          <p style="font-family:Poppins,sans-serif;font-size:1em;color:var(--background-blue);line-height:1.6;margin-bottom:1.3em;opacity:0.85;">
+      <div class="about-right">
+        <div class="about-text-wrap">
+          <h1 class="about-name-heading">hello, <br>my name is tek</h1>
+          <p class="about-body">
             Whether it's building a website, creating a mobile app, or designing a logo, I have the skills and vision to bring your ideas to life. With a strong focus on user experience and a dedication to staying up-to-date on the latest industry trends, I'm confident in my ability to bring value to any project.
           </p>
-
-          <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" style="
-            display:inline-block;
-            background-color:var(--submt-purple);
-            color:var(--font-light);
-            font-family:Mortend,sans-serif;
-            font-weight:400;
-            font-size:1.25em;
-            letter-spacing:0.08em;
-            text-transform:uppercase;
-            padding:0.9em 1.74em 0.67em;
-            border-radius:0.4em;
-            text-decoration:none;
-          ">jump to cv</a>
+          <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" class="about-cv-btn">jump to cv</a>
         </div>
       </div>
     </div>
 
     <!-- stats bar -->
-    <div style="
-      background-color:#c7bbd0;
-      border-radius:1rem;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      margin-top:5.73em;
-    ">
+    <div class="about-stats">
       {[
         { num: '12', suffix: '+', label: 'Years of design\nexperience' },
         { num: '3', suffix: '+', label: 'graduate from\ncode fellows' },
         { num: '5', suffix: 'k+', label: 'completed\nprojects' },
       ].map((stat, i) => (
         <>
-          <div style="display:flex;justify-content:space-between;border-radius:0.5em;overflow:hidden;">
-            <div style="flex:0 auto;justify-content:center;align-items:center;padding:0.94em 1.2em;display:flex;">
-              <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="" style="width:5vw;height:5vw;object-fit:contain;" />
+          <div class="stat-item">
+            <div class="stat-icon">
+              <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="" class="stat-logo" loading="lazy" />
             </div>
-            <div style="flex:0 auto;padding:1.32em;">
-              <h5 style="font-family:Mortend,sans-serif;font-weight:800;font-size:3.4em;color:var(--background-blue);opacity:0.74;margin:0;line-height:1;text-transform:none;">
-                {stat.num}<span style="font-size:0.6em;color:var(--highlight-yellow);">{stat.suffix}</span>
+            <div class="stat-text">
+              <h5 class="stat-num">
+                {stat.num}<span class="stat-suffix">{stat.suffix}</span>
               </h5>
-              <p style="font-family:Poppins,sans-serif;font-size:1.1em;font-weight:400;color:var(--background-blue);margin:0;line-height:1.3;white-space:pre-line;">{stat.label}</p>
+              <p class="stat-label">{stat.label}</p>
             </div>
           </div>
-          {i < 2 && <div style="flex:0 auto;background-color:#baaac8;width:4px;height:10.1em;margin-left:2.76em;margin-right:2.76em;"></div>}
+          {i < 2 && <div class="stat-divider"></div>}
         </>
       ))}
     </div>
 
   </div>
 </section>
+
+<style>
+.about-sec {
+  background-color: var(--font-light);
+  padding: 7.7em 0 10.6em;
+  min-height: 52.08em;
+  position: relative;
+}
+
+/* Decorative art image — right side, matches Webflow image-5 */
+.about-art-right {
+  position: absolute;
+  top: 9%;
+  right: 0;
+  height: 25.1em;
+  opacity: 1;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.about-container {
+  max-width: 100em;
+  margin: 0 auto;
+  padding: 0 6em;
+}
+
+.about-blurb-wrap {
+  margin-bottom: 10.2em;
+  position: relative;
+  max-width: 38em;
+}
+
+.about-blurb-heading {
+  font-family: Mortend, sans-serif;
+  font-weight: 800;
+  font-size: 2.9em;
+  line-height: 1.2;
+  color: var(--background-blue);
+  text-transform: uppercase;
+  opacity: 0.74;
+  position: relative;
+  z-index: 10;
+}
+
+.about-italic {
+  font-style: italic;
+  color: var(--submt-purple);
+}
+
+/* photo + text row */
+.about-split {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
+
+.about-left {
+  width: 50%;
+  position: relative;
+  z-index: 100;
+}
+
+/* watermark outline */
+.about-outline-text {
+  font-family: 'Mortend Outline', sans-serif;
+  font-weight: 800;
+  font-size: 6.9em;
+  color: var(--submt-purple);
+  opacity: 0.18;
+  white-space: nowrap;
+  position: absolute;
+  top: -0.69em;
+  left: -63%;
+  z-index: 10;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+.about-photo-card {
+  background-color: var(--font-plum);
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: auto;
+  padding-right: 3.91em;
+  position: relative;
+}
+
+.about-photo {
+  height: 30.8em;
+  flex: 0 auto;
+  margin-top: -2.9em;
+  transform: rotateY(180deg);
+}
+
+.about-right {
+  width: 50%;
+}
+
+.about-text-wrap {
+  padding: 0 3.54em 4.74em;
+}
+
+.about-name-heading {
+  font-family: Mortend, sans-serif;
+  font-weight: 800;
+  font-size: 2.9em;
+  line-height: 1;
+  color: rgba(12,4,44,0.84);
+  text-transform: uppercase;
+  margin-bottom: 0.38em;
+  max-width: 12.8em;
+}
+
+.about-body {
+  font-family: Poppins, sans-serif;
+  font-size: 1em;
+  color: var(--background-blue);
+  line-height: 1.6;
+  margin-bottom: 1.3em;
+  opacity: 0.85;
+}
+
+.about-cv-btn {
+  display: inline-block;
+  background-color: var(--submt-purple);
+  color: var(--font-light);
+  font-family: Mortend, sans-serif;
+  font-weight: 400;
+  font-size: 1.25em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.9em 1.74em 0.67em;
+  border-radius: 0.4em;
+  text-decoration: none;
+}
+
+/* stats bar */
+.about-stats {
+  background-color: #c7bbd0;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5.73em;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+
+.stat-icon {
+  flex: 0 auto;
+  justify-content: center;
+  align-items: center;
+  padding: 0.94em 1.2em;
+  display: flex;
+}
+
+.stat-logo {
+  width: 5vw;
+  height: 5vw;
+  object-fit: contain;
+}
+
+.stat-text {
+  flex: 0 auto;
+  padding: 1.32em;
+}
+
+.stat-num {
+  font-family: Mortend, sans-serif;
+  font-weight: 800;
+  font-size: 3.4em;
+  color: var(--background-blue);
+  opacity: 0.74;
+  margin: 0;
+  line-height: 1;
+  text-transform: none;
+}
+
+.stat-suffix {
+  font-size: 0.6em;
+  color: var(--highlight-yellow);
+}
+
+.stat-label {
+  font-family: Poppins, sans-serif;
+  font-size: 1.1em;
+  font-weight: 400;
+  color: var(--background-blue);
+  margin: 0;
+  line-height: 1.3;
+  white-space: pre-line;
+}
+
+.stat-divider {
+  flex: 0 auto;
+  background-color: #baaac8;
+  width: 4px;
+  height: 10.1em;
+  margin-left: 2.76em;
+  margin-right: 2.76em;
+  align-self: center;
+}
+
+/* Tablet: stack photo and text */
+@media screen and (max-width: 991px) {
+  .about-sec     { padding: 6.5em 0 8em; }
+  .about-container { padding: 0 6vw; }
+  .about-blurb-wrap { margin-bottom: 4em; }
+  .about-blurb-heading { font-size: 2.6em; }
+  .about-art-right { height: 20.8em; top: 3%; }
+
+  .about-split   { flex-direction: column; }
+  .about-left,
+  .about-right   { width: 100%; }
+  .about-text-wrap { padding: 4.74em 0 4.74em; }
+  .about-outline-text { display: none; }
+
+  .stat-logo { width: 7vw; height: 7vw; }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  .about-sec     { padding: 3.3em 0 6em; }
+  .about-container { padding: 0 5vw; }
+  .about-blurb-wrap { margin-bottom: 2.5em; }
+  .about-blurb-heading { font-size: 1.8em; }
+  .about-art-right { height: 15.1em; top: 9%; }
+
+  .about-photo   { height: 22em; }
+  .about-photo-card { padding-right: 2em; }
+
+  .about-name-heading { font-size: 2.1em; }
+  .about-text-wrap { padding: 3em 0 3em; }
+
+  /* stats: allow horizontal scroll */
+  .about-stats   { overflow-x: auto; justify-content: flex-start; padding: 0 1em; }
+  .stat-logo     { width: 10vw; height: 10vw; }
+  .stat-num      { font-size: 2.6em; }
+}
+
+/* Small mobile */
+@media screen and (max-width: 479px) {
+  .about-blurb-heading { font-size: 1.7em; }
+  .about-name-heading  { font-size: 1.9em; }
+  .about-photo   { height: 18em; }
+  .stat-num      { font-size: 2.2em; }
+  .stat-divider  { margin-left: 1em; margin-right: 1em; }
+  .about-art-right { display: none; }
+}
+</style>
