@@ -21,71 +21,36 @@ const projects = [
     tag: 'Print & Poster Design',
   },
 ];
-
-const listItems = [
-  { thumb: '/assets/images/672319b9b8617a6a9afb4534_Screenshot_2024-10-30_224619.avif', title: 'Zoo Tube', tag: 'design & development' },
-  { thumb: '/assets/images/61d38d6eaedc7a746c70281a_The_breakfast_club_poster_mockup_11x17_15ONE.avif', title: 'TBC', tag: 'design & development' },
-  { thumb: '/assets/images/61d38d75eac6788290cc902e_the-breakfast-club_poster_mockup.avif', title: 'TBC', tag: 'poster design' },
-  { thumb: '/assets/images/61d38d80e8e6e23546bf9b51_tremulant_nikki_poster_mockup.avif', title: 'Tremulant', tag: 'poster design' },
-];
 ---
 
 <section id="work" class="work-sec">
-  <!-- decorative art — left side, matches Webflow image-6 -->
   <img
     src="/assets/images/62f6c3cffd7b99342f2f8896_right-art.avif"
     alt=""
     class="work-art-left"
     aria-hidden="true"
   />
-  <div class="work-container">
 
-    <!-- watermark -->
+  <div class="work-container">
     <div class="work-watermark" aria-hidden="true">
       <span class="work-watermark-text">MY WORK MY WORK MY WORK</span>
     </div>
 
-    <div class="work-grid">
-      <!-- left: work list -->
-      <div class="work-list-col">
-        <div class="work-list-inner">
-          <p class="work-recent-label">Recent Work</p>
-          <div class="nav-divider"></div>
+    <p class="work-recent-label">Recent Work</p>
+    <div class="nav-divider work-divider"></div>
 
-          {listItems.map(item => (
-            <div class="work-item">
-              <div class="work-item-row">
-                <div class="work-item-thumb">
-                  <img src={item.thumb} alt={item.title} class="work-thumb-img" loading="lazy" />
-                </div>
-                <div class="work-item-text">
-                  <div class="work-title-group">
-                    <h2 class="work-title">{item.title}</h2>
-                  </div>
-                  <p class="work-tag">{item.tag}</p>
-                </div>
-              </div>
-              <div class="nav-divider"></div>
-            </div>
+    <div class="splide work-splide">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {projects.map(proj => (
+            <li class="splide__slide work-card">
+              <img src={proj.src} alt={proj.title} class="work-card-img" loading="lazy" />
+              <div class="work-card-overlay"></div>
+              <p class="work-card-tag">{proj.tag}</p>
+              <h5 class="work-card-title">{proj.title}</h5>
+            </li>
           ))}
-        </div>
-      </div>
-
-      <!-- right: carousel (bleeds off right edge) — Splide slider1 -->
-      <div class="work-carousel-col">
-        <div class="splide work-splide">
-          <div class="splide__track">
-            <ul class="splide__list">
-              {projects.map(proj => (
-                <li class="splide__slide work-card">
-                  <img src={proj.src} alt={proj.title} class="work-card-img" loading="lazy" />
-                  <div class="work-card-overlay"></div>
-                  <h5 class="work-card-title">{proj.title}</h5>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        </ul>
       </div>
     </div>
   </div>
@@ -99,13 +64,11 @@ const listItems = [
   position: relative;
 }
 
-/* Decorative art image — left side, matches Webflow image-6 */
 .work-art-left {
   position: absolute;
   top: 43%;
   left: 0;
   height: 31.7em;
-  opacity: 1;
   z-index: 0;
   pointer-events: none;
 }
@@ -115,9 +78,9 @@ const listItems = [
   margin: 0 auto;
   padding: 0 6em;
   position: relative;
+  z-index: 1;
 }
 
-/* watermark */
 .work-watermark {
   position: absolute;
   top: 0;
@@ -139,114 +102,38 @@ const listItems = [
   display: block;
 }
 
-/* 2-col grid: left list ~50% (matches Webflow flex-row 50/50), right carousel */
-.work-grid {
-  display: grid;
-  grid-template-columns: 47% 1fr;
-  gap: 0;
-  position: relative;
-  z-index: 1;
-}
-
-/* left column */
-.work-list-col { }
-
-.work-list-inner { margin-top: 4.13em; }
-
 .work-recent-label {
   opacity: 0.37;
   text-transform: uppercase;
-  padding-left: 2em;
   font-size: 1.1em;
   font-weight: 700;
   font-family: Poppins, sans-serif;
   color: var(--font-light);
-  margin-bottom: 1em;
+  margin: 4.13em 0 1em;
+  position: relative;
+  z-index: 1;
 }
 
-.work-item { }
-
-.work-item-row {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding-bottom: 2.2rem;
-  margin-top: 2.2rem;
+.work-divider {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2em;
 }
 
-.work-item-thumb { padding-right: 0.2rem; }
-
-.work-thumb-img {
-  width: 9vw;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 1rem;
-}
-
-.work-item-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  flex: 1;
-  min-width: 0; /* allow flex shrink so long titles wrap instead of overflow */
-}
-
-.work-title-group { position: relative; padding-right: 2rem; }
-
-.work-title {
-  font-family: Mortend, sans-serif;
-  font-weight: 800;
-  font-size: 4.6em;
-  line-height: 1;
-  color: var(--font-light);
-  margin: 0;
-}
-
-.work-tag {
-  font-family: Poppins, sans-serif;
-  font-size: 0.9em;
-  color: var(--font-light);
-  opacity: 0.6;
-  margin: 0;
-}
-
-/* right column — clips only on left, overflows right */
-.work-carousel-col {
-  clip-path: inset(-4rem -100vw -4rem 0);
-  padding: 4em 0 0 3em;
+/* Splide carousel — full width */
+.work-splide {
   overflow: visible;
+  position: relative;
+  z-index: 1;
 }
-
-/* Splide overrides */
-.work-splide { overflow: visible; }
 .work-splide .splide__track { overflow: visible; padding-bottom: 4em; }
-.work-splide .splide__list { overflow: visible; }
 
 .work-card {
-  width: 23vw;
-  height: 32.7rem;
+  height: 42rem;
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
 }
-
-/* Splide arrows */
-.work-splide .splide__arrow {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  width: 2.8em;
-  height: 2.8em;
-  border-radius: 50%;
-  top: auto;
-  bottom: 0.5em;
-  transform: none;
-}
-.work-splide .splide__arrow--prev { left: 0; }
-.work-splide .splide__arrow--next { left: 3.5em; }
-.work-splide .splide__arrow svg { fill: var(--font-light); width: 1em; height: 1em; }
 
 .work-card-img {
   width: 100%;
@@ -257,57 +144,74 @@ const listItems = [
 .work-card-overlay {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(5deg, #2a0946eb, rgba(255,255,255,0) 99%);
+  background-image: linear-gradient(5deg, #2a0946eb, rgba(255,255,255,0) 60%);
+}
+
+.work-card-tag {
+  position: absolute;
+  inset: auto 0% 14% 4%;
+  font-family: Poppins, sans-serif;
+  font-size: 0.85em;
+  font-weight: 400;
+  color: var(--font-light);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
 }
 
 .work-card-title {
-  font-size: clamp(22px, 2vw, 32px);
-  line-height: 0.95;
-  position: absolute;
-  inset: auto 0% 7% 4%;
   font-family: Mortend, sans-serif;
   font-weight: 800;
+  font-size: clamp(18px, 1.8vw, 28px);
+  line-height: 1;
+  position: absolute;
+  inset: auto 0% 7% 4%;
   color: var(--font-light);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin: 0;
 }
 
-/* Tablet: shrink fonts, narrower left */
+/* Splide arrows — bottom-left of track */
+.work-splide .splide__arrow {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 50%;
+  top: auto;
+  bottom: 0.5em;
+  transform: none;
+  opacity: 1;
+}
+.work-splide .splide__arrow--prev { left: 0; }
+.work-splide .splide__arrow--next { left: 3.5em; }
+.work-splide .splide__arrow svg { fill: var(--font-light); width: 1em; height: 1em; }
+.work-splide .splide__arrow:disabled { opacity: 0.3; }
+
+/* Tablet */
 @media screen and (max-width: 991px) {
   .work-container { padding: 0 3vw; }
-  .work-grid { grid-template-columns: 47% 1fr; }
-  .work-title { font-size: 3.4em; }
-  .work-thumb-img { width: 12vw; }
-  .work-card { width: 40vw; height: 26rem; }
   .work-art-left { height: 23.5em; top: 89%; }
+  .work-card { height: 32rem; }
 }
 
-/* Mobile: stack list on top, carousel below */
+/* Mobile */
 @media screen and (max-width: 767px) {
-  .work-art-left { height: 23.5em; top: 94%; }
   .work-sec { padding: 2em 0 5em; }
   .work-container { padding: 0 5vw; }
-  .work-grid { grid-template-columns: 1fr; }
-  .work-title { font-size: 2.1em; }
-  .work-thumb-img { width: 20vw; }
+  .work-art-left { height: 23.5em; top: 94%; }
   .work-watermark-text { font-size: 5em; }
-
-  .work-carousel-col {
-    clip-path: none;
-    padding: 2em 0 0;
-    overflow: hidden;
-  }
   .work-splide { overflow: hidden !important; }
   .work-splide .splide__track { overflow: hidden !important; }
-  .work-card { width: 70vw; height: 22rem; }
+  .work-card { height: 26rem; }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .work-title { font-size: 1.9em; }
-  .work-card  { width: 80vw; height: 20rem; }
   .work-art-left { height: 13.6em; left: -7%; }
+  .work-card { height: 22rem; }
 }
 </style>
 
@@ -316,21 +220,19 @@ const listItems = [
     const el = document.querySelector('.work-splide');
     if (!el || typeof Splide === 'undefined') return;
     new Splide(el, {
-      type: 'slide',
+      type: 'loop',
       perMove: 1,
-      focus: 'left',
-      perPage: 2,
-      padding: { left: 0, right: '12.6667%' },
+      perPage: 3,
+      focus: 0,
       gap: '1.5em',
       arrows: true,
       pagination: false,
       speed: 600,
-      trimSpace: false,
       updateOnMove: true,
       breakpoints: {
-        991: { perPage: 1, padding: { left: 0, right: 0 }, gap: '1em' },
-        767: { perPage: 1, padding: { left: 0, right: 0 }, gap: '1em' },
-        479: { perPage: 1, padding: { left: 0, right: 0 }, gap: '1em' },
+        991: { perPage: 2, gap: '1em' },
+        767: { perPage: 1, gap: '1em' },
+        479: { perPage: 1, gap: '1em' },
       },
     }).mount();
   });
