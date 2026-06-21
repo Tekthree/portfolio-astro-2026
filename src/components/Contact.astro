@@ -59,18 +59,24 @@ const stream = [
       </div>
     </div>
 
-    <!-- current work stream -->
+    <!-- current work stream — Splide slider2, free drag, custom nav -->
     <div class="contact-stream">
-      <div class="stream-grid">
-        {stream.map(src => (
-          <img src={src} alt="" class="stream-img" loading="lazy" />
-        ))}
+      <div class="splide stream-splide">
+        <div class="splide__track">
+          <ul class="splide__list">
+            {stream.map(src => (
+              <li class="splide__slide stream-slide">
+                <img src={src} alt="" class="stream-img" loading="lazy" />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div class="stream-footer">
         <p class="stream-label">Current Work Stream</p>
         <div class="stream-nav">
-          <a href="#" class="stream-btn">&lt;</a>
-          <a href="#" class="stream-btn">&gt;</a>
+          <button class="stream-btn stream-btn-prev" aria-label="Previous">&lt;</button>
+          <button class="stream-btn stream-btn-next" aria-label="Next">&gt;</button>
         </div>
       </div>
     </div>
@@ -167,24 +173,29 @@ const stream = [
   border-radius: 1rem;
 }
 
+/* FAQ arrow rotation */
+.faq-arrow {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+details[open] .faq-arrow { transform: rotate(180deg); }
+
 /* work stream */
 .contact-stream { margin-top: 5em; }
 
-.stream-grid {
-  display: flex;
-  gap: 0.8em;
-  overflow-x: auto;
-  padding-bottom: 0.5em;
-  scrollbar-width: none;
+.stream-splide { overflow: visible; }
+.stream-splide .splide__track { overflow: visible; }
+
+.stream-slide {
+  width: auto;
 }
-.stream-grid::-webkit-scrollbar { display: none; }
 
 .stream-img {
-  flex: none;
   width: 10rem;
   height: 10rem;
   object-fit: cover;
   border-radius: 1rem;
+  display: block;
 }
 
 .stream-footer {
@@ -208,6 +219,7 @@ const stream = [
 
 .stream-btn {
   background-color: var(--font-plum);
+  border: none;
   border-radius: 8rem;
   padding: 0 57px;
   font-size: 2.2em;
@@ -215,7 +227,8 @@ const stream = [
   color: var(--background-blue);
   display: inline-block;
   line-height: 1.6;
-  text-decoration: none;
+  cursor: pointer;
+  font-family: Poppins, sans-serif;
 }
 
 /* Tablet: stack photo below FAQ */
@@ -245,3 +258,33 @@ const stream = [
   .stream-footer { flex-direction: column; align-items: flex-start; gap: 1em; }
 }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.querySelector('.stream-splide');
+    if (!el || typeof Splide === 'undefined') return;
+
+    const splide = new Splide(el, {
+      type: 'slide',
+      perPage: 1,
+      perMove: 1,
+      focus: 0,
+      gap: '1em',
+      arrows: false,
+      pagination: false,
+      drag: 'free',
+      snap: false,
+      autoWidth: true,
+      trimSpace: false,
+      updateOnMove: true,
+      breakpoints: {
+        991: { gap: '1em' },
+        767: { gap: '0.75em' },
+        479: { gap: '0.5em' },
+      },
+    }).mount();
+
+    document.querySelector('.stream-btn-prev')?.addEventListener('click', () => splide.go('<'));
+    document.querySelector('.stream-btn-next')?.addEventListener('click', () => splide.go('>'));
+  });
+</script>

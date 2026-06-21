@@ -91,3 +91,18 @@ const images = [
   .marquee-item  { width: 13.7em; height: 13.4em; }
 }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to('.marquee-badge', {
+      y: -24,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.marquee-section',
+        scrub: 0.8,
+      },
+    });
+  });
+</script>

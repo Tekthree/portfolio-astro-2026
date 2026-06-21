@@ -14,7 +14,7 @@ const logos = [
 ];
 ---
 
-<section style="background-color:var(--background-blue);">
+<section class="logo-strip-sec" style="background-color:var(--background-blue);">
   <div style="background-color:var(--ashy-black);max-width:none;padding:0;overflow:hidden;">
     <div class="logo-marquee-track" style="display:flex;width:max-content;align-items:center;padding-top:2.08em;padding-bottom:2.08em;">
       {[...logos, ...logos].map(logo => (
@@ -41,3 +41,18 @@ const logos = [
     animation-play-state: paused;
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to('.logo-marquee-track', {
+      xPercent: 10,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.logo-strip-sec',
+        scrub: 0.8,
+      },
+    });
+  });
+</script>

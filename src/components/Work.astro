@@ -71,16 +71,20 @@ const listItems = [
         </div>
       </div>
 
-      <!-- right: carousel (bleeds off right edge) -->
+      <!-- right: carousel (bleeds off right edge) — Splide slider1 -->
       <div class="work-carousel-col">
-        <div class="work-carousel">
-          {projects.map(proj => (
-            <div class="work-card">
-              <img src={proj.src} alt={proj.title} class="work-card-img" loading="lazy" />
-              <div class="work-card-overlay"></div>
-              <h5 class="work-card-title">{proj.title}</h5>
-            </div>
-          ))}
+        <div class="splide work-splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {projects.map(proj => (
+                <li class="splide__slide work-card">
+                  <img src={proj.src} alt={proj.title} class="work-card-img" loading="lazy" />
+                  <div class="work-card-overlay"></div>
+                  <h5 class="work-card-title">{proj.title}</h5>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -213,28 +217,36 @@ const listItems = [
 .work-carousel-col {
   clip-path: inset(-4rem -100vw -4rem 0);
   padding: 4em 0 0 3em;
+  overflow: visible;
 }
 
-.work-carousel {
-  display: flex;
-  gap: 1.5em;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding-bottom: 4em;
-}
-.work-carousel::-webkit-scrollbar { display: none; }
+/* Splide overrides */
+.work-splide { overflow: visible; }
+.work-splide .splide__track { overflow: visible; padding-bottom: 4em; }
+.work-splide .splide__list { overflow: visible; }
 
 .work-card {
-  flex: none;
   width: 23vw;
   height: 32.7rem;
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
-  scroll-snap-align: start;
 }
+
+/* Splide arrows */
+.work-splide .splide__arrow {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 50%;
+  top: auto;
+  bottom: 0.5em;
+  transform: none;
+}
+.work-splide .splide__arrow--prev { left: 0; }
+.work-splide .splide__arrow--next { left: 3.5em; }
+.work-splide .splide__arrow svg { fill: var(--font-light); width: 1em; height: 1em; }
 
 .work-card-img {
   width: 100%;
@@ -286,6 +298,8 @@ const listItems = [
     padding: 2em 0 0;
     overflow: hidden;
   }
+  .work-splide { overflow: hidden !important; }
+  .work-splide .splide__track { overflow: hidden !important; }
   .work-card { width: 70vw; height: 22rem; }
 }
 
@@ -296,3 +310,28 @@ const listItems = [
   .work-art-left { height: 13.6em; left: -7%; }
 }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.querySelector('.work-splide');
+    if (!el || typeof Splide === 'undefined') return;
+    new Splide(el, {
+      type: 'slide',
+      perMove: 1,
+      focus: 'left',
+      perPage: 2,
+      padding: { left: 0, right: '12.6667%' },
+      gap: '1.5em',
+      arrows: true,
+      pagination: false,
+      speed: 600,
+      trimSpace: false,
+      updateOnMove: true,
+      breakpoints: {
+        991: { perPage: 1, padding: { left: 0, right: 0 }, gap: '1em' },
+        767: { perPage: 1, padding: { left: 0, right: 0 }, gap: '1em' },
+        479: { perPage: 1, padding: { left: 0, right: 0 }, gap: '1em' },
+      },
+    }).mount();
+  });
+</script>

@@ -20,6 +20,12 @@ const {
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <!-- Splide carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide-core.min.css" />
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <!-- GSAP + ScrollTrigger -->
+    <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   </head>
   <body>
     <slot />
