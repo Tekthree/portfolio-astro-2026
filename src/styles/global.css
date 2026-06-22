@@ -22,6 +22,17 @@
   font-weight: 800;
 }
 
+/* Box sizing reset */
+*, ::before, ::after { box-sizing: border-box; }
+
+/* Button reset */
+button { background-color: unset; padding: unset; text-align: inherit; }
+button:not(:disabled) { cursor: pointer; }
+
+/* Media defaults */
+video { width: 100%; object-fit: cover; }
+svg { max-width: 100%; }
+
 :root {
   --ashy-black: #070419;
   --font-light: #c0b3cb;
@@ -33,32 +44,39 @@
   --midnight-blue: #09003f;
   --slate-blue: #6d62b4;
 
-  /* Responsive keyword variables (Lumos-inspired).
-     Default value (after comma) = large/desktop.
-     Variables flip at each breakpoint via @media below. */
+  /* Responsive keyword variables — Lumos container-query system.
+     Desktop defaults. @container rules below flip these at container widths.
+     Usage: display: var(--flex-medium, grid) → grid on desktop, flex on tablet */
   --flex-medium: grid;
   --column-medium: row;
   --row-medium: column;
+  --none-medium: block;
+  --unset-medium: unset;
+  --relative-medium: static;
 
   --flex-small: grid;
   --column-small: row;
   --row-small: column;
+  --none-small: block;
+  --unset-small: unset;
+
+  --flex-xsmall: grid;
+  --column-xsmall: row;
+  --row-xsmall: column;
+
+  /* Numeric toggles for calc() expressions */
+  --r-large: 1; --r-medium: 0; --r-small: 0; --r-xsmall: 0;
 }
 
-@media screen and (max-width: 991px) {
-  :root {
-    --flex-medium: flex;
-    --column-medium: column;
-    --row-medium: row;
-  }
+/* State / trigger variable system */
+[data-state]  { --_state---true: 1; --_state---false: 0; }
+.is-active    { --_state---true: 0; --_state---false: 1; }
+[data-trigger] { --_trigger---on: 1; --_trigger---off: 0; }
+@media (hover: hover) {
+  [data-trigger~="hover"]:hover { --_trigger---on: 0; --_trigger---off: 1; }
 }
-
-@media screen and (max-width: 767px) {
-  :root {
-    --flex-small: flex;
-    --column-small: column;
-    --row-small: row;
-  }
+@media (hover: none) {
+  [data-trigger~="mobile"] { --_trigger---on: 0; --_trigger---off: 1; }
 }
 
 html, body {
@@ -67,10 +85,50 @@ html, body {
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* body is the Lumos root container — explicit 100% width prevents inline-size contain shrinkage.
+   @container queries below cascade responsive variables to all descendants. */
+body { container-type: inline-size; width: 100%; }
 
 @media screen and (max-width: 991px) {
   html, body { font-size: 14px; }
+}
+
+main { width: 100%; }
+
+@container (width < 992px) {
+  * {
+    --r-large: 0; --r-medium: 1;
+    --flex-medium: flex;
+    --column-medium: column;
+    --row-medium: row;
+    --none-medium: none;
+    --unset-medium: unset;
+    --relative-medium: relative;
+  }
+}
+
+@container (width < 768px) {
+  * {
+    --r-medium: 0; --r-small: 1;
+    --flex-small: flex;
+    --column-small: column;
+    --row-small: row;
+    --none-small: none;
+    --unset-small: unset;
+  }
+}
+
+@container (width < 480px) {
+  * {
+    --r-small: 0; --r-xsmall: 1;
+    --flex-xsmall: flex;
+    --column-xsmall: column;
+    --row-xsmall: row;
+  }
 }
 
 /* noise grain overlay — fixed on top of everything */

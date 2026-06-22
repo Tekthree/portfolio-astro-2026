@@ -122,7 +122,7 @@ const stream = [
 .contact-heading {
   font-family: Mortend, sans-serif;
   font-weight: 800;
-  font-size: 2.9em;
+  font-size: clamp(1.5rem, 2.1vw + 1rem, 2.9rem);
   line-height: 1;
   color: rgba(12,4,44,0.84);
   text-transform: uppercase;
@@ -256,7 +256,6 @@ details[open] .faq-arrow { transform: rotate(180deg); }
 @media screen and (max-width: 767px) {
   .contact-sec { padding: 4em 0 3em; }
   .contact-container { padding: 0 5vw; }
-  .contact-heading { font-size: 2.9em; }
   .contact-photo { max-height: 20em; }
   .stream-img { width: 6.5rem; height: 6.5rem; }
   .stream-label { font-size: 1.2em; max-width: 14ch; }
@@ -265,7 +264,6 @@ details[open] .faq-arrow { transform: rotate(180deg); }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .contact-heading { font-size: 2.1em; }
   .stream-img { width: 5rem; height: 5rem; }
   .stream-label { font-size: 1em; }
   .stream-footer { flex-direction: column; align-items: flex-start; gap: 1em; }

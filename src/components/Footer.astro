@@ -79,7 +79,7 @@
 .footer-title {
   font-family: Mortend, sans-serif;
   font-weight: 800;
-  font-size: 5.2em;
+  font-size: clamp(2.4rem, 4.3vw + 1.4rem, 5.2rem);
   line-height: 1.2;
   color: var(--font-light);
   text-transform: uppercase;
@@ -170,7 +170,6 @@
 /* Tablet — pill sizes auto-shrink from global font-size:14px */
 @media screen and (max-width: 991px) {
   .footer-container { padding: 6em 6vw 0; }
-  .footer-title { font-size: 3.9em; }
   .footer-meta-divider { display: block; }
   .footer-meta { flex-wrap: wrap; }
   .footer-meta-left { width: 100%; }
@@ -180,7 +179,6 @@
 /* Mobile */
 @media screen and (max-width: 767px) {
   .footer-container { padding: 4em 5vw 0; }
-  .footer-title { font-size: 2.9em; }
   .footer-head  { margin-bottom: 3em; }
   .footer-pills { flex-direction: column; gap: 1em; align-items: flex-start; }
   .footer-pill  { white-space: normal; }
@@ -191,7 +189,6 @@
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .footer-title { font-size: 2.7em; }
   .footer-pills { margin-top: 4.14em; }
   .footer-pill  { font-size: 1.5em; padding-left: 1em; padding-right: 1em; }
 }
