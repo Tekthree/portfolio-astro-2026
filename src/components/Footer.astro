@@ -131,7 +131,7 @@
 .footer-meta-right { flex: 1; }
 
 .footer-meta-label {
-  color: #5a337a;
+  color: var(--label-plum);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-size: 1.1em;
@@ -180,10 +180,10 @@
 @media screen and (max-width: 767px) {
   .footer-container { padding: 4em 5vw 0; }
   .footer-head  { margin-bottom: 3em; }
-  .footer-pills { flex-direction: column; gap: 1em; align-items: flex-start; }
+  .footer-pills { flex-direction: var(--column-small, row); gap: 1em; align-items: flex-start; }
   .footer-pill  { white-space: normal; }
-  .footer-meta  { flex-direction: column; gap: 2em; margin-top: 3em; margin-bottom: 4em; }
-  .footer-meta-left { flex-direction: column; gap: 1.5em; }
+  .footer-meta  { flex-direction: var(--column-small, row); gap: 2em; margin-top: 3em; margin-bottom: 4em; }
+  .footer-meta-left { flex-direction: var(--column-small, row); gap: 1.5em; }
   .footer-arrow { font-size: 2em; }
 }
 

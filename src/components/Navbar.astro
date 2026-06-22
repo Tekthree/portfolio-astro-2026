@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to bottom, rgba(7,4,25,0.85) 0%, transparent 100%);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--ashy-black) 85%, transparent) 0%, transparent 100%);
 }
 
 .nav-brand {
@@ -65,7 +65,7 @@
 
 .nav-wordmark {
   font-family: Mortend, sans-serif;
-  font-size: 1.1em;
+  font-size: clamp(1.1rem, 0.3vw + 1rem, 1.5rem);
   font-weight: 800;
   color: var(--font-light);
   line-height: 1;
@@ -80,7 +80,7 @@
   padding: 0.5em;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.3rem;
 }
 
 .hamburger-line {
@@ -95,7 +95,7 @@
   position: fixed;
   inset: 0;
   z-index: 998;
-  background: rgba(7,4,25,0.97);
+  background: color-mix(in srgb, var(--ashy-black) 97%, transparent);
   display: none;
   flex-direction: column;
   align-items: center;
@@ -128,18 +128,16 @@
 @media screen and (max-width: 991px) {
   .nav { padding: 2.4em 6vw; }
   .nav-logo-icon { height: 3.3em; }
-  .nav-wordmark  { font-size: 1.5em; }
 }
 
 @media screen and (max-width: 767px) {
   .nav { padding: 2.9em 6vw; }
   .nav-logo-icon { height: 2.8em; }
-  .nav-wordmark  { font-size: 1.3em; }
 }
 
 @media screen and (max-width: 479px) {
   .nav { padding: 2.2em 2.1em; }
   .nav-logo-icon { height: 2.5em; }
-  .nav-wordmark  { font-size: 1.2em; margin-left: 8px; }
+  .nav-wordmark  { margin-left: 8px; }
 }
 </style>

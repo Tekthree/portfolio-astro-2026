@@ -44,6 +44,13 @@ svg { max-width: 100%; }
   --midnight-blue: #09003f;
   --slate-blue: #6d62b4;
 
+  /* Section / component color tokens */
+  --bg-contact: #d9cfe0;
+  --bg-stats: #c7bbd0;
+  --stat-divider-color: #baaac8;
+  --faq-border: #9c8aaf;
+  --label-plum: #5a337a;
+
   /* Responsive keyword variables — Lumos container-query system.
      Desktop defaults. @container rules below flip these at container widths.
      Usage: display: var(--flex-medium, grid) → grid on desktop, flex on tablet */
@@ -71,9 +78,9 @@ svg { max-width: 100%; }
 /* State / trigger variable system */
 [data-state]  { --_state---true: 1; --_state---false: 0; }
 .is-active    { --_state---true: 0; --_state---false: 1; }
-[data-trigger] { --_trigger---on: 1; --_trigger---off: 0; }
+[data-trigger] { --_trigger---on: 0; --_trigger---off: 1; }
 @media (hover: hover) {
-  [data-trigger~="hover"]:hover { --_trigger---on: 0; --_trigger---off: 1; }
+  [data-trigger~="hover"]:hover { --_trigger---on: 1; --_trigger---off: 0; }
 }
 @media (hover: none) {
   [data-trigger~="mobile"] { --_trigger---on: 0; --_trigger---off: 1; }

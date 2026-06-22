@@ -77,7 +77,6 @@
 .about-sec {
   background-color: var(--font-light);
   padding: 7.7em 0 10.6em;
-  min-height: 52.08em;
   position: relative;
 }
 
@@ -215,7 +214,7 @@
 
 /* stats bar */
 .about-stats {
-  background-color: #c7bbd0;
+  background-color: var(--bg-stats);
   border-radius: 1rem;
   display: flex;
   justify-content: center;
@@ -227,7 +226,7 @@
   display: flex;
   justify-content: space-between;
   border-radius: 0.5em;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .stat-icon {
@@ -252,7 +251,7 @@
 .stat-num {
   font-family: Mortend, sans-serif;
   font-weight: 800;
-  font-size: 3.4em;
+  font-size: clamp(2rem, 3vw + 0.5rem, 3.4rem);
   color: var(--background-blue);
   opacity: 0.74;
   margin: 0;
@@ -277,7 +276,7 @@
 
 .stat-divider {
   flex: 0 auto;
-  background-color: #baaac8;
+  background-color: var(--stat-divider-color);
   width: 4px;
   height: 10.1em;
   margin-left: 2.76em;
@@ -312,14 +311,12 @@
 
   /* stats: allow horizontal scroll */
   .about-stats   { overflow-x: auto; justify-content: flex-start; padding: 0 1em; }
-  .stat-logo     { width: 10vw; height: 10vw; }
-  .stat-num      { font-size: 2.6em; }
+  .stat-logo     { width: clamp(2rem, 10vw, 4rem); height: clamp(2rem, 10vw, 4rem); }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
   .about-photo   { height: 18em; }
-  .stat-num      { font-size: 2.2em; }
   .stat-divider  { margin-left: 1em; margin-right: 1em; }
   .about-art-right { display: none; }
 }
