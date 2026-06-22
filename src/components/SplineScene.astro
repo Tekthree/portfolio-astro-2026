@@ -1,30 +1,55 @@
 ---
 ---
-<section style="background-color:var(--background-blue);height:54.2rem;position:relative;overflow:hidden;">
-  <div style="
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 72%,rgba(0,0,0,0) 100%);
-    mask-image:linear-gradient(to bottom,#000 0%,#000 72%,rgba(0,0,0,0) 100%);
-    -webkit-mask-size:100% 100%;
-    mask-size:100% 100%;
-    -webkit-mask-repeat:no-repeat;
-    mask-repeat:no-repeat;
-  ">
+<section class="spline-sec">
+  <div class="spline-mask">
     <spline-viewer
       url="https://prod.spline.design/HnX4nUFdAucbN4E1/scene.splinecode"
-      style="
-        position:absolute;
-        top:0;
-        left:50%;
-        transform:translateX(-50%);
-        width:max(100%, 1600px);
-        height:100%;
-        display:block;
-      "
+      class="spline-viewer"
     ></spline-viewer>
   </div>
 </section>
 
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+
+<style>
+.spline-sec {
+  background-color: var(--background-blue);
+  height: 54.2rem;
+  position: relative;
+  overflow: clip;
+}
+
+.spline-mask {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0) 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.spline-viewer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1600px);
+  height: 100%;
+  display: block;
+}
+
+@media screen and (max-width: 991px) {
+  .spline-sec { height: 34rem; }
+}
+
+@media screen and (max-width: 767px) {
+  .spline-sec { height: 20rem; }
+}
+
+@media screen and (max-width: 479px) {
+  .spline-sec { height: 14rem; }
+}
+</style>

@@ -32,6 +32,33 @@
   --font-plum: #a58fb8;
   --midnight-blue: #09003f;
   --slate-blue: #6d62b4;
+
+  /* Responsive keyword variables (Lumos-inspired).
+     Default value (after comma) = large/desktop.
+     Variables flip at each breakpoint via @media below. */
+  --flex-medium: grid;
+  --column-medium: row;
+  --row-medium: column;
+
+  --flex-small: grid;
+  --column-small: row;
+  --row-small: column;
+}
+
+@media screen and (max-width: 991px) {
+  :root {
+    --flex-medium: flex;
+    --column-medium: column;
+    --row-medium: row;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --flex-small: flex;
+    --column-small: column;
+    --row-small: row;
+  }
 }
 
 html, body {

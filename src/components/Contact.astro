@@ -107,9 +107,10 @@ const stream = [
   padding: 0 6em;
 }
 
-/* FAQ + photo row — matches Webflow header1_component: 1fr 1fr grid, 5rem gap */
+/* FAQ + photo row — 2-col on desktop, 1-col on tablet/mobile */
 .contact-split {
-  display: grid;
+  display: var(--flex-medium, grid);
+  flex-direction: column;
   grid-template-columns: 1fr 1fr;
   column-gap: 5rem;
   row-gap: 4rem;
@@ -242,10 +243,10 @@ details[open] .faq-arrow { transform: rotate(180deg); }
   font-family: Poppins, sans-serif;
 }
 
-/* Tablet: stack photo below FAQ */
+/* Tablet: display switch handled by --flex-medium variable */
 @media screen and (max-width: 991px) {
   .contact-container { padding: 0 3vw; }
-  .contact-split { grid-template-columns: 1fr; row-gap: 2.5em; }
+  .contact-split { row-gap: 2.5em; }
   .contact-photo-wrap { align-self: auto; min-height: auto; }
   .contact-photo { height: auto; max-height: 30em; object-position: top; }
   .stream-img { width: 8rem; height: 8rem; }
@@ -256,6 +257,7 @@ details[open] .faq-arrow { transform: rotate(180deg); }
   .contact-sec { padding: 4em 0 3em; }
   .contact-container { padding: 0 5vw; }
   .contact-heading { font-size: 2.9em; }
+  .contact-photo { max-height: 20em; }
   .stream-img { width: 6.5rem; height: 6.5rem; }
   .stream-label { font-size: 1.2em; max-width: 14ch; }
   .stream-btn { padding: 0 30px; font-size: 1.8em; }
