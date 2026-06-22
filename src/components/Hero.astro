@@ -1,6 +1,9 @@
 ---
 ---
 <section class="hero-sec">
+  <!-- background gradient blobs -->
+  <img src="/assets/images/61ce81425d1eb23ec48640e7_Layer_1.avif" alt="" class="bg-gradient bg-gradient--left" aria-hidden="true" />
+  <img src="/assets/images/61ce81425d1eb23ec48640e7_Layer_1.avif" alt="" class="bg-gradient bg-gradient--right" aria-hidden="true" />
   <!-- right-art goes on LEFT, left-art goes on RIGHT (matches Webflow class names) -->
   <img src="/assets/images/62f6c3cffd7b99342f2f8896_right-art.avif" alt="" class="hero-side-img side-left" />
   <img src="/assets/images/62f6c3e27640277a801c55cc_left-art.avif" alt="" class="hero-side-img side-right" />
@@ -98,6 +101,23 @@
   height: 100%;
   position: absolute;
   inset: 13% 0% 0% 3%;
+}
+
+/* Background gradient blobs — match Webflow .background-gradient */
+.bg-gradient {
+  position: absolute;
+  z-index: 1;
+  opacity: 0.77;
+  filter: blur(20px);
+  pointer-events: none;
+}
+.bg-gradient--left {
+  width: 65%;
+  inset: -9% auto auto -46%;
+}
+.bg-gradient--right {
+  width: 70%;
+  inset: 7% -49% 0% auto;
 }
 
 /* Side art images — Webflow: side-img-left inset:26% auto 0% 0%; side-img-right inset:21% -1% 0% auto */
