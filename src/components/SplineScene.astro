@@ -13,7 +13,8 @@
 
 <style>
 .spline-sec {
-  background-color: var(--background-blue);
+  /* fade the section background into the footer's ashy-black so there's no hard seam */
+  background: linear-gradient(180deg, var(--background-blue) 0%, var(--background-blue) 40%, var(--ashy-black) 100%);
   height: 54.2rem;
   position: relative;
   overflow: clip;
