@@ -38,7 +38,9 @@
 .hero-container {
   max-width: 100em;
   margin: 0 auto;
-  padding: 13.6em 6em;
+  /* top padding accounts for the fixed nav (~9.3em) overlaying the hero,
+     so visible whitespace above the headline matches the space below the CTA */
+  padding: 22.9em 6em 13.6em;
   text-align: center;
   position: relative;
   z-index: 10;
@@ -146,7 +148,8 @@
 
 /* Tablet */
 @media screen and (max-width: 991px) {
-  .hero-container { padding: 10.4em 3vw 10.7em; }
+  /* nav is ~8.1em tall at this breakpoint; keep top/bottom whitespace matched */
+  .hero-container { padding: 18.8em 3vw 10.7em; }
   .side-left  { width: 9.1em; max-width: 11.9em; }
   .side-right { width: 9.9em; max-width: 10.1em; }
 }
