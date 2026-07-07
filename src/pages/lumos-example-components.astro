@@ -65,19 +65,26 @@ const SLIDER_2 = Array.from({ length: 5 }, () => ({ heading: 'Heading', text: LO
 // ---- Contact form select options ----
 const STATE_OPTIONS = ['Option 1', 'Option 2', 'Option 3'];
 
-// ---- 9-instance "Layout image-pairing variants" showcase (source: one section,
-// 9 back-to-back Layout instances cycling through opaque, undecodable variant
-// GUIDs). Reproduced as 9 real, varied text+image pairings instead — see report.
+// ---- 10-instance "Layout image-pairing variants" showcase (source: one
+// section, 10 back-to-back Layout component instances, each on a real named
+// Webflow variant: auto-width, columns, columns-reversed, breakout,
+// breakout-reversed, full, full-reversed, contain, contain-reversed, card.
+// Every variant reuses this page's existing split/hero/visual primitives
+// (ex_split, ex_hero_content, ex_visual, ex_visual_bg) with small modifier
+// classes layered on top for the variants whose source CSS visibly differs
+// (breakout's edge-bleeding image, contain's boxed card, full's stacked
+// full-bleed image, card's faded background-image overlay) — see report.
 const SHOWCASE = [
-  { reverse: false, ratio: 'is-split-6-6', eyebrow: true },
-  { reverse: true, ratio: 'is-split-6-6', eyebrow: false },
-  { reverse: false, ratio: 'is-split-8-4', eyebrow: true },
-  { reverse: true, ratio: 'is-split-8-4', eyebrow: false },
-  { reverse: false, ratio: 'is-split-5-7', eyebrow: false },
-  { reverse: true, ratio: 'is-split-5-7', eyebrow: true },
-  { reverse: false, ratio: 'is-split-6-6', eyebrow: false },
-  { reverse: true, ratio: 'is-split-6-6', eyebrow: true },
-  { reverse: false, ratio: 'is-split-8-4', eyebrow: false },
+  { variant: 'auto-width', family: 'auto-width' },
+  { variant: 'columns', family: 'split', modifier: '' },
+  { variant: 'columns-reversed', family: 'split', modifier: '', reverse: true },
+  { variant: 'breakout', family: 'split', modifier: 'is-breakout' },
+  { variant: 'breakout-reversed', family: 'split', modifier: 'is-breakout', reverse: true },
+  { variant: 'full', family: 'full' },
+  { variant: 'full-reversed', family: 'full', reverse: true },
+  { variant: 'contain', family: 'split', modifier: 'is-contain' },
+  { variant: 'contain-reversed', family: 'split', modifier: 'is-contain', reverse: true },
+  { variant: 'card', family: 'card' },
 ];
 ---
 <BaseLayout title="Lumos Example Components (Reference)">
@@ -617,7 +624,7 @@ const SHOWCASE = [
       </style>
 
       <!-- ============================== Modal demo ============================== -->
-      <dialog class="modal_wrap u-theme-light" id="modal-1">
+      <dialog class="modal_wrap u-theme-light" data-modal-id="modal-1" id="modal-1">
         <style>
           .modal_wrap {
             padding: 0;
@@ -640,6 +647,9 @@ const SHOWCASE = [
             top: var(--_spacing---space--4);
             right: var(--_spacing---space--4);
           }
+          .ex_text.is-full-width {
+            max-width: 100%;
+          }
         </style>
         <div class="modal_scroll">
           <div class="modal_close">
@@ -654,7 +664,7 @@ const SHOWCASE = [
             <h2 class="ex_title">Lorem ipsum dolor sit amet elit</h2>
           </div>
           <div class="u-text u-text-style-main">
-            <p class="ex_text" style="max-width: 100%;">{LOREM_LONG}</p>
+            <p class="ex_text is-full-width">{LOREM_LONG}</p>
           </div>
           <div class="u-button-wrapper">
             <div class="ex_btn_wrap">
@@ -666,7 +676,7 @@ const SHOWCASE = [
         </div>
         <script>
           document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('modal-1');
+            const modal = document.querySelector('[data-modal-id="modal-1"]');
             if (!modal || modal.dataset.scriptInitialized) return;
             modal.dataset.scriptInitialized = 'true';
             document.querySelectorAll('[data-modal-trigger="modal-1"]').forEach((trigger) => {
@@ -766,6 +776,7 @@ const SHOWCASE = [
             {TAB_GENERIC.map((tab, i) => (
               <div
                 aria-labelledby={`tab-generic-btn-${i}`}
+                data-panel-id={`tab-generic-panel-${i}`}
                 hidden={i !== 0}
                 id={`tab-generic-panel-${i}`}
                 role="tabpanel"
@@ -809,13 +820,13 @@ const SHOWCASE = [
                     b.classList.remove('is-active');
                     b.setAttribute('aria-selected', 'false');
                     b.setAttribute('data-state', '');
-                    const panel = document.getElementById(b.getAttribute('aria-controls'));
+                    const panel = tabs.querySelector('[data-panel-id="' + b.getAttribute('aria-controls') + '"]');
                     if (panel) panel.hidden = true;
                   });
                   btn.classList.add('is-active');
                   btn.setAttribute('aria-selected', 'true');
                   btn.removeAttribute('data-state');
-                  const activePanel = document.getElementById(btn.getAttribute('aria-controls'));
+                  const activePanel = tabs.querySelector('[data-panel-id="' + btn.getAttribute('aria-controls') + '"]');
                   if (activePanel) activePanel.hidden = false;
                 });
               });
@@ -826,9 +837,14 @@ const SHOWCASE = [
 
       <!-- ============================== 3. Tabs — labeled "Services" ============================== -->
       <section class="u-section">
+        <style>
+          .ex_content_spaced {
+            margin-bottom: var(--_spacing---space--5);
+          }
+        </style>
         <div class="u-container">
           <div class="ex_tabs_wrap" data-tabs="">
-            <div class="u-margin-trim" style="margin-bottom: var(--_spacing---space--5);">
+            <div class="u-margin-trim ex_content_spaced">
               <div class="u-heading u-text-style-h2">
                 <h2 class="ex_title">Services</h2>
               </div>
@@ -854,6 +870,7 @@ const SHOWCASE = [
             {TAB_SERVICES.map((label, i) => (
               <div
                 aria-labelledby={`tab-services-btn-${i}`}
+                data-panel-id={`tab-services-panel-${i}`}
                 hidden={i !== 0}
                 id={`tab-services-panel-${i}`}
                 role="tabpanel"
@@ -893,13 +910,13 @@ const SHOWCASE = [
                     b.classList.remove('is-active');
                     b.setAttribute('aria-selected', 'false');
                     b.setAttribute('data-state', '');
-                    const panel = document.getElementById(b.getAttribute('aria-controls'));
+                    const panel = tabs.querySelector('[data-panel-id="' + b.getAttribute('aria-controls') + '"]');
                     if (panel) panel.hidden = true;
                   });
                   btn.classList.add('is-active');
                   btn.setAttribute('aria-selected', 'true');
                   btn.removeAttribute('data-state');
-                  const activePanel = document.getElementById(btn.getAttribute('aria-controls'));
+                  const activePanel = tabs.querySelector('[data-panel-id="' + btn.getAttribute('aria-controls') + '"]');
                   if (activePanel) activePanel.hidden = false;
                 });
               });
@@ -909,68 +926,50 @@ const SHOWCASE = [
       </section>
 
       <!-- ============================== 4/5. Text + Slider ============================== -->
-      <style>
-        .ex_slider_wrap {
-          display: var(--flex-medium, grid);
-          flex-direction: column;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: var(--site--gutter);
-          align-items: center;
-        }
-        .ex_slider_track {
-          display: flex;
-          gap: var(--_spacing---space--4);
-          overflow-x: auto;
-          padding-bottom: var(--_spacing---space--2);
-          -webkit-mask-image: linear-gradient(to right, transparent, black 2% 96%, transparent);
-          mask-image: linear-gradient(to right, transparent, black 2% 96%, transparent);
-        }
-        .card_primary_wrap {
-          flex-shrink: 0;
-          width: min(16rem, 80vw);
-          display: flex;
-        }
-        .card_primary_element {
-          width: 100%;
-          padding: var(--_spacing---space--5);
-          border: var(--border-width--main) solid var(--_theme---border);
-          border-radius: var(--radius--main);
-          background-color: var(--_theme---background-2);
-          display: flex;
-          flex-direction: column;
-          gap: var(--_spacing---space--4);
-        }
-        .card_primary_visual {
-          aspect-ratio: 16 / 9;
-        }
-        .card_primary_header {
-          display: flex;
-          flex-direction: column;
-          gap: var(--_spacing---space--2);
-        }
-        .card_primary_title {
-          margin-bottom: 0;
-        }
-        .ex_slider_controls {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: var(--_spacing---space--3);
-          margin-top: var(--_spacing---space--4);
-        }
-        .ex_slider_bullets {
-          display: flex;
-          gap: var(--_spacing---space--1);
-        }
-        .ex_slider_bullet {
-          width: 0.5rem;
-          aspect-ratio: 1;
-          border-radius: var(--radius--round);
-          border: var(--border-width--main) solid var(--_theme---border);
-          padding: 0;
-        }
-      </style>
       <section class="u-section">
+        <style>
+          .ex_slider_wrap {
+            display: var(--flex-medium, grid);
+            flex-direction: column;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--site--gutter);
+            align-items: center;
+          }
+          .ex_slider_track {
+            display: flex;
+            gap: var(--_spacing---space--4);
+            overflow-x: auto;
+            padding-bottom: var(--_spacing---space--2);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 2% 96%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 2% 96%, transparent);
+          }
+          .card_primary_wrap {
+            flex-shrink: 0;
+            width: min(16rem, 80vw);
+            display: flex;
+          }
+          .card_primary_element {
+            width: 100%;
+            padding: var(--_spacing---space--5);
+            border: var(--border-width--main) solid var(--_theme---border);
+            border-radius: var(--radius--main);
+            background-color: var(--_theme---background-2);
+            display: flex;
+            flex-direction: column;
+            gap: var(--_spacing---space--4);
+          }
+          .card_primary_visual {
+            aspect-ratio: 16 / 9;
+          }
+          .card_primary_header {
+            display: flex;
+            flex-direction: column;
+            gap: var(--_spacing---space--2);
+          }
+          .card_primary_title {
+            margin-bottom: 0;
+          }
+        </style>
         <div class="u-container">
           <div class="ex_slider_wrap">
             <div class="u-margin-trim">
@@ -1016,6 +1015,67 @@ const SHOWCASE = [
       </section>
 
       <section class="u-section">
+        <style>
+          .ex_slider_wrap {
+            display: var(--flex-medium, grid);
+            flex-direction: column;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--site--gutter);
+            align-items: center;
+          }
+          .ex_slider_track {
+            display: flex;
+            gap: var(--_spacing---space--4);
+            overflow-x: auto;
+            padding-bottom: var(--_spacing---space--2);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 2% 96%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 2% 96%, transparent);
+          }
+          .card_primary_wrap {
+            flex-shrink: 0;
+            width: min(16rem, 80vw);
+            display: flex;
+          }
+          .card_primary_element {
+            width: 100%;
+            padding: var(--_spacing---space--5);
+            border: var(--border-width--main) solid var(--_theme---border);
+            border-radius: var(--radius--main);
+            background-color: var(--_theme---background-2);
+            display: flex;
+            flex-direction: column;
+            gap: var(--_spacing---space--4);
+          }
+          .card_primary_visual {
+            aspect-ratio: 16 / 9;
+          }
+          .card_primary_header {
+            display: flex;
+            flex-direction: column;
+            gap: var(--_spacing---space--2);
+          }
+          .card_primary_title {
+            margin-bottom: 0;
+          }
+          .ex_slider_controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--_spacing---space--3);
+            margin-top: var(--_spacing---space--4);
+          }
+          .ex_slider_bullets {
+            display: flex;
+            gap: var(--_spacing---space--1);
+          }
+          .ex_slider_bullet {
+            width: 0.5rem;
+            aspect-ratio: 1;
+            border-radius: var(--radius--round);
+            border: var(--border-width--main) solid var(--_theme---border);
+            padding: 0;
+          }
+        </style>
         <div class="u-container">
           <div class="ex_slider_wrap">
             <div class="u-margin-trim">
@@ -1260,7 +1320,7 @@ const SHOWCASE = [
                         </svg>
                       </button>
                     </h3>
-                    <div aria-labelledby={`accordion-btn-${i}`} class="accordion_content_wrap" hidden id={`accordion-panel-${i}`}>
+                    <div aria-labelledby={`accordion-btn-${i}`} class="accordion_content_wrap" data-panel-id={`accordion-panel-${i}`} hidden id={`accordion-panel-${i}`}>
                       <p class="u-text-style-main">{LOREM_LONG}</p>
                     </div>
                   </div>
@@ -1277,7 +1337,7 @@ const SHOWCASE = [
               accordion.querySelectorAll('.accordion_toggle_button').forEach((btn) => {
                 btn.addEventListener('click', () => {
                   const open = btn.getAttribute('aria-expanded') === 'true';
-                  const panel = document.getElementById(btn.getAttribute('aria-controls'));
+                  const panel = accordion.querySelector('[data-panel-id="' + btn.getAttribute('aria-controls') + '"]');
                   btn.setAttribute('aria-expanded', String(!open));
                   btn.classList.toggle('is-active', !open);
                   if (open) btn.setAttribute('data-state', '');
@@ -1291,13 +1351,13 @@ const SHOWCASE = [
       </section>
 
       <!-- ============================== 8/9. Image-background hero ============================== -->
-      <style>
-        .ex_bg_hero_wrap {
-          position: relative;
-          overflow: clip;
-        }
-      </style>
       <section class="ex_bg_hero_wrap u-section u-theme-dark">
+        <style>
+          .ex_bg_hero_wrap {
+            position: relative;
+            overflow: clip;
+          }
+        </style>
         <div class="ex_visual_bg">
           <div class="ex_visual"></div>
           <div class="ex_visual_overlay"></div>
@@ -1327,6 +1387,12 @@ const SHOWCASE = [
       </section>
 
       <section class="ex_bg_hero_wrap u-section u-theme-dark">
+        <style>
+          .ex_bg_hero_wrap {
+            position: relative;
+            overflow: clip;
+          }
+        </style>
         <div class="ex_visual_bg">
           <div class="ex_visual"></div>
           <div class="ex_visual_overlay"></div>
@@ -1363,6 +1429,9 @@ const SHOWCASE = [
             flex-direction: column;
             gap: var(--_spacing---space--8);
           }
+          .ex_text.is-43ch {
+            max-width: 43ch;
+          }
         </style>
         <div class="u-container">
           <div class="ex_split_stack">
@@ -1374,7 +1443,7 @@ const SHOWCASE = [
               </div>
               <div class="ex_split_col2 u-margin-trim">
                 <div class="u-text u-text-style-main">
-                  <p class="ex_text" style="max-width: 43ch;">{LOREM_MED}</p>
+                  <p class="ex_text is-43ch">{LOREM_MED}</p>
                 </div>
                 <div class="u-button-wrapper">
                   <div class="ex_btn_wrap">
@@ -1392,29 +1461,23 @@ const SHOWCASE = [
       </section>
 
       <!-- ============================== 11/12/13. Text + Card Grid ============================== -->
-      <style>
-        .ex_grid {
-          display: var(--flex-medium, grid);
-          flex-direction: column;
-          gap: var(--site--gutter);
-        }
-        .ex_grid.is-cols-3-2-1 {
-          grid-template-columns: repeat(calc(var(--_responsive---large) * 3 + var(--_responsive---medium) * 2 + var(--_responsive---small) * 1 + var(--_responsive---xsmall) * 1), minmax(0, 1fr));
-        }
-        .ex_grid.is-cols-3-1-1 {
-          grid-template-columns: repeat(calc(var(--_responsive---large) * 3 + var(--_responsive---medium) * 1 + var(--_responsive---small) * 1 + var(--_responsive---xsmall) * 1), minmax(0, 1fr));
-        }
-        .ex_grid.is-cols-4-2-1 {
-          grid-template-columns: repeat(calc(var(--_responsive---large) * 4 + var(--_responsive---medium) * 2 + var(--_responsive---small) * 1 + var(--_responsive---xsmall) * 1), minmax(0, 1fr));
-        }
-        .ex_grid .card_primary_wrap {
-          width: 100%;
-        }
-        .ex_grid .card_primary_element {
-          height: 100%;
-        }
-      </style>
       <section class="u-section">
+        <style>
+          .ex_grid {
+            display: var(--flex-medium, grid);
+            flex-direction: column;
+            gap: var(--site--gutter);
+          }
+          .ex_grid.is-cols-3-2-1 {
+            grid-template-columns: repeat(calc(var(--_responsive---large) * 3 + var(--_responsive---medium) * 2 + var(--_responsive---small) * 1 + var(--_responsive---xsmall) * 1), minmax(0, 1fr));
+          }
+          .ex_grid .card_primary_wrap {
+            width: 100%;
+          }
+          .ex_grid .card_primary_element {
+            height: 100%;
+          }
+        </style>
         <div class="u-container">
           <div class="ex_split is-split-5-7 is-top">
             <div class="ex_split_col1 u-margin-trim">
@@ -1458,6 +1521,22 @@ const SHOWCASE = [
       </section>
 
       <section class="u-section">
+        <style>
+          .ex_grid {
+            display: var(--flex-medium, grid);
+            flex-direction: column;
+            gap: var(--site--gutter);
+          }
+          .ex_grid.is-cols-3-1-1 {
+            grid-template-columns: repeat(calc(var(--_responsive---large) * 3 + var(--_responsive---medium) * 1 + var(--_responsive---small) * 1 + var(--_responsive---xsmall) * 1), minmax(0, 1fr));
+          }
+          .ex_grid .card_primary_wrap {
+            width: 100%;
+          }
+          .ex_grid .card_primary_element {
+            height: 100%;
+          }
+        </style>
         <div class="u-container">
           <div class="ex_split is-split-5-7 is-top">
             <div class="ex_split_col1 u-margin-trim">
@@ -1497,6 +1576,22 @@ const SHOWCASE = [
       </section>
 
       <section class="u-section">
+        <style>
+          .ex_grid {
+            display: var(--flex-medium, grid);
+            flex-direction: column;
+            gap: var(--site--gutter);
+          }
+          .ex_grid.is-cols-4-2-1 {
+            grid-template-columns: repeat(calc(var(--_responsive---large) * 4 + var(--_responsive---medium) * 2 + var(--_responsive---small) * 1 + var(--_responsive---xsmall) * 1), minmax(0, 1fr));
+          }
+          .ex_grid .card_primary_wrap {
+            width: 100%;
+          }
+          .ex_grid .card_primary_element {
+            height: 100%;
+          }
+        </style>
         <div class="u-container">
           <div class="ex_split is-split-5-7 is-top">
             <div class="ex_split_col1 u-margin-trim">
@@ -1547,38 +1642,176 @@ const SHOWCASE = [
             flex-direction: column;
             gap: var(--_spacing---section-space--small);
           }
+
+          /* auto-width — content-sized columns, buttons stand in for col2 */
+          .ex_split.is-auto-width {
+            grid-template-columns: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+          }
+          .ex_split.is-auto-width .ex_split_col1,
+          .ex_split.is-auto-width .ex_split_col2 {
+            width: auto;
+          }
+
+          /* breakout / breakout-reversed — image bleeds past the container edge */
+          .ex_split.is-breakout .ex_split_col2 {
+            border-radius: 0;
+            overflow: clip;
+          }
+          .ex_split.is-breakout:not(.is-reverse) .ex_split_col2 {
+            margin-right: calc(-1 * var(--site--margin));
+            border-top-left-radius: var(--radius--main);
+            border-bottom-left-radius: var(--radius--main);
+          }
+          .ex_split.is-breakout.is-reverse .ex_split_col2 {
+            margin-left: calc(-1 * var(--site--margin));
+            border-top-right-radius: var(--radius--main);
+            border-bottom-right-radius: var(--radius--main);
+          }
+
+          /* contain / contain-reversed — whole row becomes one boxed card */
+          .ex_split.is-contain {
+            gap: 0;
+            border-radius: var(--radius--main);
+            background-color: var(--_theme---background-2);
+            overflow: clip;
+          }
+          .ex_split.is-contain .ex_split_col1 {
+            padding: var(--_spacing---space--6);
+          }
+          .ex_split.is-contain .ex_split_col2 {
+            border-radius: 0;
+            height: 100%;
+          }
+
+          /* full / full-reversed — stacked, full-bleed text + image */
+          .ex_showcase_full {
+            display: flex;
+            flex-direction: column;
+            gap: var(--_spacing---space--6);
+          }
+          .ex_showcase_full.is-reverse {
+            flex-direction: column-reverse;
+          }
+
+          /* card — theme-flipped card with a faded background image */
+          .ex_showcase_card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 26rem;
+            padding: var(--_spacing---space--6) var(--_spacing---space--5);
+            border-radius: var(--radius--main);
+            overflow: clip;
+          }
+          .ex_showcase_card_content {
+            position: relative;
+            max-width: 32rem;
+          }
         </style>
         <div class="u-container">
           <div class="ex_showcase_list">
-            {SHOWCASE.map((item) => (
-              <div class:list={['ex_split', item.ratio, { 'is-reverse': item.reverse }]}>
-                <div class="ex_split_col1 u-margin-trim">
-                  {item.eyebrow && (
-                    <div class="ex_eyebrow_wrap">
-                      <div class="ex_eyebrow_marker"></div>
-                      <div class="u-text-style-main">Eyebrow Text Here</div>
+            {SHOWCASE.map((item) => {
+              if (item.family === 'auto-width') {
+                return (
+                  <div class="ex_split is-auto-width">
+                    <div class="ex_split_col1 u-margin-trim">
+                      <div class="u-heading u-text-style-h2">
+                        <h2 class="ex_title">Lorem ipsum dolor sit amet elit</h2>
+                      </div>
+                      <div class="u-text u-text-style-main">
+                        <p class="ex_text">{LOREM_TINY}</p>
+                      </div>
                     </div>
-                  )}
-                  <div class="u-heading u-text-style-h2">
-                    <h2 class="ex_title">Lorem ipsum dolor sit amet elit</h2>
+                    <div class="ex_split_col2 u-button-wrapper">
+                      <div class="ex_btn_wrap">
+                        <a class="ex_btn" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                      </div>
+                      <div class="ex_btn_wrap">
+                        <a class="ex_btn is-secondary" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                      </div>
+                    </div>
                   </div>
-                  <div class="u-text u-text-style-main">
-                    <p class="ex_text">{LOREM_TINY}</p>
+                );
+              }
+
+              if (item.family === 'full') {
+                return (
+                  <div class:list={['ex_showcase_full', { 'is-reverse': item.reverse }]}>
+                    <div class="ex_hero_content u-margin-trim">
+                      <div class="ex_eyebrow_wrap">
+                        <div class="ex_eyebrow_marker"></div>
+                        <div class="u-text-style-main">Eyebrow Text Here</div>
+                      </div>
+                      <div class="u-heading u-text-style-h2 u-alignment-center">
+                        <h2 class="ex_title">Lorem ipsum dolor sit amet elit</h2>
+                      </div>
+                      <div class="u-text u-text-style-main u-alignment-center">
+                        <p class="ex_text">{LOREM_LONG}</p>
+                      </div>
+                    </div>
+                    <div class="ex_visual"></div>
                   </div>
-                  <div class="u-button-wrapper">
-                    <div class="ex_btn_wrap">
-                      <a class="ex_btn" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                );
+              }
+
+              if (item.family === 'card') {
+                return (
+                  <div class="ex_showcase_card u-theme-dark">
+                    <div class="ex_visual_bg">
+                      <div class="ex_visual"></div>
+                      <div class="ex_visual_overlay"></div>
                     </div>
-                    <div class="ex_btn_wrap">
-                      <a class="ex_btn is-secondary" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                    <div class="ex_showcase_card_content u-margin-trim">
+                      <div class="u-heading u-text-style-h2 u-alignment-center">
+                        <h2 class="ex_title">Lorem ipsum dolor sit amet elit</h2>
+                      </div>
+                      <div class="u-text u-text-style-main u-alignment-center">
+                        <p class="ex_text">{LOREM_LONG}</p>
+                      </div>
+                      <div class="u-button-wrapper u-alignment-center">
+                        <div class="ex_btn_wrap">
+                          <a class="ex_btn" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                        </div>
+                        <div class="ex_btn_wrap">
+                          <a class="ex_btn is-secondary" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                );
+              }
+
+              // family === 'split' — columns, breakout, contain (+ reversed)
+              return (
+                <div class:list={['ex_split', 'is-split-6-6', item.modifier, { 'is-reverse': item.reverse }]}>
+                  <div class="ex_split_col1 u-margin-trim">
+                    <div class="u-heading u-text-style-h2">
+                      <h2 class="ex_title">Lorem ipsum dolor sit amet elit</h2>
+                    </div>
+                    <div class="u-text u-text-style-main">
+                      <p class="ex_text">{LOREM_LONG}</p>
+                    </div>
+                    <div class="u-button-wrapper">
+                      <div class="ex_btn_wrap">
+                        <a class="ex_btn" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                      </div>
+                      <div class="ex_btn_wrap">
+                        <a class="ex_btn is-secondary" data-trigger="hover focus" href="#"><span class="ex_btn_text u-text-style-main">Button Text</span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ex_split_col2">
+                    <div class="ex_visual"></div>
                   </div>
                 </div>
-                <div class="ex_split_col2">
-                  <div class="ex_visual"></div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
