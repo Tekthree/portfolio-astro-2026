@@ -43,3 +43,111 @@
   --_spacing---section-space--large: clamp(5.5rem, ((5.5 - ((10 - 5.5) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((10 - 5.5) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 10rem);
   --_spacing---section-space--page-top: clamp(10rem, ((10 - ((14 - 10) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((14 - 10) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 14rem);
 }
+
+:root {
+  --_typography---font--primary-family: system-ui;
+  --_typography---font--primary-regular: 400;
+  --_typography---font--primary-medium: 500;
+  --_typography---font--primary-bold: 700;
+
+  --_typography---letter-spacing--tight: -0.03em;
+  --_typography---letter-spacing--normal: 0em;
+
+  --_typography---line-height--small: 1;
+  --_typography---line-height--medium: 1.1;
+  --_typography---line-height--large: 1.3;
+  --_typography---line-height--huge: 1.5;
+
+  --_typography---font-size--display: clamp(4rem, ((4 - ((7 - 4) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((7 - 4) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 7rem);
+  --_typography---font-size--h1: clamp(3rem, ((3 - ((5 - 3) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((5 - 3) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 5rem);
+  --_typography---font-size--h2: clamp(2.5rem, ((2.5 - ((4 - 2.5) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((4 - 2.5) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 4rem);
+  --_typography---font-size--h3: clamp(2.25rem, ((2.25 - ((3 - 2.25) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((3 - 2.25) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 3rem);
+  --_typography---font-size--h4: clamp(1.75rem, ((1.75 - ((2 - 1.75) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((2 - 1.75) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 2rem);
+  --_typography---font-size--h5: clamp(1.375rem, ((1.375 - ((1.5 - 1.375) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((1.5 - 1.375) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 1.5rem);
+  --_typography---font-size--h6: clamp(1rem, ((1 - ((1.125 - 1) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((1.125 - 1) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 1.125rem);
+  --_typography---font-size--text-large: clamp(1.125rem, ((1.125 - ((1.25 - 1.125) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((1.25 - 1.125) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 1.25rem);
+  --_typography---font-size--text-main: clamp(1rem, ((1 - ((1.125 - 1) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((1.125 - 1) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 1.125rem);
+  --_typography---font-size--text-small: clamp(0.875rem, ((0.875 - ((1 - 0.875) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((1 - 0.875) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 1rem);
+}
+
+:root {
+  /* Display */
+  --_text-style---display-font-size: var(--_typography---font-size--display);
+  --_text-style---display-line-height: var(--_typography---line-height--small);
+  --_text-style---display-letter-spacing: var(--_typography---letter-spacing--tight);
+  --_text-style---display-margin-bottom: var(--_spacing---space--7);
+  --_text-style---display-font-weight: var(--_typography---font--primary-bold);
+  --_text-style---display-text-wrap: balance;
+
+  /* H1 */
+  --_text-style---h1-font-size: var(--_typography---font-size--h1);
+  --_text-style---h1-line-height: var(--_typography---line-height--small);
+  --_text-style---h1-letter-spacing: var(--_typography---letter-spacing--tight);
+  --_text-style---h1-margin-bottom: var(--_spacing---space--7);
+  --_text-style---h1-font-weight: var(--_typography---font--primary-bold);
+  --_text-style---h1-text-wrap: balance;
+
+  /* H2 */
+  --_text-style---h2-font-size: var(--_typography---font-size--h2);
+  --_text-style---h2-line-height: var(--_typography---line-height--small);
+  --_text-style---h2-letter-spacing: var(--_typography---letter-spacing--tight);
+  --_text-style---h2-margin-bottom: var(--_spacing---space--7);
+  --_text-style---h2-font-weight: var(--_typography---font--primary-bold);
+  --_text-style---h2-text-wrap: balance;
+
+  /* H3 */
+  --_text-style---h3-font-size: var(--_typography---font-size--h3);
+  --_text-style---h3-line-height: var(--_typography---line-height--medium);
+  --_text-style---h3-letter-spacing: var(--_typography---letter-spacing--tight);
+  --_text-style---h3-margin-bottom: var(--_spacing---space--7);
+  --_text-style---h3-font-weight: var(--_typography---font--primary-bold);
+  --_text-style---h3-text-wrap: balance;
+
+  /* H4 */
+  --_text-style---h4-font-size: var(--_typography---font-size--h4);
+  --_text-style---h4-line-height: var(--_typography---line-height--medium);
+  --_text-style---h4-letter-spacing: var(--_typography---letter-spacing--normal);
+  --_text-style---h4-margin-bottom: var(--_spacing---space--7);
+  --_text-style---h4-font-weight: var(--_typography---font--primary-bold);
+  --_text-style---h4-text-wrap: balance;
+
+  /* H5 */
+  --_text-style---h5-font-size: var(--_typography---font-size--h5);
+  --_text-style---h5-line-height: var(--_typography---line-height--medium);
+  --_text-style---h5-letter-spacing: var(--_typography---letter-spacing--normal);
+  --_text-style---h5-margin-bottom: var(--_spacing---space--7);
+  --_text-style---h5-font-weight: var(--_typography---font--primary-bold);
+  --_text-style---h5-text-wrap: balance;
+
+  /* H6 */
+  --_text-style---h6-font-size: var(--_typography---font-size--h6);
+  --_text-style---h6-line-height: var(--_typography---line-height--medium);
+  --_text-style---h6-letter-spacing: var(--_typography---letter-spacing--normal);
+  --_text-style---h6-margin-bottom: var(--_spacing---space--7);
+  --_text-style---h6-font-weight: var(--_typography---font--primary-bold);
+  --_text-style---h6-text-wrap: balance;
+
+  /* Text Large */
+  --_text-style---large-font-size: var(--_typography---font-size--text-large);
+  --_text-style---large-line-height: var(--_typography---line-height--huge);
+  --_text-style---large-letter-spacing: var(--_typography---letter-spacing--normal);
+  --_text-style---large-margin-bottom: var(--_spacing---space--4);
+  --_text-style---large-font-weight: var(--_typography---font--primary-regular);
+  --_text-style---large-text-wrap: pretty;
+
+  /* Text Main (body default) */
+  --_text-style---main-font-size: var(--_typography---font-size--text-main);
+  --_text-style---main-line-height: var(--_typography---line-height--huge);
+  --_text-style---main-letter-spacing: var(--_typography---letter-spacing--normal);
+  --_text-style---main-margin-bottom: var(--_spacing---space--4);
+  --_text-style---main-font-weight: var(--_typography---font--primary-regular);
+  --_text-style---main-text-wrap: pretty;
+
+  /* Text Small */
+  --_text-style---small-font-size: var(--_typography---font-size--text-small);
+  --_text-style---small-line-height: var(--_typography---line-height--huge);
+  --_text-style---small-letter-spacing: var(--_typography---letter-spacing--normal);
+  --_text-style---small-margin-bottom: var(--_spacing---space--4);
+  --_text-style---small-font-weight: var(--_typography---font--primary-regular);
+  --_text-style---small-text-wrap: pretty;
+}
