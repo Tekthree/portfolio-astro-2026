@@ -150,4 +150,70 @@
   --_text-style---small-margin-bottom: var(--_spacing---space--4);
   --_text-style---small-font-weight: var(--_typography---font--primary-regular);
   --_text-style---small-text-wrap: pretty;
+
+  --swatch--transparent: transparent;
+  --swatch--light-100: white;
+  --swatch--light-200: #ebebeb;
+  --swatch--dark-800: #2f2b2d;
+  --swatch--dark-900: #1f1d1e;
+  --swatch--brand-500: #c6fb50;
+
+  --swatch--light-100-o20: color-mix(in srgb, var(--swatch--light-100) 20%, transparent);
+  --swatch--dark-900-o20: color-mix(in srgb, var(--swatch--dark-900) 20%, transparent);
+  --swatch--brand-100: color-mix(in srgb, var(--swatch--brand-500), white 80%);
+  --swatch--brand-200: color-mix(in srgb, var(--swatch--brand-500), white 60%);
+  --swatch--brand-300: color-mix(in srgb, var(--swatch--brand-500), white 40%);
+  --swatch--brand-400: color-mix(in srgb, var(--swatch--brand-500), white 20%);
+  --swatch--brand-600: color-mix(in srgb, var(--swatch--brand-500), black 20%);
+  --swatch--brand-700: color-mix(in srgb, var(--swatch--brand-500), black 40%);
+  --swatch--brand-800: color-mix(in srgb, var(--swatch--brand-500), black 60%);
+  --swatch--brand-900: color-mix(in srgb, var(--swatch--brand-500), black 80%);
+  --swatch--brand-text: var(--swatch--dark-900);
+  --swatch--brand-text-o20: color-mix(in srgb, var(--swatch--brand-text) 20%, transparent);
+}
+
+.u-theme-light {
+  --_theme---background: var(--swatch--light-200);
+  --_theme---background-2: var(--swatch--light-100);
+  --_theme---background-skeleton: color-mix(in lab, currentcolor 10%, transparent);
+  --_theme---text: var(--swatch--dark-900);
+  --_theme---heading-accent: var(--swatch--brand-600);
+  --_theme---border: var(--swatch--dark-900-o20);
+
+  --_theme---selection--background: var(--swatch--brand-300);
+  --_theme---selection--text: var(--swatch--brand-text);
+
+  --_theme---button-primary--background: var(--swatch--brand-500);
+  --_theme---button-primary--border: var(--_theme---button-primary--background);
+  --_theme---button-primary--text: var(--swatch--brand-text);
+  --_theme---button-primary--background-hover: var(--_theme---text);
+  --_theme---button-primary--border-hover: var(--_theme---button-primary--background-hover);
+  --_theme---button-primary--text-hover: var(--_theme---background);
+
+  --_theme---button-secondary--background: var(--swatch--transparent);
+  --_theme---button-secondary--border: var(--_theme---border);
+  --_theme---button-secondary--text: var(--_theme---text);
+  --_theme---button-secondary--background-hover: var(--_theme---text);
+  --_theme---button-secondary--border-hover: var(--_theme---button-secondary--background-hover);
+  --_theme---button-secondary--text-hover: var(--_theme---background);
+
+  --_theme---text-link--text: var(--_theme---text);
+  --_theme---text-link--border: var(--_theme---border);
+  --_theme---text-link--text-hover: var(--_theme---text-link--text);
+  --_theme---text-link--border-hover: var(--_theme---text);
+
+  --_theme---nav--background: var(--_theme---background-2);
+
+  background-color: var(--_theme---background);
+  color: var(--_theme---text);
+}
+
+body {
+  /* Default the whole document to light mode; sections override with
+     u-theme-dark / u-theme-brand as needed (not defined until a page
+     actually uses them — see Task 5). */
+}
+body.u-theme-light,
+:root {
+  color-scheme: light;
 }
