@@ -1110,7 +1110,7 @@ body.u-theme-light,
 }
 
 .u-margin-top-text {
-  margin-top: var(--_text-style---margin-top);
+  margin-top: var(--_text-style---main-margin-bottom);
 }
 
 .u-margin-top-1 {
@@ -1157,7 +1157,7 @@ body.u-theme-light,
 }
 
 .u-margin-bottom-text {
-  margin-bottom: var(--_text-style---margin-bottom);
+  margin-bottom: var(--_text-style---main-margin-bottom);
 }
 
 .u-margin-bottom-1 {
