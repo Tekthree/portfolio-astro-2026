@@ -125,7 +125,7 @@ const SHOWCASE = [
           fill: currentColor;
         }
         .nav_links_wrap {
-          display: var(--flex-medium, flex);
+          display: flex;
           flex-direction: row;
           align-items: center;
           gap: var(--_spacing---space--6);
@@ -133,7 +133,7 @@ const SHOWCASE = [
           justify-content: flex-end;
         }
         .nav_links_list {
-          display: var(--flex-medium, none);
+          display: flex;
           align-items: center;
           gap: var(--_spacing---space--5);
         }
@@ -170,8 +170,10 @@ const SHOWCASE = [
           background-color: var(--_theme---background-2);
           box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--_theme---text) 15%, transparent);
         }
-        .nav_dropdown_panel.is-mega {
+        .nav_dropdown_panel.is-mega:not([hidden]) {
           display: grid;
+          width: max-content;
+          max-width: calc(100vw - var(--site--margin) * 2);
           grid-template-columns: repeat(4, minmax(0, 10rem));
           gap: var(--_spacing---space--4);
         }
@@ -231,10 +233,10 @@ const SHOWCASE = [
           font-size: 1rem;
         }
         .nav_buttons_wrap {
-          display: var(--flex-medium, none);
+          display: flex;
         }
         .nav_toggle_wrap {
-          display: var(--none-medium, flex);
+          display: none;
           flex-direction: column;
           justify-content: center;
           align-items: center;
@@ -257,7 +259,7 @@ const SHOWCASE = [
           transition: transform 200ms ease;
         }
         .nav_mobile_panel {
-          display: var(--none-medium, block);
+          display: none;
           padding-top: var(--_spacing---space--4);
           padding-bottom: var(--_spacing---space--2);
           border-top: var(--border-width--main) solid var(--_theme---border);
@@ -280,6 +282,26 @@ const SHOWCASE = [
         }
         .nav_mobile_buttons {
           margin-top: var(--_spacing---space--4);
+        }
+        /* Desktop <-> mobile nav switch. None of the pre-built responsive
+           keyword variables (--flex-medium, --none-medium, etc.) express a
+           pure show/hide toggle in this direction — their "large" baseline
+           value is always the visible/typical one (grid, block, static),
+           never "none" — so a variable-driven fallback silently resolved to
+           the wrong side on both branches here. This is the one case in the
+           file where the skill's "@container only when variables can't
+           express the change" escape hatch applies. */
+        @container (width < 62em) {
+          .nav_links_list,
+          .nav_buttons_wrap {
+            display: none;
+          }
+          .nav_toggle_wrap {
+            display: flex;
+          }
+          .nav_mobile_panel:not([hidden]) {
+            display: block;
+          }
         }
       </style>
 
