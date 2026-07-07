@@ -89,11 +89,17 @@ const SHOWCASE = [
 ---
 <BaseLayout title="Lumos Example Components (Reference)">
   <div class="page_wrap u-theme-dark">
-    <a class="ex_skip_wrap" href="#main">Skip to main content</a>
-
     <!-- ============================== Nav ============================== -->
     <header class="nav_wrap">
       <style>
+        /* CSS custom properties for dropdown/menu animation durations */
+        .nav_wrap {
+          --nav--dropdown-open-duration: 400ms;
+          --nav--dropdown-close-duration: 400ms;
+          --nav--menu-open-duration: 400ms;
+          --nav--menu-close-duration: 400ms;
+        }
+
         .nav_wrap {
           position: sticky;
           top: 0;
@@ -102,28 +108,34 @@ const SHOWCASE = [
           color: var(--_theme---text);
           border-bottom: var(--border-width--main) solid var(--_theme---border);
         }
+
         .nav_contain {
           padding-top: var(--_spacing---space--3);
           padding-bottom: var(--_spacing---space--3);
         }
+
         .nav_layout {
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: var(--site--gutter);
         }
+
         .nav_logo_wrap {
           flex-shrink: 0;
           width: 6rem;
         }
+
         .nav_logo_svg {
           width: 100%;
           height: auto;
           display: block;
         }
+
         .nav_logo_path {
           fill: currentColor;
         }
+
         .nav_links_wrap {
           display: flex;
           flex-direction: row;
@@ -132,73 +144,115 @@ const SHOWCASE = [
           flex: 1;
           justify-content: flex-end;
         }
+
         .nav_links_list {
           display: flex;
           align-items: center;
           gap: var(--_spacing---space--5);
         }
+
         .nav_links_item_wrap {
           position: relative;
         }
+
         .nav_links_link {
           display: flex;
           align-items: center;
           gap: var(--_spacing---space--1);
           padding: var(--_spacing---space--2) 0;
         }
+
         .nav_links_arrow {
           width: 0.6rem;
           aspect-ratio: 1;
           flex-shrink: 0;
-          transform: rotate(calc(180deg * var(--_state---true)));
-          transition: transform 200ms ease;
+          transform: rotate(calc(-90deg + 180deg * var(--_state---true)));
+          transition: transform var(--nav--dropdown-close-duration) ease;
         }
+
         .nav_links_arrow_path {
           stroke: currentColor;
           stroke-width: 2;
           fill: none;
         }
+
+        /* Dropdown panel: initial state (collapsed) */
         .nav_dropdown_panel {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: 0fr;
           position: absolute;
           top: 100%;
           left: 0;
           margin-top: var(--_spacing---space--2);
           min-width: 12rem;
-          padding: var(--_spacing---space--3);
           border-radius: var(--radius--main);
           border: var(--border-width--main) solid var(--_theme---border);
           background-color: var(--_theme---background-2);
           box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--_theme---text) 15%, transparent);
+          transition: grid-template-rows var(--nav--dropdown-close-duration);
+          visibility: hidden;
+          opacity: 0;
+          overflow: hidden;
         }
-        .nav_dropdown_panel.is-mega:not([hidden]) {
-          display: grid;
+
+        /* Dropdown panel children need overflow: hidden for height transition */
+        .nav_dropdown_panel > * {
+          overflow: hidden;
+        }
+
+        /* Dropdown panel: open state (expanded via aria-expanded="true") */
+        .nav_links_link:has(~ .nav_dropdown_panel[aria-expanded="true"]) {
+          --nav--dropdown-close-duration: var(--nav--dropdown-open-duration);
+        }
+
+        .nav_dropdown_panel[aria-expanded="true"] {
+          grid-template-rows: 1fr;
+          visibility: visible;
+          opacity: 1;
+        }
+
+        /* Mega dropdown (4 columns for Work section) */
+        .nav_dropdown_panel.is-mega {
           width: max-content;
           max-width: calc(100vw - var(--site--margin) * 2);
           grid-template-columns: repeat(4, minmax(0, 10rem));
           gap: var(--_spacing---space--4);
+          padding: var(--_spacing---space--3);
         }
+
+        /* Regular dropdown padding */
+        .nav_dropdown_panel:not(.is-mega) {
+          padding: var(--_spacing---space--3);
+        }
+
         .nav_dropdown_list {
           display: flex;
           flex-direction: column;
           gap: var(--_spacing---space--1);
         }
+
         .nav_dropdown_link {
           display: block;
           padding: var(--_spacing---space--2);
           border-radius: var(--radius--small);
           color: color-mix(in hsl, var(--_theme---text-link--text) calc(100% * var(--_trigger---on)), var(--_theme---text-link--text-hover) calc(100% * var(--_trigger---off)));
         }
+
         .nav_actions_wrap {
           display: flex;
           align-items: center;
           gap: var(--_spacing---space--3);
         }
+
         .nav_locale_text {
           padding: var(--_spacing---space--2);
         }
+
         .nav_search_wrap {
           position: relative;
         }
+
         .nav_search_btn {
           width: 2.2rem;
           aspect-ratio: 1;
@@ -207,21 +261,25 @@ const SHOWCASE = [
           justify-content: center;
           border-radius: var(--radius--round);
         }
+
         .nav_search_icon {
           width: 1rem;
           aspect-ratio: 1;
         }
+
         .nav_search_icon_path {
           stroke: currentColor;
           stroke-width: 2;
           fill: none;
         }
+
         .nav_search_form {
           position: absolute;
           top: 100%;
           right: 0;
           margin-top: var(--_spacing---space--2);
         }
+
         .nav_search_field {
           width: 16rem;
           max-width: 70vw;
@@ -232,9 +290,11 @@ const SHOWCASE = [
           color: var(--_theme---text);
           font-size: 1rem;
         }
+
         .nav_buttons_wrap {
           display: flex;
         }
+
         .nav_toggle_wrap {
           display: none;
           flex-direction: column;
@@ -244,20 +304,49 @@ const SHOWCASE = [
           aspect-ratio: 1;
           flex-shrink: 0;
         }
+
         .nav_toggle_line {
           width: 100%;
           height: var(--border-width--main);
           background-color: currentColor;
         }
+
         .nav_toggle_line.is-1 {
           transform: translateY(calc(-0.3rem * var(--_state---false))) rotate(calc(45deg * var(--_state---true)));
           transition: transform 200ms ease;
         }
+
         .nav_toggle_line.is-2 {
           margin-top: 0.6rem;
           transform: translateY(calc(-0.6rem * var(--_state---true))) rotate(calc(-45deg * var(--_state---true)));
           transition: transform 200ms ease;
         }
+
+        /* Mobile dropdown panel: uses grid-template-rows animation */
+        .nav_mobile_dropdown_panel {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: 0fr;
+          padding: 0;
+          transition: grid-template-rows var(--nav--dropdown-close-duration);
+          visibility: hidden;
+          overflow: hidden;
+        }
+
+        .nav_mobile_dropdown_panel > * {
+          overflow: hidden;
+        }
+
+        .nav_mobile_link:has(~ .nav_mobile_dropdown_panel[aria-expanded="true"]) {
+          --nav--dropdown-close-duration: var(--nav--dropdown-open-duration);
+        }
+
+        .nav_mobile_dropdown_panel[aria-expanded="true"] {
+          grid-template-rows: 1fr;
+          padding: var(--_spacing---space--2) var(--_spacing---space--3) var(--_spacing---space--3);
+          visibility: visible;
+        }
+
         .nav_mobile_panel {
           display: none;
           padding-top: var(--_spacing---space--4);
@@ -265,11 +354,13 @@ const SHOWCASE = [
           border-top: var(--border-width--main) solid var(--_theme---border);
           margin-top: var(--_spacing---space--3);
         }
+
         .nav_mobile_list {
           display: flex;
           flex-direction: column;
           gap: var(--_spacing---space--1);
         }
+
         .nav_mobile_link {
           display: flex;
           align-items: center;
@@ -277,21 +368,32 @@ const SHOWCASE = [
           padding: var(--_spacing---space--3) var(--_spacing---space--1);
           border-bottom: var(--border-width--main) solid var(--_theme---border);
         }
-        .nav_mobile_dropdown_panel {
-          padding: var(--_spacing---space--2) var(--_spacing---space--3) var(--_spacing---space--3);
-        }
+
         .nav_mobile_buttons {
           margin-top: var(--_spacing---space--4);
         }
-        /* Desktop <-> mobile nav switch. None of the pre-built responsive
-           keyword variables (--flex-medium, --none-medium, etc.) express a
-           pure show/hide toggle in this direction — their "large" baseline
-           value is always the visible/typical one (grid, block, static),
-           never "none" — so a variable-driven fallback silently resolved to
-           the wrong side on both branches here. This is the one case in the
-           file where the skill's "@container only when variables can't
-           express the change" escape hatch applies. */
-        @container (width < 62em) {
+
+        .nav_skip_wrap {
+          position: absolute;
+          top: -3rem;
+          left: var(--site--margin);
+          z-index: 200;
+          padding: var(--_spacing---space--2) var(--_spacing---space--4);
+          background-color: var(--_theme---background);
+          color: var(--_theme---text);
+          border-radius: var(--radius--small);
+          border: var(--border-width--main) solid var(--_theme---border);
+          transition: top 150ms ease;
+        }
+
+        .nav_skip_wrap:focus {
+          top: var(--site--margin);
+        }
+
+        /* Desktop <-> mobile nav switch using 65em breakpoint (matching reference)
+           The @container escape hatch: responsive variables cannot express a pure
+           show/hide toggle in this direction, so we use @container here. */
+        @container (width < 65em) {
           .nav_links_list,
           .nav_buttons_wrap {
             display: none;
@@ -299,11 +401,13 @@ const SHOWCASE = [
           .nav_toggle_wrap {
             display: flex;
           }
-          .nav_mobile_panel:not([hidden]) {
+          .nav_mobile_panel[aria-expanded="true"] {
             display: block;
           }
         }
       </style>
+
+      <a class="nav_skip_wrap" href="#main">Skip to main content</a>
 
       <div class="nav_contain u-container">
         <div class="nav_layout">
@@ -321,11 +425,11 @@ const SHOWCASE = [
               <li class="nav_links_item_wrap">
                 <button aria-expanded="false" class="nav_links_link" data-nav-dropdown-toggle="services">
                   Services
-                  <svg class="nav_links_arrow" data-state="" viewBox="0 0 66 70">
+                  <svg class="nav_links_arrow" viewBox="0 0 66 70">
                     <path class="nav_links_arrow_path" d="M17 2L50 35 17 68"></path>
                   </svg>
                 </button>
-                <div class="nav_dropdown_panel" data-nav-dropdown-panel="services" hidden>
+                <div class="nav_dropdown_panel" data-nav-dropdown-panel="services" aria-expanded="false">
                   <ul class="nav_dropdown_list" role="list">
                     {NAV_SERVICES_LINKS.map((label) => (
                       <li>
@@ -338,11 +442,11 @@ const SHOWCASE = [
               <li class="nav_links_item_wrap">
                 <button aria-expanded="false" class="nav_links_link" data-nav-dropdown-toggle="work">
                   Work
-                  <svg class="nav_links_arrow" data-state="" viewBox="0 0 66 70">
+                  <svg class="nav_links_arrow" viewBox="0 0 66 70">
                     <path class="nav_links_arrow_path" d="M17 2L50 35 17 68"></path>
                   </svg>
                 </button>
-                <div class="nav_dropdown_panel is-mega" data-nav-dropdown-panel="work" hidden>
+                <div class="nav_dropdown_panel is-mega" data-nav-dropdown-panel="work" aria-expanded="false">
                   {NAV_WORK_COLUMNS.map(() => (
                     <ul class="nav_dropdown_list" role="list">
                       {NAV_SERVICES_LINKS.map((label) => (
@@ -370,7 +474,7 @@ const SHOWCASE = [
                     <path class="nav_search_icon_path" d="M280.6 280.6L388.6 388.6"></path>
                   </svg>
                 </button>
-                <form action="/search" class="nav_search_form" data-nav-search-form="" hidden>
+                <form action="/search" class="nav_search_form" data-nav-search-form="" aria-expanded="false">
                   <label>
                     <span class="u-sr-only">Search</span>
                     <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
@@ -398,7 +502,7 @@ const SHOWCASE = [
           </button>
         </div>
 
-        <div class="nav_mobile_panel" data-nav-mobile-panel="" hidden id="nav-mobile-panel">
+        <div class="nav_mobile_panel" data-nav-mobile-panel="" aria-expanded="false" id="nav-mobile-panel">
           <ul class="nav_mobile_list" role="list">
             <li>
               <button aria-expanded="false" class="nav_mobile_link" data-nav-dropdown-toggle="services-mobile">
@@ -407,7 +511,7 @@ const SHOWCASE = [
                   <path class="nav_links_arrow_path" d="M17 2L50 35 17 68"></path>
                 </svg>
               </button>
-              <div class="nav_mobile_dropdown_panel" data-nav-dropdown-panel="services-mobile" hidden>
+              <div class="nav_mobile_dropdown_panel" data-nav-dropdown-panel="services-mobile" aria-expanded="false">
                 <ul class="nav_dropdown_list" role="list">
                   {NAV_SERVICES_LINKS.map((label) => (
                     <li><a class="nav_dropdown_link" href="#">{label}</a></li>
@@ -446,20 +550,17 @@ const SHOWCASE = [
             toggle?.addEventListener('click', () => {
               const open = toggle.getAttribute('aria-expanded') === 'true';
               toggle.setAttribute('aria-expanded', String(!open));
-              toggle.classList.toggle('is-active', !open);
-              if (panel) panel.hidden = open;
+              if (panel) panel.setAttribute('aria-expanded', String(!open));
             });
 
             // Dropdown toggles (desktop + mobile)
             nav.querySelectorAll('[data-nav-dropdown-toggle]').forEach((btn) => {
               const id = btn.getAttribute('data-nav-dropdown-toggle');
               const dropdownPanel = nav.querySelector(`[data-nav-dropdown-panel="${id}"]`);
-              const arrow = btn.querySelector('.nav_links_arrow');
               btn.addEventListener('click', () => {
                 const open = btn.getAttribute('aria-expanded') === 'true';
                 btn.setAttribute('aria-expanded', String(!open));
-                if (dropdownPanel) dropdownPanel.hidden = open;
-                if (arrow) arrow.classList.toggle('is-active', !open);
+                if (dropdownPanel) dropdownPanel.setAttribute('aria-expanded', String(!open));
               });
             });
 
@@ -470,7 +571,7 @@ const SHOWCASE = [
               const open = searchToggle.getAttribute('aria-expanded') === 'true';
               searchToggle.setAttribute('aria-expanded', String(!open));
               if (searchForm) {
-                searchForm.hidden = open;
+                searchForm.setAttribute('aria-expanded', String(!open));
                 if (!open) searchForm.querySelector('input')?.focus();
               }
             });
@@ -483,20 +584,6 @@ const SHOWCASE = [
       <style>
         /* ---- Shared demo-page component classes (reused across every
            section below) ---- */
-        .ex_skip_wrap {
-          position: absolute;
-          top: -3rem;
-          left: var(--site--margin);
-          z-index: 200;
-          padding: var(--_spacing---space--2) var(--_spacing---space--4);
-          background-color: var(--_theme---background);
-          color: var(--_theme---text);
-          border-radius: var(--radius--small);
-          transition: top 150ms ease;
-        }
-        .ex_skip_wrap:focus {
-          top: var(--site--margin);
-        }
 
         .ex_eyebrow_wrap {
           display: flex;
