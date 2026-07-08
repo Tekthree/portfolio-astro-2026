@@ -50,6 +50,11 @@
 .hero-headline {
   font-family: var(--_typography---font--heading-family);
   font-weight: 800; /* Mortend only ships 400/800 — the token's generic bold (700) would mismatch the asset */
+  /* Custom clamp instead of the h1 token's font-size: this headline is hard-wrapped into
+     3 fixed phrases (not natural reflow), so the longest line ("DEVELOPER &") needs more
+     side margin at mid-narrow widths than the general-purpose h1 scale gives it — the h1
+     token's own min (3rem) left almost no breathing room around 600px viewport width. */
+  font-size: clamp(2.25rem, 1.46rem + 3.93vw, 5rem);
   overflow-wrap: break-word;
   text-align: center;
   color: var(--swatch--light-100);
@@ -158,10 +163,6 @@
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  /* h1 token's fluid minimum (3rem) still breaks "DEVELOPER"/"DESIGNER+" mid-word
-     at this width given the forced one-phrase-per-line layout below — sized down
-     to the nearest point that keeps both whole words on one line. */
-  .hero-headline { font-size: 2.1rem; }
   .side-left  { width: 6.8em; left: -7%; }
   .side-right { width: 6.9em; max-width: 8.2em; top: 78%; right: -10%; }
 }
