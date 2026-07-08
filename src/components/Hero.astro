@@ -58,7 +58,9 @@
   overflow-wrap: break-word;
   text-align: center;
   color: var(--swatch--light-100);
-  margin-bottom: var(--_text-style---h1-margin-bottom);
+  /* tighter than the h1 token's own margin-bottom (space-7) — this hero's headline/
+     sub/button block reads as one tight group, not three loosely spaced elements */
+  margin-bottom: var(--_spacing---space--3);
   text-transform: uppercase;
 }
 
@@ -75,11 +77,10 @@
   font-family: var(--_typography---font--primary-family);
   text-align: center;
   color: var(--swatch--light-100);
-  margin-bottom: var(--_spacing---space--6);
+  margin-bottom: var(--_spacing---space--5);
 }
 
 .hero-cta-wrap {
-  margin-top: var(--_spacing---space--4);
   display: inline-flex;
   position: relative;
 }
@@ -91,7 +92,8 @@
   font-family: var(--_typography---font--heading-family);
   font-weight: 700;
   letter-spacing: var(--_typography---letter-spacing--tight);
-  padding: var(--_spacing---space--4) var(--_spacing---space--6);
+  /* skill section 8's canonical default button padding — was space-4/space-6, too chunky */
+  padding: var(--_spacing---space--3) var(--_spacing---space--5);
   border-radius: var(--radius--small);
   transition: all 0.2s cubic-bezier(.544,.375,.25,1);
   text-decoration: none;
