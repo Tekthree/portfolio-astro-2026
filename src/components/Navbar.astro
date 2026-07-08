@@ -1,36 +1,38 @@
 ---
 ---
-<div class="nav-divider nav-top-bar"></div>
+<div class="navbar_component u-theme-dark">
+  <header class="navbar_desktop_wrap">
+    <div class="navbar_desktop_contain">
+      <div class="navbar_desktop_layout">
+        <a href="/" aria-label="Home" class="navbar_logo_wrap">
+          <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="Pixel Jones" class="navbar_logo_icon" />
+          <div class="navbar_logo_text u-text-style-small">pixel<br>JONES</div>
+        </a>
 
-<nav class="nav">
-  <a href="/" class="nav-brand">
-    <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="Pixel Jones" class="nav-logo-icon" />
-    <div class="nav-wordmark">pixel<br>JONES</div>
-  </a>
+        <nav aria-label="Main" class="navbar_links_component">
+          <div role="list" class="navbar_links_wrap">
+            <div role="listitem" class="navbar_links_item">
+              <a href="#work" class="navbar_links_link u-text-style-small">Work</a>
+            </div>
+            <div role="listitem" class="navbar_links_item">
+              <a href="#about" class="navbar_links_link u-text-style-small">About</a>
+            </div>
+            <div role="listitem" class="navbar_links_item">
+              <a href="#contact" class="navbar_links_link u-text-style-small">Contact</a>
+            </div>
+          </div>
+        </nav>
 
-  <button id="menu-btn" class="nav-menu-btn" aria-label="Menu">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-  </button>
-</nav>
-
-<div id="nav-overlay" class="nav-overlay">
-  <button id="menu-close" class="nav-close">×</button>
-  <a href="#work"  onclick="document.getElementById('nav-overlay').style.display='none'" class="nav-overlay-link">WORK</a>
-  <a href="#about" onclick="document.getElementById('nav-overlay').style.display='none'" class="nav-overlay-link">ABOUT</a>
-  <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" class="nav-overlay-link">RESUME</a>
+        <div class="navbar_actions u-button-wrapper">
+          <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" rel="noopener" data-trigger="hover focus" class="navbar_button">Resume</a>
+        </div>
+      </div>
+    </div>
+  </header>
 </div>
 
-<script>
-  const btn     = document.getElementById('menu-btn');
-  const overlay = document.getElementById('nav-overlay');
-  const close   = document.getElementById('menu-close');
-  btn?.addEventListener('click',  () => { overlay.style.display = 'flex'; });
-  close?.addEventListener('click', () => { overlay.style.display = 'none'; });
-</script>
-
 <style>
-.nav-top-bar {
+.navbar_component {
   position: fixed;
   top: 0;
   left: 0;
@@ -38,106 +40,87 @@
   z-index: 1000;
 }
 
-.nav {
-  position: fixed;
-  top: 1px;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  padding: 2.9em 6vw;
+.navbar_desktop_wrap {
+  display: var(--flex-medium, flex);
+  flex-direction: column;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--swatch--dark-900) 85%, transparent) 0%, transparent 100%);
+}
+
+.navbar_desktop_contain {
+  width: 100%;
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
+}
+
+.navbar_desktop_layout {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--ashy-black) 85%, transparent) 0%, transparent 100%);
+  gap: var(--_spacing---space--4);
+  min-height: var(--nav--height-total);
+  padding-top: var(--_spacing---space--3);
+  padding-bottom: var(--_spacing---space--3);
 }
 
-.nav-brand {
+.navbar_logo_wrap {
   display: flex;
   align-items: center;
-  gap: 0.75em;
-  text-decoration: none;
+  gap: var(--_spacing---space--2);
+  flex-shrink: 0;
 }
 
-.nav-logo-icon {
+.navbar_logo_icon {
   height: 3.5em;
   width: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
 }
 
-.nav-wordmark {
-  font-family: Mortend, sans-serif;
-  font-size: clamp(1.1rem, 0.3vw + 1rem, 1.5rem);
-  font-weight: 800;
-  color: var(--font-light);
+.navbar_logo_text {
+  font-family: var(--_typography---font--heading-family);
+  font-weight: var(--_typography---font--primary-bold);
+  color: var(--_theme---text);
   line-height: 1;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--_typography---letter-spacing--tight);
   text-transform: uppercase;
 }
 
-.nav-menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5em;
+.navbar_links_component {
+  display: var(--none-medium, block);
+}
+
+.navbar_links_wrap {
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.hamburger-line {
-  display: block;
-  width: 1.5em;
-  height: 2px;
-  background: var(--font-light);
-}
-
-/* overlay */
-.nav-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 998;
-  background: color-mix(in srgb, var(--ashy-black) 97%, transparent);
-  display: none;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 3em;
+  gap: var(--_spacing---space--5);
 }
 
-.nav-close {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--font-light);
-  font-size: 2em;
+.navbar_links_item {
+  display: block;
 }
 
-.nav-overlay-link {
-  font-family: Mortend, sans-serif;
-  font-size: 3em;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+.navbar_links_link {
+  color: color-mix(in hsl, var(--_theme---text) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--background) calc(100% * var(--_trigger---off)));
   text-transform: uppercase;
-  color: var(--font-light);
-  text-decoration: none;
+  letter-spacing: var(--_typography---letter-spacing--tight);
+  transition: color 200ms;
 }
 
-/* Tablet/mobile adjustments */
-@media screen and (max-width: 991px) {
-  .nav { padding: 2.4em 6vw; }
-  .nav-logo-icon { height: 3.3em; }
+.navbar_actions {
+  display: var(--none-medium, flex);
+  flex-shrink: 0;
 }
 
-@media screen and (max-width: 767px) {
-  .nav { padding: 2.9em 6vw; }
-  .nav-logo-icon { height: 2.8em; }
-}
-
-@media screen and (max-width: 479px) {
-  .nav { padding: 2.2em 2.1em; }
-  .nav-logo-icon { height: 2.5em; }
-  .nav-wordmark  { margin-left: 0.5rem; }
+.navbar_button {
+  padding: var(--_spacing---space--3) var(--_spacing---space--5);
+  border-radius: var(--radius--round);
+  border-width: var(--border-width--main);
+  border-style: solid;
+  text-transform: uppercase;
+  letter-spacing: var(--_typography---letter-spacing--tight);
+  background-color: color-mix(in hsl, var(--_theme---button-primary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--background-hover) calc(100% * var(--_trigger---off)));
+  color: color-mix(in hsl, var(--_theme---button-primary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--text-hover) calc(100% * var(--_trigger---off)));
+  border-color: color-mix(in hsl, var(--_theme---button-primary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--border-hover) calc(100% * var(--_trigger---off)));
+  transition: all 200ms;
 }
 </style>
