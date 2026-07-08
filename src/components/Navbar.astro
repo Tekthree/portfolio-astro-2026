@@ -100,17 +100,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <style>
 .navbar_component {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .navbar_desktop_wrap {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--swatch--dark-900) 85%, transparent) 0%, transparent 100%);
+  margin-top: var(--site--margin);
+  position: relative;
 }
 
 @container (width < 992px) {
@@ -118,9 +118,14 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 .navbar_desktop_contain {
-  width: 100%;
-  padding-left: var(--site--margin);
-  padding-right: var(--site--margin);
+  max-width: var(--max-width--main);
+  width: calc(100% - var(--site--margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--_spacing---space--5);
+  padding-right: var(--_spacing---space--5);
+  border-radius: var(--radius--small);
+  background-color: var(--_theme---nav--background);
 }
 
 .navbar_desktop_layout {
@@ -129,8 +134,10 @@ document.addEventListener("DOMContentLoaded", function () {
   justify-content: space-between;
   gap: var(--_spacing---space--4);
   min-height: var(--nav--height-total);
-  padding-top: var(--_spacing---space--3);
-  padding-bottom: var(--_spacing---space--3);
+  max-width: var(--max-width--main);
+  margin-left: auto;
+  margin-right: auto;
+  pointer-events: auto;
 }
 
 .navbar_logo_wrap {
@@ -198,6 +205,8 @@ document.addEventListener("DOMContentLoaded", function () {
 .navbar_mobile_wrap {
   display: none;
   flex-direction: column;
+  margin-top: var(--site--margin);
+  position: relative;
 }
 
 @container (width < 992px) {
@@ -205,10 +214,10 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 .navbar_mobile_contain {
-  width: 100%;
-  padding-left: var(--site--margin);
-  padding-right: var(--site--margin);
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--swatch--dark-900) 85%, transparent) 0%, transparent 100%);
+  max-width: var(--max-width--main);
+  width: calc(100% - var(--site--margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar_mobile_layout {
@@ -216,8 +225,11 @@ document.addEventListener("DOMContentLoaded", function () {
   align-items: center;
   justify-content: space-between;
   min-height: var(--nav--height-total);
-  padding-top: var(--_spacing---space--3);
-  padding-bottom: var(--_spacing---space--3);
+  padding-left: var(--_spacing---space--5);
+  padding-right: var(--_spacing---space--5);
+  border-radius: var(--radius--small);
+  background-color: var(--_theme---nav--background);
+  pointer-events: auto;
 }
 
 .navbar_menu_btn {
@@ -240,6 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
   left: 0;
   right: 0;
   bottom: 0;
+  pointer-events: auto;
   visibility: hidden;
   opacity: 0;
   transition: opacity 400ms, visibility 400ms;
