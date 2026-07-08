@@ -112,6 +112,15 @@ const SHOWCASE = [
           --nav--dropdown-close-duration: 400ms;
           --nav--menu-open-duration: 400ms;
           --nav--menu-close-duration: 400ms;
+          /* Real tokens (webflow.css :root, ~lines 81-92): --nav--height: 4rem
+             (matches the hardcoded 4rem already on .nav_desktop_layout /
+             .nav_mobile_layout); --nav--spacing-outer-vertical maps to the
+             real site's --site--margin; --nav--height-total is the real
+             file's own composed token, reused verbatim by fix #10's mobile
+             scroll cap so the calc() here matches the source exactly. */
+          --nav--height: 4rem;
+          --nav--spacing-outer-vertical: var(--site--margin);
+          --nav--height-total: calc(var(--nav--height) + var(--nav--spacing-outer-vertical));
           /* The reference sets position:fixed as an inline style directly on
              this element (overriding a `position: sticky` rule in its own
              compiled CSS) — confirmed from the live page's actual DOM, not
@@ -182,9 +191,15 @@ const SHOWCASE = [
           justify-content: space-between;
           gap: var(--_spacing---space--3);
           pointer-events: auto;
-          position: relative;
         }
+        /* .nav_desktop_layout must stay position:static (real CSS sets
+           this explicitly) — it's an ancestor of .nav_dropdown_mega_wrap,
+           and being positioned here would wrongly become the mega
+           dropdown's containing block instead of .nav_desktop_wrap
+           (see fix #1 above). .nav_mobile_layout has no such constraint
+           and matches the real CSS's own position:relative for it. */
         .nav_mobile_layout {
+          position: relative;
           padding: 0 var(--_spacing---space--5);
         }
 
@@ -217,14 +232,21 @@ const SHOWCASE = [
           align-items: stretch;
         }
         .nav_links_item {
+          /* Real CSS never sets position on .nav_links_item (default
+             static) — .nav_dropdown_mega_wrap needs the whole static
+             ancestor chain (this, .nav_dropdown_component,
+             .nav_links_wrap, .nav_links_component, .nav_desktop_layout)
+             to stay unpositioned so it anchors to .nav_desktop_wrap
+             instead. See .nav_dropdown_main_wrap / .nav_dropdown_mega_wrap
+             below for how each dropdown type still positions correctly
+             without this. */
           height: 100%;
-          position: relative;
         }
         .nav_links_link {
           height: 100%;
           display: flex;
           align-items: center;
-          gap: var(--_spacing---space--1);
+          gap: var(--_spacing---space--2);
           padding: 0 var(--_spacing---space--3);
           cursor: pointer;
           color: inherit;
@@ -246,7 +268,11 @@ const SHOWCASE = [
           height: 100%;
         }
         .nav_links_svg path {
-          stroke: currentColor;
+          /* Real inline SVG hardcodes stroke="white" on this path
+             (nav-raw-block.html ~138) — no CSS override anywhere in the
+             real stylesheet, so match it exactly rather than
+             theme-reacting via currentColor. */
+          stroke: white;
           stroke-width: 2;
           fill: none;
         }
@@ -286,51 +312,88 @@ const SHOWCASE = [
           overflow: hidden;
         }
 
+        /* .nav_dropdown_main_wrap: real CSS (webflow.css ~4636-4642) sets
+           position: absolute via its desktop variant but NEVER sets top/
+           left/inset — with no percentage-based offsets it resolves to
+           its own "static position" (exactly where it'd render if it
+           were position:static, i.e. directly under its own trigger),
+           which is independent of which ancestor ends up as the nearest
+           positioned ancestor. That's what lets it keep anchoring to its
+           own .nav_links_link even though .nav_links_item above is no
+           longer position:relative. The push-down gap comes from
+           padding-top on the wrap itself, not a margin or top offset. */
         .nav_dropdown_main_wrap {
           position: absolute;
-          top: 100%;
-          left: 0;
           width: 10rem;
-          margin-top: var(--_spacing---space--1);
+          padding-top: var(--_spacing---space--1);
         }
+        /* .nav_dropdown_mega_wrap: real CSS (webflow.css ~5024-5039) desktop
+           variant DOES use percentage-based inset (0% 0% auto), so it
+           genuinely needs a positioned ancestor — and the real containing
+           block is .nav_desktop_wrap (position: relative), reached only
+           because every element in between (.nav_dropdown_component,
+           .nav_links_item, .nav_links_wrap, .nav_links_component,
+           .nav_desktop_layout) is position: static. The visible panel is
+           pushed below the nav bar via margin-top: var(--nav--height) on
+           .nav_dropdown_mega_scroll, not via an offset on this wrap. */
         .nav_dropdown_mega_wrap {
           position: absolute;
-          top: 100%;
-          left: 0;
-          width: calc(100vw - var(--site--margin) * 2);
+          inset: 0% 0% auto;
           max-width: var(--max-width--main);
-          margin-top: var(--_spacing---space--1);
+          margin: auto;
         }
         .nav_dropdown_main_scroll,
         .nav_dropdown_mega_scroll {
+          /* Real .nav_dropdown_main_scroll / .nav_dropdown_mega_content-family
+             rules (webflow.css ~4570-4598) only set border-radius (the
+             real --nav--radius token resolves to --radius--small) and
+             background-color — no border, no box-shadow. */
           padding: var(--_spacing---space--3);
-          border-radius: var(--radius--main);
-          border: var(--border-width--main) solid var(--_theme---border);
+          border-radius: var(--radius--small);
           background-color: var(--_theme---background-2);
-          box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--_theme---text) 15%, transparent);
+        }
+        .nav_dropdown_mega_scroll {
+          /* Real .nav_dropdown_mega_scroll desktop variant (webflow.css
+             ~5003-5008): margin-top: var(--nav--height) pushes the panel
+             below the nav bar; padding is horizontal-only via
+             --nav--spacing-inner-horizontal (= --_spacing---space--5 in the
+             real root tokens), since vertical padding now comes from the
+             .nav_dropdown_mega_contain wrapper (fix #11) instead. */
+          margin-top: var(--nav--height);
+          padding: 0 var(--_spacing---space--5);
         }
         .nav_dropdown_mega_layout {
           display: grid;
-          grid-template-columns: repeat(4, minmax(0, 10rem));
-          gap: var(--_spacing---space--6);
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+          column-gap: var(--site--gutter);
+          row-gap: var(--_spacing---space--6);
         }
         .nav_dropdown_list {
           display: flex;
           flex-direction: column;
-          gap: var(--_spacing---space--1);
+        }
+        .nav_dropdown_text {
+          transition: opacity 0.1s;
         }
         .nav_dropdown_link {
+          /* Real .nav_dropdown_link desktop variant (webflow.css ~4735-4745)
+             is a bordered list row (divider line between items), not a
+             rounded hover-pill — .nav_dropdown_list / .nav_dropdown_item
+             carry zero rules of their own in the real file, confirmed by
+             grep. */
           display: block;
-          padding: var(--_spacing---space--2);
-          border-radius: var(--radius--small);
+          padding: var(--_spacing---space--2) calc(var(--_spacing---space--6) / 2);
+          border-bottom: var(--border-width--main) solid var(--_theme---border);
           color: color-mix(in hsl, var(--_theme---text-link--text) calc(100% * var(--_trigger---on)), var(--_theme---text-link--text-hover) calc(100% * var(--_trigger---off)));
         }
 
         .nav_actions_wrap {
+          /* Real .nav_actions_wrap (webflow.css ~4966-4976) has no gap at
+             any breakpoint — spacing between items comes from
+             .nav_buttons_item.is-main's own margins instead. */
           flex: none;
           display: flex;
           align-items: center;
-          gap: var(--_spacing---space--3);
         }
         .nav_links_text.u-text-transform-uppercase {
           padding: var(--_spacing---space--2);
@@ -346,21 +409,38 @@ const SHOWCASE = [
           height: 100%;
         }
         .nav_links_search_icon path {
-          stroke: currentColor;
+          /* Real inline SVG hardcodes stroke="black" on this trigger icon's
+             paths (nav-raw-block.html ~303-304) — no CSS override in the
+             real stylesheet, match it exactly rather than theme-reacting.
+             Note: the OTHER search icon, .nav_search_btn_icon (the submit
+             button inside the search form), uses stroke="currentColor" in
+             the real DOM (nav-raw-block.html ~314-315) — that one is left
+             untouched below, it was already correct. */
+          stroke: black;
           fill: none;
         }
         .nav_search_wrap {
-          width: 20rem;
-          max-width: 70vw;
+          /* Real .nav_search_wrap (webflow.css ~5063-5069) has no width or
+             max-width — it's a flex item that fills its container. This
+             now looks correct once the mega panel above is full-width
+             instead of a small floating box (fix #1). */
           display: flex;
           align-items: center;
           border-bottom: var(--border-width--main) solid var(--_theme---border);
         }
         .nav_search_btn_wrap {
+          /* Real .nav_search_btn_wrap (webflow.css ~5042-5050) is an actual
+             <button type="submit"> with padding: 0 1rem and
+             margin-left: -1rem (see markup below). */
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: var(--_spacing---space--2);
+          padding: 0 1rem;
+          margin-left: -1rem;
+          background: transparent;
+          border: none;
+          color: inherit;
+          cursor: pointer;
         }
         .nav_search_btn_icon {
           width: 1.1rem;
@@ -372,8 +452,9 @@ const SHOWCASE = [
           fill: none;
         }
         .nav_search_field {
-          width: 16rem;
-          max-width: 60vw;
+          /* Real .nav_search_field (webflow.css ~4659-4672): width: 100%,
+             no max-width — fills its (now unconstrained) container. */
+          width: 100%;
           height: 2.9em;
           background: transparent;
           border: none;
@@ -485,6 +566,17 @@ const SHOWCASE = [
         @container (min-width: 65em) {
           .nav_desktop_wrap { display: block; }
           .nav_mobile_wrap { display: none; }
+          /* Real .nav_buttons_item.is-main desktop variant (webflow.css
+             ~4855): margin: 0 var(--_spacing---space--3). The non-main
+             button gets no margin rule at any breakpoint. */
+          .nav_buttons_item.is-main { margin: 0 var(--_spacing---space--3); }
+          /* Real .nav_dropdown_mega_contain desktop variant (webflow.css
+             ~4582-4586): distinct top/bottom padding. Only the desktop
+             markup instance carries this variant class in the real
+             source (nav-raw-block.html ~183 has it, ~417/~546 mobile
+             mirrors don't), so scope it here rather than applying it
+             unconditionally. */
+          .nav_dropdown_mega_contain { padding-top: var(--_spacing---space--7); padding-bottom: var(--_spacing---space--8); }
         }
         @container (width < 65em) {
           .nav_component:has(.nav_button_wrap[aria-expanded="true"]) .nav_mobile_menu_wrap {
@@ -500,7 +592,22 @@ const SHOWCASE = [
           .nav_dropdown_main_scroll,
           .nav_dropdown_mega_scroll { border: none; border-radius: 0; box-shadow: none; padding: 0 var(--_spacing---space--5); }
           .nav_actions_wrap { flex-direction: column; align-items: stretch; padding: var(--_spacing---space--3) var(--_spacing---space--5); gap: var(--_spacing---space--4); }
-          .nav_buttons_item { margin-top: var(--_spacing---space--3); }
+          /* Real .nav_buttons_item.is-main base rule (webflow.css ~4848-4851,
+             applies at mobile since the desktop variant above overrides it):
+             margin-top: space--6, margin-bottom: space--3. The non-main
+             button gets no margin rule at all in the real CSS. */
+          .nav_buttons_item.is-main { margin-top: var(--_spacing---space--6); margin-bottom: var(--_spacing---space--3); }
+        }
+        .nav_mobile_menu_scroll {
+          /* Real .nav_mobile_menu_scroll (webflow.css ~5052-5057): an
+             internal scroll cap so a long mobile menu scrolls instead of
+             growing full-page height. Formula reuses --nav--height-total
+             and --nav--spacing-outer-vertical exactly as defined on
+             .nav_component above, matching the real calc() verbatim. */
+          padding-right: var(--_spacing---space--5);
+          padding-left: var(--_spacing---space--5);
+          max-height: calc(100svh - var(--nav--height-total) - var(--nav--spacing-outer-vertical) * 2);
+          overflow: hidden auto;
         }
       </style>
 
@@ -531,7 +638,7 @@ const SHOWCASE = [
                         <div class="nav_dropdown_main_scroll">
                           <ul role="list" class="nav_dropdown_list">
                             {NAV_SERVICES_LINKS.map((label) => (
-                              <li class="nav_dropdown_item"><a class="nav_dropdown_link" data-trigger="hover focus" href="#">{label}</a></li>
+                              <li class="nav_dropdown_item"><a class="nav_dropdown_link" data-trigger="hover focus" href="#"><div class="nav_dropdown_text">{label}</div></a></li>
                             ))}
                           </ul>
                         </div>
@@ -548,14 +655,16 @@ const SHOWCASE = [
                     <nav class="nav_dropdown_mega_wrap" id="nav-dd-work" aria-labelledby="nav-toggle-work">
                       <div class="nav_dropdown_mega_content">
                         <div class="nav_dropdown_mega_scroll">
-                          <div class="nav_dropdown_mega_layout">
-                            {NAV_WORK_COLUMNS.map(() => (
-                              <ul role="list" class="nav_dropdown_list">
-                                {NAV_SERVICES_LINKS.map((label) => (
-                                  <li class="nav_dropdown_item"><a class="nav_dropdown_link" data-trigger="hover focus" href="#">{label}</a></li>
-                                ))}
-                              </ul>
-                            ))}
+                          <div class="nav_dropdown_mega_contain">
+                            <div class="nav_dropdown_mega_layout">
+                              {NAV_WORK_COLUMNS.map(() => (
+                                <ul role="list" class="nav_dropdown_list">
+                                  {NAV_SERVICES_LINKS.map((label) => (
+                                    <li class="nav_dropdown_item"><a class="nav_dropdown_link" data-trigger="hover focus" href="#"><div class="nav_dropdown_text">{label}</div></a></li>
+                                  ))}
+                                </ul>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -593,15 +702,17 @@ const SHOWCASE = [
                   <nav class="nav_dropdown_mega_wrap" id="nav-dd-search" aria-labelledby="nav-toggle-search">
                     <div class="nav_dropdown_mega_content">
                       <div class="nav_dropdown_mega_scroll">
-                        <form action="/search" class="nav_search_wrap">
-                          <div class="nav_search_btn_wrap">
-                            <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
-                          </div>
-                          <label class="nav_search_label">
-                            <span class="u-sr-only">Search</span>
-                            <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
-                          </label>
-                        </form>
+                        <div class="nav_dropdown_mega_contain">
+                          <form action="/search" class="nav_search_wrap">
+                            <button type="submit" class="nav_search_btn_wrap" tabindex="-1">
+                              <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
+                            </button>
+                            <label class="nav_search_label">
+                              <span class="u-sr-only">Search</span>
+                              <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
+                            </label>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </nav>
@@ -640,6 +751,7 @@ const SHOWCASE = [
           </a>
 
           <nav class="nav_mobile_menu_wrap" id="nav-mobile-menu">
+            <div class="nav_mobile_menu_scroll">
             <nav aria-label="Main" class="nav_links_component">
               <div role="list" class="nav_links_wrap">
                 <div role="listitem" class="nav_links_item">
@@ -653,7 +765,7 @@ const SHOWCASE = [
                         <div class="nav_dropdown_main_scroll">
                           <ul role="list" class="nav_dropdown_list">
                             {NAV_SERVICES_LINKS.map((label) => (
-                              <li class="nav_dropdown_item"><a class="nav_dropdown_link" href="#">{label}</a></li>
+                              <li class="nav_dropdown_item"><a class="nav_dropdown_link" href="#"><div class="nav_dropdown_text">{label}</div></a></li>
                             ))}
                           </ul>
                         </div>
@@ -670,14 +782,16 @@ const SHOWCASE = [
                     <nav class="nav_dropdown_mega_wrap" id="nav-dd-work-m" aria-labelledby="nav-toggle-work-m">
                       <div class="nav_dropdown_mega_content">
                         <div class="nav_dropdown_mega_scroll">
-                          <div class="nav_dropdown_mega_layout">
-                            {NAV_WORK_COLUMNS.map(() => (
-                              <ul role="list" class="nav_dropdown_list">
-                                {NAV_SERVICES_LINKS.map((label) => (
-                                  <li class="nav_dropdown_item"><a class="nav_dropdown_link" href="#">{label}</a></li>
-                                ))}
-                              </ul>
-                            ))}
+                          <div class="nav_dropdown_mega_contain">
+                            <div class="nav_dropdown_mega_layout">
+                              {NAV_WORK_COLUMNS.map(() => (
+                                <ul role="list" class="nav_dropdown_list">
+                                  {NAV_SERVICES_LINKS.map((label) => (
+                                    <li class="nav_dropdown_item"><a class="nav_dropdown_link" href="#"><div class="nav_dropdown_text">{label}</div></a></li>
+                                  ))}
+                                </ul>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -715,15 +829,17 @@ const SHOWCASE = [
                   <nav class="nav_dropdown_mega_wrap" id="nav-dd-search-m" aria-labelledby="nav-toggle-search-m">
                     <div class="nav_dropdown_mega_content">
                       <div class="nav_dropdown_mega_scroll">
-                        <form action="/search" class="nav_search_wrap">
-                          <div class="nav_search_btn_wrap">
-                            <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
-                          </div>
-                          <label class="nav_search_label">
-                            <span class="u-sr-only">Search</span>
-                            <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
-                          </label>
-                        </form>
+                        <div class="nav_dropdown_mega_contain">
+                          <form action="/search" class="nav_search_wrap">
+                            <button type="submit" class="nav_search_btn_wrap" tabindex="-1">
+                              <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
+                            </button>
+                            <label class="nav_search_label">
+                              <span class="u-sr-only">Search</span>
+                              <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
+                            </label>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </nav>
@@ -746,6 +862,7 @@ const SHOWCASE = [
                 </div>
               </div>
             </nav>
+            </div>
           </nav>
 
           <button aria-controls="nav-mobile-menu" aria-expanded="false" aria-label="Menu" class="nav_button_wrap" id="nav-mobile-toggle" type="button">
