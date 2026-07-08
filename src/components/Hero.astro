@@ -38,10 +38,14 @@
 .hero-container {
   max-width: var(--max-width--main);
   margin: 0 auto;
-  padding-top: var(--_spacing---section-space--page-top);
+  /* bigger than the page-top/large tokens — this is the top-of-page hero, it should
+     have the most breathing room on the page, more than a token tuned for a generic
+     first section. fluid clamp, min 12rem @ 20rem viewport → max 18rem @ 90rem viewport */
+  padding-top: clamp(12rem, 10.29rem + 8.57vw, 18rem);
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
-  padding-bottom: var(--_spacing---section-space--large);
+  /* fluid clamp, min 10rem @ 20rem viewport → max 16rem @ 90rem viewport */
+  padding-bottom: clamp(10rem, 8.29rem + 8.57vw, 16rem);
   text-align: center;
   position: relative;
   z-index: 10;
