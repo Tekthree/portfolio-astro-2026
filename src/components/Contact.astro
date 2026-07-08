@@ -42,14 +42,14 @@ const stream = [
 ];
 ---
 
-<section id="contact" class="contact-sec">
+<section id="contact" class="contact-sec u-theme-light">
   <div class="contact-container">
 
     <!-- FAQ + photo row -->
     <div class="contact-split">
       <!-- left: FAQ -->
       <div class="contact-faq">
-        <h1 class="contact-heading">got questions?<br>let's go!</h1>
+        <h1 class="contact-heading u-text-style-h3">got questions?<br>let's go!</h1>
 
         <div class="faq-list">
           {faqs.map(faq => (
@@ -102,14 +102,15 @@ const stream = [
 
 <style>
 .contact-sec {
-  background-color: var(--bg-contact);
-  padding: 7.7em 0 7.7em;
+  padding-top: var(--_spacing---section-space--main);
+  padding-bottom: var(--_spacing---section-space--main);
 }
 
 .contact-container {
-  max-width: 100em;
+  max-width: var(--max-width--main);
   margin: 0 auto;
-  padding: 0 6em;
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
 }
 
 /* FAQ + photo row — 2-col on desktop, 1-col on tablet/mobile */
@@ -117,45 +118,41 @@ const stream = [
   display: var(--flex-medium, grid);
   flex-direction: column;
   grid-template-columns: 1fr 1fr;
-  column-gap: 5rem;
-  row-gap: 4rem;
+  column-gap: var(--_spacing---section-space--small);
+  row-gap: var(--_spacing---space--8);
   align-items: center;
 }
 
 .contact-faq { }
 
 .contact-heading {
-  font-family: Mortend, sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.5rem, 2.1vw + 1rem, 2.9rem);
-  line-height: 1;
-  color: color-mix(in srgb, var(--background-blue) 84%, transparent);
-  text-transform: uppercase;
-  margin-bottom: 0.38em;
+  font-family: var(--_typography---font--heading-family);
+  color: var(--_theme---text);
+  margin-bottom: var(--_text-style---h3-margin-bottom);
   max-width: 12.8em;
 }
 
 .faq-list { }
 
 .faq-item {
-  border-top: 4px solid var(--faq-border);
+  border-top: 4px solid color-mix(in srgb, var(--swatch--light-200), black 25%);
 }
 .faq-item:last-child {
-  border-bottom: 4px solid var(--faq-border);
+  border-bottom: 4px solid color-mix(in srgb, var(--swatch--light-200), black 25%);
 }
 
 .faq-summary {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: var(--_spacing---space--3) 0;
   cursor: pointer;
   list-style: none;
-  font-family: Poppins, sans-serif;
-  font-size: 1.125rem;
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-main);
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--background-blue);
+  color: var(--_theme---text);
   opacity: 0.74;
 }
 
@@ -163,16 +160,16 @@ const stream = [
 
 .faq-arrow {
   font-size: 1.4em;
-  margin-left: 1em;
+  margin-left: var(--_spacing---space--3);
   flex-shrink: 0;
 }
 
 .faq-answer {
-  font-family: Poppins, sans-serif;
-  font-size: 0.95em;
-  color: var(--background-blue);
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  color: var(--_theme---text);
   opacity: 0.75;
-  padding-bottom: 1.2em;
+  padding-bottom: var(--_spacing---space--3);
   line-height: 1.6;
   margin: 0;
 }
@@ -187,7 +184,7 @@ const stream = [
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 1rem;
+  border-radius: var(--radius--main);
 }
 
 /* FAQ arrow rotation */
@@ -198,7 +195,7 @@ const stream = [
 details[open] .faq-arrow { transform: rotate(180deg); }
 
 /* work stream */
-.contact-stream { margin-top: 5em; }
+.contact-stream { margin-top: var(--_spacing---section-space--small); }
 
 .stream-splide { overflow: visible; }
 .stream-splide .splide__track { overflow: visible; }
@@ -211,7 +208,7 @@ details[open] .faq-arrow { transform: rotate(180deg); }
   width: 10rem;
   height: 10rem;
   object-fit: cover;
-  border-radius: 1rem;
+  border-radius: var(--radius--main);
   display: block;
 }
 
@@ -219,39 +216,37 @@ details[open] .faq-arrow { transform: rotate(180deg); }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2em;
+  margin-top: var(--_spacing---space--5);
 }
 
 .stream-label {
-  font-family: Poppins, sans-serif;
+  font-family: var(--_typography---font--primary-family);
   font-weight: 300;
-  font-size: 1.6em;
+  font-size: var(--_typography---font-size--h5);
   text-transform: uppercase;
-  color: var(--font-plum);
+  color: var(--swatch--muted-500);
   margin: 0;
   max-width: 17ch;
 }
 
-.stream-nav { display: flex; gap: 1rem; align-items: center; }
+.stream-nav { display: flex; gap: var(--_spacing---space--3); align-items: center; }
 
 .stream-btn {
-  background-color: var(--font-plum);
+  background-color: var(--swatch--muted-500);
   border: none;
-  border-radius: 8rem;
-  padding: 0 3.5rem;
-  font-size: 2.2em;
+  border-radius: var(--radius--round);
+  padding: var(--_spacing---space--3) var(--_spacing---space--8);
+  font-size: var(--_typography---font-size--h4);
   font-weight: 600;
-  color: var(--background-blue);
+  color: var(--_theme---text);
   display: inline-block;
   line-height: 1.6;
   cursor: pointer;
-  font-family: Poppins, sans-serif;
+  font-family: var(--_typography---font--primary-family);
 }
 
 /* Tablet: display switch handled by --flex-medium variable */
 @media screen and (max-width: 991px) {
-  .contact-container { padding: 0 3vw; }
-  .contact-split { row-gap: 2.5em; }
   .contact-photo-wrap { align-self: auto; min-height: auto; }
   .contact-photo { height: auto; max-height: 30em; object-position: top; }
   .stream-img { width: 8rem; height: 8rem; }
@@ -259,19 +254,15 @@ details[open] .faq-arrow { transform: rotate(180deg); }
 
 /* Mobile */
 @media screen and (max-width: 767px) {
-  .contact-sec { padding: 4em 0 3em; }
-  .contact-container { padding: 0 5vw; }
   .contact-photo { max-height: 20em; }
   .stream-img { width: 6.5rem; height: 6.5rem; }
-  .stream-label { font-size: 1.2em; max-width: 14ch; }
-  .stream-btn { padding: 0 1.875rem; font-size: 1.8em; }
+  .stream-label { max-width: 14ch; }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
   .stream-img { width: 5rem; height: 5rem; }
-  .stream-label { font-size: 1em; }
-  .stream-footer { flex-direction: var(--column-xsmall, row); align-items: flex-start; gap: 1em; }
+  .stream-footer { flex-direction: var(--column-xsmall, row); align-items: flex-start; gap: var(--_spacing---space--4); }
 }
 </style>
 
