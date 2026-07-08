@@ -108,6 +108,10 @@ document.addEventListener("DOMContentLoaded", function () {
      sticky element (no padding/border of its own to block it), so the whole contained
      box would snap flush the moment it becomes stuck on scroll. Padding never collapses. */
   padding-top: var(--site--margin);
+  /* u-theme-dark sets background-color as a side effect of providing the theme
+     variables (text/button colors) — this element is a transparent overlay, not a
+     themed section, so that background needs an explicit override. */
+  background-color: transparent;
 }
 
 .navbar_desktop_wrap {
@@ -128,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
   padding-left: var(--_spacing---space--5);
   padding-right: var(--_spacing---space--5);
   border-radius: var(--radius--small);
-  background-color: var(--_theme---nav--background);
 }
 
 .navbar_desktop_layout {
@@ -230,7 +233,6 @@ document.addEventListener("DOMContentLoaded", function () {
   padding-left: var(--_spacing---space--5);
   padding-right: var(--_spacing---space--5);
   border-radius: var(--radius--small);
-  background-color: var(--_theme---nav--background);
   pointer-events: auto;
 }
 
