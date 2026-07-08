@@ -162,7 +162,8 @@
 }
 
 .about-photo {
-  height: 30.8em;
+  /* fluid clamp, min 18rem @ 20rem viewport → max 30.8rem @ 90rem viewport */
+  height: clamp(18rem, 14.34rem + 18.29vw, 30.8rem);
   flex: 0 auto;
   margin-top: -2.9em;
   transform: rotateY(180deg);
@@ -284,9 +285,8 @@
   .about-outline-text { display: none; }
 }
 
-/* Mobile */
+/* Mobile — about-photo height now fluid */
 @media screen and (max-width: 767px) {
-  .about-photo   { height: 22em; }
   .about-photo-card { padding-right: var(--_spacing---space--5); }
 
   /* stats: allow horizontal scroll */
@@ -296,7 +296,6 @@
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .about-photo   { height: 18em; }
   .stat-divider  { margin-left: var(--_spacing---space--3); margin-right: var(--_spacing---space--3); }
   .about-art-right { display: none; }
 }

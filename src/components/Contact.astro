@@ -246,15 +246,16 @@ details[open] .faq-arrow { transform: rotate(180deg); }
   font-family: var(--_typography---font--primary-family);
 }
 
-/* Tablet: display switch handled by --flex-medium variable */
+/* Tablet: display switch handled by --flex-medium variable. Below 992px the photo
+   drops out of the FAQ-column-height stretch and gets its own fluid cap instead. */
 @media screen and (max-width: 991px) {
   .contact-photo-wrap { align-self: auto; min-height: auto; }
-  .contact-photo { height: auto; max-height: 30em; object-position: top; }
+  /* fluid clamp, min 20rem @ 20rem viewport → max 30rem @ 90rem viewport */
+  .contact-photo { height: auto; max-height: clamp(20rem, 17.14rem + 14.29vw, 30rem); object-position: top; }
 }
 
 /* Mobile — stream-img size now fluid */
 @media screen and (max-width: 767px) {
-  .contact-photo { max-height: 20em; }
   .stream-label { max-width: 14ch; }
 }
 
