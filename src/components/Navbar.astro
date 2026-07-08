@@ -29,7 +29,74 @@
       </div>
     </div>
   </header>
+
+  <header class="navbar_mobile_wrap">
+    <div class="navbar_mobile_contain">
+      <div class="navbar_mobile_layout">
+        <a href="/" aria-label="Home" class="navbar_logo_wrap">
+          <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="Pixel Jones" class="navbar_logo_icon" />
+          <div class="navbar_logo_text u-text-style-small">pixel<br>JONES</div>
+        </a>
+
+        <button
+          type="button"
+          id="navbar-mobile-toggle"
+          aria-expanded="false"
+          aria-controls="navbar-mobile-menu"
+          aria-label="Menu"
+          class="navbar_menu_btn"
+        >
+          <span class="navbar_menu_line"></span>
+          <span class="navbar_menu_line"></span>
+        </button>
+      </div>
+    </div>
+
+    <nav
+      id="navbar-mobile-menu"
+      aria-labelledby="navbar-mobile-toggle"
+      class="navbar_mobile_menu_wrap"
+    >
+      <div role="list" class="navbar_mobile_menu_layout">
+        <div role="listitem" class="navbar_links_item">
+          <a href="#work" class="navbar_mobile_link u-text-style-h4">Work</a>
+        </div>
+        <div role="listitem" class="navbar_links_item">
+          <a href="#about" class="navbar_mobile_link u-text-style-h4">About</a>
+        </div>
+        <div role="listitem" class="navbar_links_item">
+          <a href="#contact" class="navbar_mobile_link u-text-style-h4">Contact</a>
+        </div>
+        <div role="listitem" class="navbar_links_item navbar_actions u-button-wrapper">
+          <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" rel="noopener" data-trigger="hover focus" class="navbar_button">Resume</a>
+        </div>
+      </div>
+    </nav>
+  </header>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".navbar_component").forEach((component) => {
+    if (component.dataset.scriptInitialized) return;
+    component.dataset.scriptInitialized = "true";
+
+    const toggle = component.querySelector("#navbar-mobile-toggle");
+    const menu = component.querySelector("#navbar-mobile-menu");
+
+    toggle?.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+    });
+
+    menu?.querySelectorAll(".navbar_mobile_link, .navbar_button").forEach((link) => {
+      link.addEventListener("click", () => {
+        toggle?.setAttribute("aria-expanded", "false");
+      });
+    });
+  });
+});
+</script>
 
 <style>
 .navbar_component {
@@ -41,9 +108,13 @@
 }
 
 .navbar_desktop_wrap {
-  display: var(--flex-medium, flex);
+  display: flex;
   flex-direction: column;
   background: linear-gradient(to bottom, color-mix(in srgb, var(--swatch--dark-900) 85%, transparent) 0%, transparent 100%);
+}
+
+@container (width < 992px) {
+  .navbar_desktop_wrap { display: none; }
 }
 
 .navbar_desktop_contain {
@@ -86,7 +157,7 @@
 }
 
 .navbar_links_component {
-  display: var(--none-medium, block);
+  display: block;
 }
 
 .navbar_links_wrap {
@@ -107,7 +178,7 @@
 }
 
 .navbar_actions {
-  display: var(--none-medium, flex);
+  display: flex;
   flex-shrink: 0;
 }
 
@@ -122,5 +193,78 @@
   color: color-mix(in hsl, var(--_theme---button-primary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--text-hover) calc(100% * var(--_trigger---off)));
   border-color: color-mix(in hsl, var(--_theme---button-primary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--border-hover) calc(100% * var(--_trigger---off)));
   transition: all 200ms;
+}
+
+.navbar_mobile_wrap {
+  display: none;
+  flex-direction: column;
+}
+
+@container (width < 992px) {
+  .navbar_mobile_wrap { display: flex; }
+}
+
+.navbar_mobile_contain {
+  width: 100%;
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--swatch--dark-900) 85%, transparent) 0%, transparent 100%);
+}
+
+.navbar_mobile_layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--nav--height-total);
+  padding-top: var(--_spacing---space--3);
+  padding-bottom: var(--_spacing---space--3);
+}
+
+.navbar_menu_btn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_spacing---space--1);
+  padding: var(--_spacing---space--2);
+}
+
+.navbar_menu_line {
+  display: block;
+  width: 1.5em;
+  height: var(--border-width--main);
+  background-color: var(--_theme---text);
+}
+
+.navbar_mobile_menu_wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 400ms, visibility 400ms;
+  background-color: var(--_theme---background);
+}
+
+.navbar_mobile_wrap:has(#navbar-mobile-toggle[aria-expanded="true"]) .navbar_mobile_menu_wrap {
+  visibility: visible;
+  opacity: 1;
+}
+
+.navbar_mobile_menu_layout {
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_spacing---space--5);
+  padding: var(--_spacing---space--8);
+}
+
+.navbar_mobile_link {
+  color: var(--_theme---text);
+  text-transform: uppercase;
+  letter-spacing: var(--_typography---letter-spacing--tight);
 }
 </style>
