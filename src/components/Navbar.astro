@@ -94,6 +94,16 @@ document.addEventListener("DOMContentLoaded", function () {
         toggle?.setAttribute("aria-expanded", "false");
       });
     });
+
+    // Nav's flow height depends on fluid tokens, breakpoint tree switches, and
+    // border-box padding math — too error-prone to hand-compute in CSS. Measuring
+    // the real rendered height and exposing it as a variable keeps Hero's
+    // compensating negative margin exactly correct at every viewport.
+    const setNavHeightVar = () => {
+      document.documentElement.style.setProperty("--nav--actual-height", component.offsetHeight + "px");
+    };
+    setNavHeightVar();
+    window.addEventListener("resize", setNavHeightVar);
   });
 });
 </script>
@@ -141,6 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
   justify-content: space-between;
   gap: var(--_spacing---space--4);
   min-height: var(--nav--height-total);
+  padding-top: var(--_spacing---space--3);
+  padding-bottom: var(--_spacing---space--3);
   max-width: var(--max-width--main);
   margin-left: auto;
   margin-right: auto;
@@ -231,6 +243,8 @@ document.addEventListener("DOMContentLoaded", function () {
   align-items: center;
   justify-content: space-between;
   min-height: var(--nav--height-total);
+  padding-top: var(--_spacing---space--3);
+  padding-bottom: var(--_spacing---space--3);
   padding-left: var(--_spacing---space--5);
   padding-right: var(--_spacing---space--5);
   border-radius: var(--radius--small);

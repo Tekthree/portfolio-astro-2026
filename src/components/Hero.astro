@@ -32,9 +32,12 @@
   background-size: cover;
   /* nav is position:sticky, which (unlike the old fixed nav) occupies real space in
      document flow — its own height pushes this section down instead of floating over
-     it. Pull the section back up by nav's flow height so the background still starts
-     at the true top of the window, with nav rendering on top via its higher z-index. */
-  margin-top: calc(-1 * (var(--site--margin) + var(--nav--height-total)));
+     it. Pull the section back up by nav's actual measured height (--nav--actual-height,
+     set by Navbar.astro's script — hand-computing this from fluid tokens/border-box
+     padding proved error-prone) so the background still starts at the true top of the
+     window, with nav rendering on top via its higher z-index. Fallback covers the
+     no-JS/pre-hydration instant before the script runs. */
+  margin-top: calc(-1 * var(--nav--actual-height, 6.5rem));
   position: relative;
   display: block;
   overflow: clip;
