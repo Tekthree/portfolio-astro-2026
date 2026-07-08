@@ -112,8 +112,16 @@ const SHOWCASE = [
           --nav--dropdown-close-duration: 400ms;
           --nav--menu-open-duration: 400ms;
           --nav--menu-close-duration: 400ms;
-          position: sticky;
+          /* The reference sets position:fixed as an inline style directly on
+             this element (overriding a `position: sticky` rule in its own
+             compiled CSS) — confirmed from the live page's actual DOM, not
+             just its stylesheet. Content below intentionally has no
+             compensating top padding; the hero is meant to start behind the
+             nav. */
+          position: fixed;
           top: 0;
+          left: 0;
+          width: 100%;
           z-index: 1000;
           pointer-events: none;
           background-color: transparent;
@@ -379,22 +387,36 @@ const SHOWCASE = [
         .nav_buttons_item {
           position: relative;
         }
+        /* .button_main_wrap is just the rounded-corner clipping shell — all
+           real visual styling (border, background, padding) lives on
+           .button_main_element, a nested element this port initially left
+           out entirely, which is why colors/size were wrong: the wrapper
+           alone carries none of the actual button skin. */
         .button_main_wrap {
           position: relative;
-          display: flex;
-          padding: var(--_spacing---space--2) var(--_spacing---space--4);
+          display: inline-block;
           border-radius: var(--radius--round);
-          border: var(--border-width--main) solid;
         }
-        .nav_buttons_item.is-main .button_main_wrap {
-          border-color: color-mix(in hsl, var(--_theme---button-secondary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--border-hover) calc(100% * var(--_trigger---off)));
-          background-color: color-mix(in hsl, var(--_theme---button-secondary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--background-hover) calc(100% * var(--_trigger---off)));
-          color: color-mix(in hsl, var(--_theme---button-secondary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--text-hover) calc(100% * var(--_trigger---off)));
+        .button_main_element {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          height: 100%;
+          padding: 0.9rem 1.5rem;
+          line-height: 1;
+          text-align: center;
+          border-radius: inherit;
+          border: var(--border-width--main) solid color-mix(in srgb, var(--_theme---button-primary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--border-hover) calc(100% * var(--_trigger---off)));
+          color: color-mix(in srgb, var(--_theme---button-primary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--text-hover) calc(100% * var(--_trigger---off)));
+          background-color: color-mix(in srgb, var(--_theme---button-primary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--background-hover) calc(100% * var(--_trigger---off)));
+          transition: all 200ms ease;
+          position: relative;
         }
-        .nav_buttons_item:not(.is-main) .button_main_wrap {
-          border-color: color-mix(in hsl, var(--_theme---button-primary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--border-hover) calc(100% * var(--_trigger---off)));
-          background-color: color-mix(in hsl, var(--_theme---button-primary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--background-hover) calc(100% * var(--_trigger---off)));
-          color: color-mix(in hsl, var(--_theme---button-primary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--text-hover) calc(100% * var(--_trigger---off)));
+        .button_main_element.is-secondary {
+          border-color: color-mix(in srgb, var(--_theme---button-secondary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--border-hover) calc(100% * var(--_trigger---off)));
+          color: color-mix(in srgb, var(--_theme---button-secondary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--text-hover) calc(100% * var(--_trigger---off)));
+          background-color: color-mix(in srgb, var(--_theme---button-secondary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--background-hover) calc(100% * var(--_trigger---off)));
         }
         .clickable_wrap {
           position: absolute;
@@ -559,13 +581,17 @@ const SHOWCASE = [
                 <div role="listitem" class="nav_buttons_item is-main">
                   <div class="button_main_wrap" data-trigger="hover focus">
                     <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
-                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    <div class="button_main_element is-secondary">
+                      <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    </div>
                   </div>
                 </div>
                 <div role="listitem" class="nav_buttons_item">
                   <div class="button_main_wrap" data-trigger="hover focus">
                     <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
-                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    <div class="button_main_element">
+                      <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -654,13 +680,17 @@ const SHOWCASE = [
                 <div role="listitem" class="nav_buttons_item is-main">
                   <div class="button_main_wrap" data-trigger="hover focus">
                     <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
-                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    <div class="button_main_element is-secondary">
+                      <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    </div>
                   </div>
                 </div>
                 <div role="listitem" class="nav_buttons_item">
                   <div class="button_main_wrap" data-trigger="hover focus">
                     <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
-                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    <div class="button_main_element">
+                      <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                    </div>
                   </div>
                 </div>
               </div>
