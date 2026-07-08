@@ -218,10 +218,16 @@ const SHOWCASE = [
           cursor: pointer;
           color: inherit;
         }
+        /* The source path (M17 2L50 35 17 68) is a rightward-pointing arrow —
+           the reference rotates it 90deg via a data-wf--icon-arrow--direction
+           attribute to point down at rest. Same rotation applied here directly
+           since this port has no equivalent attribute-driven variant system. */
         .nav_links_svg {
           width: 0.6rem;
           aspect-ratio: 1;
           flex-shrink: 0;
+          transform: rotate(90deg);
+          transition: transform 200ms ease;
         }
         .nav_links_svg svg {
           display: block;
@@ -234,10 +240,11 @@ const SHOWCASE = [
           fill: none;
         }
         /* Arrow flips to point up while its dropdown is open — reads
-           aria-expanded directly per the reference's own technique. */
+           aria-expanded directly per the reference's own technique.
+           270deg = 90deg (rest, pointing down) + 180deg (flip), since
+           transform values override rather than compound across rules. */
         .nav_dropdown_component:has(> .nav_links_link[aria-expanded="true"]) .nav_links_svg {
-          transform: rotate(180deg);
-          transition: transform 200ms ease;
+          transform: rotate(270deg);
         }
 
         .nav_dropdown_component {
@@ -539,6 +546,7 @@ const SHOWCASE = [
 
               <div role="list" class="nav_actions_wrap">
                 <div class="nav_links_text u-text-transform-uppercase">EN</div>
+                  <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
                 <div class="nav_search_wrap">
                   <div class="nav_search_btn_wrap">
                     <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
@@ -633,6 +641,7 @@ const SHOWCASE = [
 
               <div role="list" class="nav_actions_wrap">
                 <div class="nav_links_text u-text-transform-uppercase">EN</div>
+                  <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
                 <div class="nav_search_wrap">
                   <div class="nav_search_btn_wrap">
                     <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
