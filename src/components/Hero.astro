@@ -44,8 +44,11 @@
   padding-top: clamp(12rem, 10.29rem + 8.57vw, 18rem);
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
-  /* fluid clamp, min 10rem @ 20rem viewport → max 16rem @ 90rem viewport */
-  padding-bottom: clamp(10rem, 8.29rem + 8.57vw, 16rem);
+  /* Marquee (the next section) has its own padding-top, which stacks visually with
+     this padding-bottom since both sections share the same dark background — sized
+     down from the top value by roughly that amount so top/bottom read as equal.
+     fluid clamp, min 7.75rem @ 20rem viewport → max 13rem @ 90rem viewport */
+  padding-bottom: clamp(7.75rem, 6.25rem + 7.5vw, 13rem);
   text-align: center;
   position: relative;
   z-index: 10;
