@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900|Poppins:300,400,500,600,700');
+@import './lumos.css';
 
 @tailwind base;
 @tailwind components;
@@ -70,20 +71,6 @@ svg { max-width: 100%; }
   --flex-xsmall: grid;
   --column-xsmall: row;
   --row-xsmall: column;
-
-  /* Numeric toggles for calc() expressions */
-  --r-large: 1; --r-medium: 0; --r-small: 0; --r-xsmall: 0;
-}
-
-/* State / trigger variable system */
-[data-state]  { --_state---true: 1; --_state---false: 0; }
-.is-active    { --_state---true: 0; --_state---false: 1; }
-[data-trigger] { --_trigger---on: 0; --_trigger---off: 1; }
-@media (hover: hover) {
-  [data-trigger~="hover"]:hover { --_trigger---on: 1; --_trigger---off: 0; }
-}
-@media (hover: none) {
-  [data-trigger~="mobile"] { --_trigger---on: 0; --_trigger---off: 1; }
 }
 
 html, body {
@@ -116,6 +103,9 @@ main { width: 100%; }
     --none-medium: none;
     --unset-medium: unset;
     --relative-medium: relative;
+    --start-medium: start;
+    --center-medium: center;
+    --end-medium: end;
   }
 }
 
@@ -127,6 +117,9 @@ main { width: 100%; }
     --row-small: row;
     --none-small: none;
     --unset-small: unset;
+    --start-small: start;
+    --center-small: center;
+    --end-small: end;
   }
 }
 
