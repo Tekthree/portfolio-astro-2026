@@ -1,6 +1,6 @@
 ---
 ---
-<section id="about" class="about-sec">
+<section id="about" class="about-sec u-theme-light">
   <!-- decorative art — top-right of about section -->
   <img
     src="/assets/images/62f6c3e27640277a801c55cc_left-art.avif"
@@ -13,7 +13,7 @@
 
     <!-- blurb -->
     <div class="about-blurb-wrap">
-      <h1 class="about-blurb-heading">
+      <h1 class="about-blurb-heading u-text-style-h3">
         My <em class="about-italic">mission</em> is to solve user challenges and convert them into loyal customers.
       </h1>
     </div>
@@ -37,11 +37,11 @@
       <!-- right: text -->
       <div class="about-right">
         <div class="about-text-wrap">
-          <h1 class="about-name-heading">hello, <br>my name is tek</h1>
-          <p class="about-body">
+          <h1 class="about-name-heading u-text-style-h3">hello, <br>my name is tek</h1>
+          <p class="about-body u-text-style-main">
             Whether it's building a website, creating a mobile app, or designing a logo, I have the skills and vision to bring your ideas to life. With a strong focus on user experience and a dedication to staying up-to-date on the latest industry trends, I'm confident in my ability to bring value to any project.
           </p>
-          <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" class="about-cv-btn">jump to cv</a>
+          <a href="https://linkedin.com/in/ryan-jones-54b39562" target="_blank" class="about-cv-btn" data-trigger="hover focus">jump to cv</a>
         </div>
       </div>
     </div>
@@ -75,8 +75,8 @@
 
 <style>
 .about-sec {
-  background-color: var(--font-light);
-  padding: 7.7em 0 10.6em;
+  padding-top: var(--_spacing---section-space--main);
+  padding-bottom: var(--_spacing---section-space--large);
   position: relative;
 }
 
@@ -92,24 +92,21 @@
 }
 
 .about-container {
-  max-width: 100em;
+  max-width: var(--max-width--main);
   margin: 0 auto;
-  padding: 0 6em;
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
 }
 
 .about-blurb-wrap {
-  margin-bottom: 10.2em;
+  margin-bottom: var(--_spacing---section-space--large);
   position: relative;
   max-width: 38em;
 }
 
 .about-blurb-heading {
-  font-family: Mortend, sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.5rem, 2.1vw + 1rem, 2.9rem);
-  line-height: 1.2;
-  color: var(--background-blue);
-  text-transform: uppercase;
+  font-family: var(--_typography---font--heading-family);
+  color: var(--_theme---text);
   opacity: 0.74;
   position: relative;
   z-index: 10;
@@ -117,7 +114,7 @@
 
 .about-italic {
   font-style: italic;
-  color: var(--submt-purple);
+  color: var(--swatch--accent-500);
 }
 
 /* photo + text row — uses responsive variable, no @media needed for direction */
@@ -141,7 +138,7 @@
   font-family: 'Mortend Outline', sans-serif;
   font-weight: 800;
   font-size: 6.9em;
-  color: var(--submt-purple);
+  color: var(--swatch--accent-500);
   opacity: 0.18;
   white-space: nowrap;
   position: absolute;
@@ -153,13 +150,13 @@
 }
 
 .about-photo-card {
-  background-color: var(--font-plum);
-  border-radius: 1rem;
+  background-color: var(--swatch--muted-500);
+  border-radius: var(--radius--main);
   display: flex;
   justify-content: center;
   align-items: stretch;
   height: auto;
-  padding-right: 3.91em;
+  padding-right: var(--_spacing---space--8);
   position: relative;
 }
 
@@ -175,57 +172,51 @@
 }
 
 .about-text-wrap {
-  padding: 0 3.54em 4.74em;
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
+  padding-bottom: var(--_spacing---section-space--small);
 }
 
 .about-name-heading {
-  font-family: Mortend, sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.5rem, 2.1vw + 1rem, 2.9rem);
-  line-height: 1;
-  color: color-mix(in srgb, var(--background-blue) 84%, transparent);
-  text-transform: uppercase;
-  margin-bottom: 0.38em;
+  font-family: var(--_typography---font--heading-family);
+  color: var(--_theme---text);
+  margin-bottom: var(--_text-style---h3-margin-bottom);
   max-width: 12.8em;
 }
 
 .about-body {
-  font-family: Poppins, sans-serif;
-  font-size: 1em;
-  color: var(--background-blue);
-  line-height: 1.6;
-  margin-bottom: 1.3em;
+  color: var(--_theme---text);
+  margin-bottom: var(--_spacing---space--4);
   opacity: 0.85;
 }
 
 .about-cv-btn {
   display: inline-block;
-  background-color: var(--submt-purple);
-  color: var(--font-light);
-  font-family: Mortend, sans-serif;
+  background-color: color-mix(in hsl, var(--swatch--accent-500) calc(100% * var(--_trigger---on)), color-mix(in srgb, var(--swatch--accent-500), black 20%) calc(100% * var(--_trigger---off)));
+  color: var(--swatch--light-100);
+  font-family: var(--_typography---font--heading-family);
   font-weight: 400;
-  font-size: 1.25em;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--_typography---letter-spacing--tight);
   text-transform: uppercase;
-  padding: 0.9em 1.74em 0.67em;
-  border-radius: 0.4em;
+  padding: var(--_spacing---space--3) var(--_spacing---space--5);
+  border-radius: var(--radius--small);
   text-decoration: none;
 }
 
 /* stats bar */
 .about-stats {
-  background-color: var(--bg-stats);
-  border-radius: 1rem;
+  background-color: var(--_theme---background-2);
+  border-radius: var(--radius--main);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5.73em;
+  margin-top: var(--_spacing---section-space--small);
 }
 
 .stat-item {
   display: flex;
   justify-content: space-between;
-  border-radius: 0.5em;
+  border-radius: var(--radius--small);
   overflow: clip;
 }
 
@@ -233,7 +224,7 @@
   flex: 0 auto;
   justify-content: center;
   align-items: center;
-  padding: 0.94em 1.2em;
+  padding: var(--_spacing---space--3) var(--_spacing---space--4);
   display: flex;
 }
 
@@ -245,14 +236,14 @@
 
 .stat-text {
   flex: 0 auto;
-  padding: 1.32em;
+  padding: var(--_spacing---space--4);
 }
 
 .stat-num {
-  font-family: Mortend, sans-serif;
+  font-family: var(--_typography---font--heading-family);
   font-weight: 800;
-  font-size: clamp(2rem, 3vw + 0.5rem, 3.4rem);
-  color: var(--background-blue);
+  font-size: var(--_typography---font-size--h4);
+  color: var(--_theme---text);
   opacity: 0.74;
   margin: 0;
   line-height: 1;
@@ -261,14 +252,14 @@
 
 .stat-suffix {
   font-size: 0.6em;
-  color: var(--highlight-yellow);
+  color: var(--swatch--highlight-500);
 }
 
 .stat-label {
-  font-family: Poppins, sans-serif;
-  font-size: 1.1em;
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-large);
   font-weight: 400;
-  color: var(--background-blue);
+  color: var(--_theme---text);
   margin: 0;
   line-height: 1.3;
   white-space: pre-line;
@@ -276,48 +267,36 @@
 
 .stat-divider {
   flex: 0 auto;
-  background-color: var(--stat-divider-color);
+  background-color: color-mix(in srgb, var(--swatch--light-200), black 15%);
   width: 4px;
   height: 10.1em;
-  margin-left: 2.76em;
-  margin-right: 2.76em;
+  margin-left: var(--_spacing---space--6);
+  margin-right: var(--_spacing---space--6);
   align-self: center;
 }
 
-/* Tablet: flex-direction handled by --column-medium variable */
+/* Tablet: flex-direction handled by --column-medium variable; width swap and
+   watermark-hide have no responsive-variable equivalent, kept as @media */
 @media screen and (max-width: 991px) {
-  .about-sec     { padding: 6.5em 0 8em; min-height: 0; }
-  .about-container { padding: 0 6vw; }
-  .about-blurb-wrap { margin-bottom: 4em; }
-  .about-art-right { height: 20.8em; top: 3%; }
-
   .about-left,
   .about-right   { width: 100%; }
-  .about-text-wrap { padding: 4.74em 0 4.74em; }
   .about-outline-text { display: none; }
 }
 
 /* Mobile */
 @media screen and (max-width: 767px) {
-  .about-sec     { padding: 3.3em 0 6em; min-height: 0; }
-  .about-container { padding: 0 5vw; }
-  .about-blurb-wrap { margin-bottom: 2.5em; }
-  .about-art-right { height: 15.1em; top: 9%; }
-
   .about-photo   { height: 22em; }
-  .about-photo-card { padding-right: 2em; }
-
-  .about-text-wrap { padding: 3em 0 3em; }
+  .about-photo-card { padding-right: var(--_spacing---space--5); }
 
   /* stats: allow horizontal scroll */
-  .about-stats   { overflow-x: auto; justify-content: flex-start; padding: 0 1em; }
+  .about-stats   { overflow-x: auto; justify-content: flex-start; padding: 0 var(--_spacing---space--3); }
   .stat-logo     { width: clamp(2rem, 10vw, 4rem); height: clamp(2rem, 10vw, 4rem); }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
   .about-photo   { height: 18em; }
-  .stat-divider  { margin-left: 1em; margin-right: 1em; }
+  .stat-divider  { margin-left: var(--_spacing---space--3); margin-right: var(--_spacing---space--3); }
   .about-art-right { display: none; }
 }
 </style>
