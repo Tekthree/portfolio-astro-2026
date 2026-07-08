@@ -350,6 +350,8 @@ const SHOWCASE = [
           fill: none;
         }
         .nav_search_wrap {
+          width: 20rem;
+          max-width: 70vw;
           display: flex;
           align-items: center;
           border-bottom: var(--border-width--main) solid var(--_theme---border);
@@ -572,14 +574,26 @@ const SHOWCASE = [
               <div role="list" class="nav_actions_wrap">
                 <div class="nav_links_text u-text-transform-uppercase">EN</div>
                   <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
-                <div class="nav_search_wrap">
-                  <div class="nav_search_btn_wrap">
-                    <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
-                  </div>
-                  <label class="nav_search_label">
+                <div class="nav_dropdown_component">
+                  <div aria-controls="nav-dd-search" aria-expanded="false" aria-haspopup="menu" class="nav_links_link" id="nav-toggle-search" role="button" tabindex="0">
+                    <div class="nav_links_search_icon"><svg viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg></div>
                     <span class="u-sr-only">Search</span>
-                    <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
-                  </label>
+                  </div>
+                  <nav class="nav_dropdown_mega_wrap" id="nav-dd-search" aria-labelledby="nav-toggle-search">
+                    <div class="nav_dropdown_mega_content">
+                      <div class="nav_dropdown_mega_scroll">
+                        <form action="/search" class="nav_search_wrap">
+                          <div class="nav_search_btn_wrap">
+                            <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
+                          </div>
+                          <label class="nav_search_label">
+                            <span class="u-sr-only">Search</span>
+                            <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
+                          </label>
+                        </form>
+                      </div>
+                    </div>
+                  </nav>
                 </div>
                 <div role="listitem" class="nav_buttons_item is-main">
                   <div class="button_main_wrap" data-trigger="hover focus">
@@ -671,14 +685,26 @@ const SHOWCASE = [
               <div role="list" class="nav_actions_wrap">
                 <div class="nav_links_text u-text-transform-uppercase">EN</div>
                   <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
-                <div class="nav_search_wrap">
-                  <div class="nav_search_btn_wrap">
-                    <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
-                  </div>
-                  <label class="nav_search_label">
+                <div class="nav_dropdown_component">
+                  <div aria-controls="nav-dd-search-m" aria-expanded="false" aria-haspopup="menu" class="nav_links_link" id="nav-toggle-search-m" role="button" tabindex="0">
+                    <div class="nav_links_search_icon"><svg viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg></div>
                     <span class="u-sr-only">Search</span>
-                    <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
-                  </label>
+                  </div>
+                  <nav class="nav_dropdown_mega_wrap" id="nav-dd-search-m" aria-labelledby="nav-toggle-search-m">
+                    <div class="nav_dropdown_mega_content">
+                      <div class="nav_dropdown_mega_scroll">
+                        <form action="/search" class="nav_search_wrap">
+                          <div class="nav_search_btn_wrap">
+                            <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
+                          </div>
+                          <label class="nav_search_label">
+                            <span class="u-sr-only">Search</span>
+                            <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
+                          </label>
+                        </form>
+                      </div>
+                    </div>
+                  </nav>
                 </div>
                 <div role="listitem" class="nav_buttons_item is-main">
                   <div class="button_main_wrap" data-trigger="hover focus">
