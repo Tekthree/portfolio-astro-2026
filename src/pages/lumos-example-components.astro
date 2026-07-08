@@ -90,148 +90,217 @@ const SHOWCASE = [
 <BaseLayout title="Lumos Example Components (Reference)">
   <div class="page_wrap u-theme-dark">
     <!-- ============================== Nav ============================== -->
-    <header class="nav_wrap">
+    <div class="nav_component">
       <style>
-        /* CSS custom properties for dropdown/menu animation durations */
-        .nav_wrap {
+        /* Faithful port of the live reference's nav — sourced directly from its
+           real markup and compiled CSS, not reconstructed. Two real, deliberate
+           deviations from the general skill rules, both because the reference
+           itself works this way:
+           1. The open/close state is read straight off `aria-expanded` via
+              `:has()` (no JS-driven .is-active class needed for this component —
+              a click handler flips aria-expanded, the CSS reacts to it directly).
+              This is the actual mechanism the reference's own nav ships with.
+           2. `.nav_component` redeclares the `--_theme---*` variables locally
+              (matching the reference's own scoped-light-theme technique) rather
+              than using the `u-theme-light` utility class, because the nav
+              wrapper itself must stay transparent — the visible white surface
+              comes from `nav_desktop_contain` / `nav_mobile_layout` picking up
+              `--_theme---nav--background`, not from painting the wrapper itself.
+        */
+        .nav_component {
           --nav--dropdown-open-duration: 400ms;
           --nav--dropdown-close-duration: 400ms;
           --nav--menu-open-duration: 400ms;
           --nav--menu-close-duration: 400ms;
-        }
-
-        .nav_wrap {
           position: sticky;
           top: 0;
-          z-index: 100;
+          z-index: 1000;
+          pointer-events: none;
+          background-color: transparent;
+          color: var(--_theme---text);
+          container-type: inline-size;
+          --_theme---background: var(--swatch--light-200);
+          --_theme---text: var(--swatch--dark-900);
+          --_theme---background-2: var(--swatch--light-100);
+          --_theme---heading-accent: var(--swatch--brand-600);
+          --_theme---border: var(--swatch--dark-900-o20);
+          --_theme---nav--background: var(--_theme---background-2);
+        }
+
+        .nav_skip_wrap {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 2;
+          margin: 0.5rem;
+          padding: 0.5rem;
+          border: var(--border-width--main) solid var(--_theme---border);
+          border-radius: var(--radius--small);
           background-color: var(--_theme---background);
           color: var(--_theme---text);
-          border-bottom: var(--border-width--main) solid var(--_theme---border);
+          pointer-events: auto;
+          transform: translate(-200%);
+        }
+        .nav_skip_wrap:focus {
+          transform: translate(0%);
         }
 
-        .nav_contain {
-          padding-top: var(--_spacing---space--3);
-          padding-bottom: var(--_spacing---space--3);
+        .nav_desktop_wrap,
+        .nav_mobile_wrap {
+          position: relative;
+          margin-top: var(--site--margin);
+          background-color: transparent;
         }
+        .nav_desktop_wrap { display: none; }
 
-        .nav_layout {
+        .nav_desktop_contain,
+        .nav_mobile_layout {
+          max-width: var(--max-width--main);
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: var(--radius--small);
+          background-color: var(--_theme---nav--background);
+          width: calc(100% - var(--site--margin) * 2);
+        }
+        .nav_desktop_contain {
+          padding-left: var(--_spacing---space--5);
+          padding-right: var(--_spacing---space--5);
+        }
+        .nav_desktop_layout,
+        .nav_mobile_layout {
+          height: 4rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: var(--site--gutter);
+          gap: var(--_spacing---space--3);
+          pointer-events: auto;
+          position: relative;
+        }
+        .nav_mobile_layout {
+          padding: 0 var(--_spacing---space--5);
         }
 
-        .nav_logo_wrap {
+        .nav_desktop_logo,
+        .nav_mobile_logo {
           flex-shrink: 0;
           width: 6rem;
+          display: flex;
+          align-items: center;
         }
-
         .nav_logo_svg {
           width: 100%;
           height: auto;
           display: block;
         }
-
         .nav_logo_path {
           fill: currentColor;
         }
 
-        .nav_links_wrap {
+        .nav_links_component {
+          flex: 1;
           display: flex;
           flex-direction: row;
-          align-items: center;
-          gap: var(--_spacing---space--6);
-          flex: 1;
-          justify-content: flex-end;
         }
-
-        .nav_links_list {
+        .nav_links_wrap {
           display: flex;
           align-items: center;
-          gap: var(--_spacing---space--5);
         }
-
-        .nav_links_item_wrap {
+        .nav_links_item {
+          height: 100%;
           position: relative;
         }
-
         .nav_links_link {
+          height: 100%;
           display: flex;
           align-items: center;
           gap: var(--_spacing---space--1);
-          padding: var(--_spacing---space--2) 0;
+          padding: 0 var(--_spacing---space--3);
+          cursor: pointer;
+          color: inherit;
         }
-
-        .nav_links_arrow {
+        .nav_links_svg {
           width: 0.6rem;
           aspect-ratio: 1;
           flex-shrink: 0;
-          transform: rotate(calc(-90deg + 180deg * var(--_state---true)));
-          transition: transform var(--nav--dropdown-close-duration) ease;
         }
-
-        .nav_links_arrow_path {
+        .nav_links_svg svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        .nav_links_svg path {
           stroke: currentColor;
           stroke-width: 2;
           fill: none;
         }
+        /* Arrow flips to point up while its dropdown is open — reads
+           aria-expanded directly per the reference's own technique. */
+        .nav_dropdown_component:has(> .nav_links_link[aria-expanded="true"]) .nav_links_svg {
+          transform: rotate(180deg);
+          transition: transform 200ms ease;
+        }
 
-        /* Dropdown panel: initial state (collapsed) */
-        .nav_dropdown_panel {
+        .nav_dropdown_component {
+          position: static;
+        }
+
+        /* Dropdown open/close: grid-template-rows height animation, collapsed
+           (0fr) at rest, expands to 1fr when its toggle's aria-expanded is
+           true — matches the reference exactly, no JS state class needed. */
+        .nav_dropdown_main_wrap,
+        .nav_dropdown_mega_wrap {
           display: grid;
-          grid-template-columns: minmax(0, 1fr);
           grid-template-rows: 0fr;
+          grid-template-columns: minmax(0, 1fr);
+          visibility: hidden;
+          opacity: 0;
+          transition: grid-template-rows var(--nav--dropdown-close-duration);
+        }
+        .nav_dropdown_component:has(> .nav_links_link[aria-expanded="true"]) .nav_dropdown_main_wrap,
+        .nav_dropdown_component:has(> .nav_links_link[aria-expanded="true"]) .nav_dropdown_mega_wrap {
+          grid-template-rows: 1fr;
+          visibility: visible;
+          opacity: 1;
+          transition-duration: var(--nav--dropdown-open-duration);
+        }
+        .nav_dropdown_main_content,
+        .nav_dropdown_mega_content {
+          overflow: hidden;
+        }
+
+        .nav_dropdown_main_wrap {
           position: absolute;
           top: 100%;
           left: 0;
-          margin-top: var(--_spacing---space--2);
-          min-width: 12rem;
+          width: 10rem;
+          margin-top: var(--_spacing---space--1);
+        }
+        .nav_dropdown_mega_wrap {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: calc(100vw - var(--site--margin) * 2);
+          max-width: var(--max-width--main);
+          margin-top: var(--_spacing---space--1);
+        }
+        .nav_dropdown_main_scroll,
+        .nav_dropdown_mega_scroll {
+          padding: var(--_spacing---space--3);
           border-radius: var(--radius--main);
           border: var(--border-width--main) solid var(--_theme---border);
           background-color: var(--_theme---background-2);
           box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--_theme---text) 15%, transparent);
-          transition: grid-template-rows var(--nav--dropdown-close-duration);
-          visibility: hidden;
-          opacity: 0;
-          overflow: hidden;
         }
-
-        /* Dropdown panel children need overflow: hidden for height transition */
-        .nav_dropdown_panel > * {
-          overflow: hidden;
-        }
-
-        /* Dropdown panel: open state (expanded via aria-expanded="true") */
-        .nav_links_link:has(~ .nav_dropdown_panel[aria-expanded="true"]) {
-          --nav--dropdown-close-duration: var(--nav--dropdown-open-duration);
-        }
-
-        .nav_dropdown_panel[aria-expanded="true"] {
-          grid-template-rows: 1fr;
-          visibility: visible;
-          opacity: 1;
-        }
-
-        /* Mega dropdown (4 columns for Work section) */
-        .nav_dropdown_panel.is-mega {
-          width: max-content;
-          max-width: calc(100vw - var(--site--margin) * 2);
+        .nav_dropdown_mega_layout {
+          display: grid;
           grid-template-columns: repeat(4, minmax(0, 10rem));
-          gap: var(--_spacing---space--4);
-          padding: var(--_spacing---space--3);
+          gap: var(--_spacing---space--6);
         }
-
-        /* Regular dropdown padding */
-        .nav_dropdown_panel:not(.is-mega) {
-          padding: var(--_spacing---space--3);
-        }
-
         .nav_dropdown_list {
           display: flex;
           flex-direction: column;
           gap: var(--_spacing---space--1);
         }
-
         .nav_dropdown_link {
           display: block;
           padding: var(--_spacing---space--2);
@@ -240,178 +309,266 @@ const SHOWCASE = [
         }
 
         .nav_actions_wrap {
+          flex: none;
           display: flex;
           align-items: center;
           gap: var(--_spacing---space--3);
         }
-
-        .nav_locale_text {
+        .nav_links_text.u-text-transform-uppercase {
           padding: var(--_spacing---space--2);
         }
 
-        .nav_search_wrap {
-          position: relative;
-        }
-
-        .nav_search_btn {
-          width: 2.2rem;
+        .nav_links_search_icon {
+          width: 1.1rem;
           aspect-ratio: 1;
+        }
+        .nav_links_search_icon svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        .nav_links_search_icon path {
+          stroke: currentColor;
+          fill: none;
+        }
+        .nav_search_wrap {
+          display: flex;
+          align-items: center;
+          border-bottom: var(--border-width--main) solid var(--_theme---border);
+        }
+        .nav_search_btn_wrap {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: var(--radius--round);
+          padding: var(--_spacing---space--2);
         }
-
-        .nav_search_icon {
-          width: 1rem;
+        .nav_search_btn_icon {
+          width: 1.1rem;
           aspect-ratio: 1;
         }
-
-        .nav_search_icon_path {
+        .nav_search_btn_icon circle,
+        .nav_search_btn_icon path {
           stroke: currentColor;
-          stroke-width: 2;
           fill: none;
         }
-
-        .nav_search_form {
-          position: absolute;
-          top: 100%;
-          right: 0;
-          margin-top: var(--_spacing---space--2);
-        }
-
         .nav_search_field {
           width: 16rem;
-          max-width: 70vw;
-          padding: var(--_spacing---space--3) var(--_spacing---space--4);
-          border-radius: var(--radius--main);
-          border: var(--border-width--main) solid var(--_theme---border);
-          background-color: var(--_theme---background-2);
-          color: var(--_theme---text);
+          max-width: 60vw;
+          height: 2.9em;
+          background: transparent;
+          border: none;
+          color: inherit;
           font-size: 1rem;
         }
-
-        .nav_buttons_wrap {
-          display: flex;
+        .nav_search_field::placeholder {
+          color: color-mix(in srgb, var(--_theme---text) 60%, transparent);
         }
 
-        .nav_toggle_wrap {
+        /* Button component — minimal, scoped to just what this nav needs
+           (the two nav_buttons_item instances). The full Button system was
+           deliberately excluded from the shared foundation layer (2026-07-07
+           decision), but the real nav markup uses it, so it's built here,
+           local to the nav, rather than skipped. */
+        .nav_buttons_item {
+          position: relative;
+        }
+        .button_main_wrap {
+          position: relative;
+          display: flex;
+          padding: var(--_spacing---space--2) var(--_spacing---space--4);
+          border-radius: var(--radius--round);
+          border: var(--border-width--main) solid;
+        }
+        .nav_buttons_item.is-main .button_main_wrap {
+          border-color: color-mix(in hsl, var(--_theme---button-secondary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--border-hover) calc(100% * var(--_trigger---off)));
+          background-color: color-mix(in hsl, var(--_theme---button-secondary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--background-hover) calc(100% * var(--_trigger---off)));
+          color: color-mix(in hsl, var(--_theme---button-secondary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-secondary--text-hover) calc(100% * var(--_trigger---off)));
+        }
+        .nav_buttons_item:not(.is-main) .button_main_wrap {
+          border-color: color-mix(in hsl, var(--_theme---button-primary--border) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--border-hover) calc(100% * var(--_trigger---off)));
+          background-color: color-mix(in hsl, var(--_theme---button-primary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--background-hover) calc(100% * var(--_trigger---off)));
+          color: color-mix(in hsl, var(--_theme---button-primary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--text-hover) calc(100% * var(--_trigger---off)));
+        }
+        .clickable_wrap {
+          position: absolute;
+          inset: 0;
+        }
+        .clickable_btn {
+          width: 100%;
+          height: 100%;
+        }
+
+        .nav_mobile_menu_wrap {
+          display: none;
+        }
+        .nav_button_wrap {
+          flex-shrink: 0;
+          width: 2rem;
+          aspect-ratio: 1;
           display: none;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          width: 2.4rem;
-          aspect-ratio: 1;
-          flex-shrink: 0;
+          gap: var(--_spacing---space--2);
+          pointer-events: auto;
         }
-
-        .nav_toggle_line {
+        .nav_button_line {
           width: 100%;
           height: var(--border-width--main);
           background-color: currentColor;
-        }
-
-        .nav_toggle_line.is-1 {
-          transform: translateY(calc(-0.3rem * var(--_state---false))) rotate(calc(45deg * var(--_state---true)));
           transition: transform 200ms ease;
         }
-
-        .nav_toggle_line.is-2 {
-          margin-top: 0.6rem;
-          transform: translateY(calc(-0.6rem * var(--_state---true))) rotate(calc(-45deg * var(--_state---true)));
-          transition: transform 200ms ease;
+        .nav_component:has(.nav_button_wrap[aria-expanded="true"]) .nav_button_line.is-1 {
+          transform: translateY(calc(var(--_spacing---space--2) * 0.5 + 0.047rem)) rotate(45deg);
+        }
+        .nav_component:has(.nav_button_wrap[aria-expanded="true"]) .nav_button_line.is-2 {
+          transform: translateY(calc(var(--_spacing---space--2) * -0.5 - 0.047rem)) rotate(-45deg);
         }
 
-        /* Mobile dropdown panel: uses grid-template-rows animation */
-        .nav_mobile_dropdown_panel {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr);
-          grid-template-rows: 0fr;
-          padding: 0;
-          transition: grid-template-rows var(--nav--dropdown-close-duration);
-          visibility: hidden;
-          overflow: hidden;
+        .nav_dropdown_backdrop,
+        .nav_menu_backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          width: 100%;
+          height: 100vh;
+          opacity: 0;
+          pointer-events: none;
+          background-color: color-mix(in srgb, var(--swatch--dark-900) 20%, transparent);
+          transition: opacity var(--nav--dropdown-close-duration);
+        }
+        .nav_component:has(.nav_dropdown_component > .nav_links_link[aria-expanded="true"]) .nav_dropdown_backdrop {
+          opacity: 1;
+        }
+        .nav_component:has(.nav_button_wrap[aria-expanded="true"]) .nav_menu_backdrop {
+          opacity: 1;
         }
 
-        .nav_mobile_dropdown_panel > * {
-          overflow: hidden;
+        /* Desktop <-> mobile switch at the reference's real 65em breakpoint.
+           @container is the documented escape hatch: a pure structural
+           swap (two entirely different trees shown/hidden) can't be
+           expressed by the responsive keyword variables. */
+        @container (min-width: 65em) {
+          .nav_desktop_wrap { display: block; }
+          .nav_mobile_wrap { display: none; }
         }
-
-        .nav_mobile_link:has(~ .nav_mobile_dropdown_panel[aria-expanded="true"]) {
-          --nav--dropdown-close-duration: var(--nav--dropdown-open-duration);
-        }
-
-        .nav_mobile_dropdown_panel[aria-expanded="true"] {
-          grid-template-rows: 1fr;
-          padding: var(--_spacing---space--2) var(--_spacing---space--3) var(--_spacing---space--3);
-          visibility: visible;
-        }
-
-        .nav_mobile_panel {
-          display: none;
-          padding-top: var(--_spacing---space--4);
-          padding-bottom: var(--_spacing---space--2);
-          border-top: var(--border-width--main) solid var(--_theme---border);
-          margin-top: var(--_spacing---space--3);
-        }
-
-        .nav_mobile_list {
-          display: flex;
-          flex-direction: column;
-          gap: var(--_spacing---space--1);
-        }
-
-        .nav_mobile_link {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: var(--_spacing---space--3) var(--_spacing---space--1);
-          border-bottom: var(--border-width--main) solid var(--_theme---border);
-        }
-
-        .nav_mobile_buttons {
-          margin-top: var(--_spacing---space--4);
-        }
-
-        .nav_skip_wrap {
-          position: absolute;
-          top: -3rem;
-          left: var(--site--margin);
-          z-index: 200;
-          padding: var(--_spacing---space--2) var(--_spacing---space--4);
-          background-color: var(--_theme---background);
-          color: var(--_theme---text);
-          border-radius: var(--radius--small);
-          border: var(--border-width--main) solid var(--_theme---border);
-          transition: top 150ms ease;
-        }
-
-        .nav_skip_wrap:focus {
-          top: var(--site--margin);
-        }
-
-        /* Desktop <-> mobile nav switch using 65em breakpoint (matching reference)
-           The @container escape hatch: responsive variables cannot express a pure
-           show/hide toggle in this direction, so we use @container here. */
         @container (width < 65em) {
-          .nav_links_list,
-          .nav_buttons_wrap {
-            display: none;
-          }
-          .nav_toggle_wrap {
-            display: flex;
-          }
-          .nav_mobile_panel[aria-expanded="true"] {
+          .nav_component:has(.nav_button_wrap[aria-expanded="true"]) .nav_mobile_menu_wrap {
             display: block;
           }
+          .nav_button_wrap { display: flex; }
+          .nav_links_component { flex-direction: column; padding: var(--_spacing---space--3) 0; }
+          .nav_links_wrap { flex-direction: column; align-items: stretch; width: 100%; }
+          .nav_links_link { padding: var(--_spacing---space--3) var(--_spacing---space--5); }
+          .nav_dropdown_main_wrap,
+          .nav_dropdown_mega_wrap { position: static; width: 100%; margin-top: 0; }
+          .nav_dropdown_mega_layout { grid-template-columns: minmax(0, 1fr); }
+          .nav_dropdown_main_scroll,
+          .nav_dropdown_mega_scroll { border: none; border-radius: 0; box-shadow: none; padding: 0 var(--_spacing---space--5); }
+          .nav_actions_wrap { flex-direction: column; align-items: stretch; padding: var(--_spacing---space--3) var(--_spacing---space--5); gap: var(--_spacing---space--4); }
+          .nav_buttons_item { margin-top: var(--_spacing---space--3); }
         }
       </style>
 
       <a class="nav_skip_wrap" href="#main">Skip to main content</a>
 
-      <div class="nav_contain u-container">
-        <div class="nav_layout">
-          <a aria-label="Home Page" class="nav_logo_wrap" href="/">
+      <header class="nav_desktop_wrap">
+        <div class="nav_desktop_contain">
+          <div class="nav_desktop_layout">
+            <a aria-label="Home Page" class="nav_desktop_logo" href="/">
+              <svg class="nav_logo_svg" fill="none" viewBox="0 0 908 184" xmlns="http://www.w3.org/2000/svg">
+                <path class="nav_logo_path" d="M176.11 120.7L119.28 105.47L134.5 162.3L106.42 169.82L91.19 113.01L20.56 183.63L0 163.07L70.63 92.44L13.81 77.22L21.33 49.13L78.16 64.36L62.93 7.53L91.02 0L106.25 56.83L148.86 14.21L169.42 34.77L126.81 77.39L183.63 92.62L176.11 120.7Z"></path>
+                <path class="nav_logo_path" d="M224.24 174.1V7.62988H255.87V146.75H333.63V174.1H224.24Z"></path>
+                <path class="nav_logo_path" d="M455.47 54.2402V174.1H426.22V155.55C419.56 168.63 406.01 176 388.88 176C362.01 176 344.41 156.5 344.41 128.44V54.2402H373.42V122.25C373.42 138.66 383.65 150.07 398.39 150.07C414.8 150.07 426.21 137.23 426.21 119.63V54.2402H455.46H455.47Z"></path>
+                <path class="nav_logo_path" d="M676.2 114.17C676.2 78.5003 702.36 52.3403 738.98 52.3403C775.6 52.3403 801.52 78.5003 801.52 114.17C801.52 149.84 775.36 176 738.98 176C702.6 176 676.2 149.84 676.2 114.17ZM772.04 114.17C772.04 92.5303 758.72 77.5503 738.98 77.5503C719.24 77.5503 705.69 92.5303 705.69 114.17C705.69 135.81 719.01 150.79 738.98 150.79C758.95 150.79 772.04 135.81 772.04 114.17Z"></path>
+              </svg>
+            </a>
+
+            <nav aria-label="Main" class="nav_links_component">
+              <div role="list" class="nav_links_wrap">
+                <div role="listitem" class="nav_links_item">
+                  <div class="nav_dropdown_component">
+                    <div aria-controls="nav-dd-services" aria-expanded="false" aria-haspopup="menu" class="nav_links_link" id="nav-toggle-services" role="button" tabindex="0">
+                      <div class="nav_links_text">Services</div>
+                      <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
+                    </div>
+                    <nav class="nav_dropdown_main_wrap" id="nav-dd-services" aria-labelledby="nav-toggle-services">
+                      <div class="nav_dropdown_main_content">
+                        <div class="nav_dropdown_main_scroll">
+                          <ul role="list" class="nav_dropdown_list">
+                            {NAV_SERVICES_LINKS.map((label) => (
+                              <li class="nav_dropdown_item"><a class="nav_dropdown_link" data-trigger="hover focus" href="#">{label}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+                <div role="listitem" class="nav_links_item">
+                  <div class="nav_dropdown_component">
+                    <div aria-controls="nav-dd-work" aria-expanded="false" aria-haspopup="menu" class="nav_links_link" id="nav-toggle-work" role="button" tabindex="0">
+                      <div class="nav_links_text">Work</div>
+                      <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
+                    </div>
+                    <nav class="nav_dropdown_mega_wrap" id="nav-dd-work" aria-labelledby="nav-toggle-work">
+                      <div class="nav_dropdown_mega_content">
+                        <div class="nav_dropdown_mega_scroll">
+                          <div class="nav_dropdown_mega_layout">
+                            {NAV_WORK_COLUMNS.map(() => (
+                              <ul role="list" class="nav_dropdown_list">
+                                {NAV_SERVICES_LINKS.map((label) => (
+                                  <li class="nav_dropdown_item"><a class="nav_dropdown_link" data-trigger="hover focus" href="#">{label}</a></li>
+                                ))}
+                              </ul>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+                {NAV_LINKS.map((label) => (
+                  <div role="listitem" class="nav_links_item">
+                    <a class="nav_links_link" data-trigger="hover focus" href="#">
+                      <div class="nav_links_text">{label}</div>
+                    </a>
+                  </div>
+                ))}
+              </div>
+
+              <div role="list" class="nav_actions_wrap">
+                <div class="nav_links_text u-text-transform-uppercase">EN</div>
+                <div class="nav_search_wrap">
+                  <div class="nav_search_btn_wrap">
+                    <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
+                  </div>
+                  <label class="nav_search_label">
+                    <span class="u-sr-only">Search</span>
+                    <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
+                  </label>
+                </div>
+                <div role="listitem" class="nav_buttons_item is-main">
+                  <div class="button_main_wrap" data-trigger="hover focus">
+                    <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
+                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                  </div>
+                </div>
+                <div role="listitem" class="nav_buttons_item">
+                  <div class="button_main_wrap" data-trigger="hover focus">
+                    <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
+                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <div role="banner" class="nav_mobile_wrap">
+        <div class="nav_mobile_layout">
+          <a aria-label="Home Page" class="nav_mobile_logo" href="/">
             <svg class="nav_logo_svg" fill="none" viewBox="0 0 908 184" xmlns="http://www.w3.org/2000/svg">
               <path class="nav_logo_path" d="M176.11 120.7L119.28 105.47L134.5 162.3L106.42 169.82L91.19 113.01L20.56 183.63L0 163.07L70.63 92.44L13.81 77.22L21.33 49.13L78.16 64.36L62.93 7.53L91.02 0L106.25 56.83L148.86 14.21L169.42 34.77L126.81 77.39L183.63 92.62L176.11 120.7Z"></path>
               <path class="nav_logo_path" d="M224.24 174.1V7.62988H255.87V146.75H333.63V174.1H224.24Z"></path>
@@ -420,165 +577,125 @@ const SHOWCASE = [
             </svg>
           </a>
 
-          <nav aria-label="Main" class="nav_links_wrap">
-            <ul class="nav_links_list" role="list">
-              <li class="nav_links_item_wrap">
-                <button aria-expanded="false" class="nav_links_link" data-nav-dropdown-toggle="services">
-                  Services
-                  <svg class="nav_links_arrow" viewBox="0 0 66 70">
-                    <path class="nav_links_arrow_path" d="M17 2L50 35 17 68"></path>
-                  </svg>
-                </button>
-                <div class="nav_dropdown_panel" data-nav-dropdown-panel="services" aria-expanded="false">
-                  <ul class="nav_dropdown_list" role="list">
-                    {NAV_SERVICES_LINKS.map((label) => (
-                      <li>
-                        <a class="nav_dropdown_link" data-trigger="hover focus" href="#">{label}</a>
-                      </li>
-                    ))}
-                  </ul>
+          <nav class="nav_mobile_menu_wrap">
+            <nav aria-label="Main" class="nav_links_component">
+              <div role="list" class="nav_links_wrap">
+                <div role="listitem" class="nav_links_item">
+                  <div class="nav_dropdown_component">
+                    <div aria-controls="nav-dd-services-m" aria-expanded="false" aria-haspopup="menu" class="nav_links_link" id="nav-toggle-services-m" role="button" tabindex="0">
+                      <div class="nav_links_text">Services</div>
+                      <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
+                    </div>
+                    <nav class="nav_dropdown_main_wrap" id="nav-dd-services-m" aria-labelledby="nav-toggle-services-m">
+                      <div class="nav_dropdown_main_content">
+                        <div class="nav_dropdown_main_scroll">
+                          <ul role="list" class="nav_dropdown_list">
+                            {NAV_SERVICES_LINKS.map((label) => (
+                              <li class="nav_dropdown_item"><a class="nav_dropdown_link" href="#">{label}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
                 </div>
-              </li>
-              <li class="nav_links_item_wrap">
-                <button aria-expanded="false" class="nav_links_link" data-nav-dropdown-toggle="work">
-                  Work
-                  <svg class="nav_links_arrow" viewBox="0 0 66 70">
-                    <path class="nav_links_arrow_path" d="M17 2L50 35 17 68"></path>
-                  </svg>
-                </button>
-                <div class="nav_dropdown_panel is-mega" data-nav-dropdown-panel="work" aria-expanded="false">
-                  {NAV_WORK_COLUMNS.map(() => (
-                    <ul class="nav_dropdown_list" role="list">
-                      {NAV_SERVICES_LINKS.map((label) => (
-                        <li>
-                          <a class="nav_dropdown_link" data-trigger="hover focus" href="#">{label}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  ))}
+                <div role="listitem" class="nav_links_item">
+                  <div class="nav_dropdown_component">
+                    <div aria-controls="nav-dd-work-m" aria-expanded="false" aria-haspopup="menu" class="nav_links_link" id="nav-toggle-work-m" role="button" tabindex="0">
+                      <div class="nav_links_text">Work</div>
+                      <div class="nav_links_svg"><svg viewBox="0 0 66 70"><path d="M17 2L50 35 17 68"></path></svg></div>
+                    </div>
+                    <nav class="nav_dropdown_mega_wrap" id="nav-dd-work-m" aria-labelledby="nav-toggle-work-m">
+                      <div class="nav_dropdown_mega_content">
+                        <div class="nav_dropdown_mega_scroll">
+                          <div class="nav_dropdown_mega_layout">
+                            {NAV_WORK_COLUMNS.map(() => (
+                              <ul role="list" class="nav_dropdown_list">
+                                {NAV_SERVICES_LINKS.map((label) => (
+                                  <li class="nav_dropdown_item"><a class="nav_dropdown_link" href="#">{label}</a></li>
+                                ))}
+                              </ul>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
                 </div>
-              </li>
-              {NAV_LINKS.map((label) => (
-                <li>
-                  <a class="nav_links_link" data-trigger="hover focus" href="#">{label}</a>
-                </li>
-              ))}
-            </ul>
+                {NAV_LINKS.map((label) => (
+                  <div role="listitem" class="nav_links_item">
+                    <a class="nav_links_link" href="#">
+                      <div class="nav_links_text">{label}</div>
+                    </a>
+                  </div>
+                ))}
+              </div>
 
-            <div class="nav_actions_wrap">
-              <div class="nav_locale_text u-text-transform-uppercase u-text-style-small">EN</div>
-              <div class="nav_search_wrap">
-                <button aria-expanded="false" aria-label="Search" class="nav_search_btn" data-nav-search-toggle="">
-                  <svg class="nav_search_icon" viewBox="0 0 400 400">
-                    <circle class="nav_search_icon_path" cx="171" cy="171" r="155"></circle>
-                    <path class="nav_search_icon_path" d="M280.6 280.6L388.6 388.6"></path>
-                  </svg>
-                </button>
-                <form action="/search" class="nav_search_form" data-nav-search-form="" aria-expanded="false">
-                  <label>
+              <div role="list" class="nav_actions_wrap">
+                <div class="nav_links_text u-text-transform-uppercase">EN</div>
+                <div class="nav_search_wrap">
+                  <div class="nav_search_btn_wrap">
+                    <svg class="nav_search_btn_icon" viewBox="0 0 400 400"><circle cx="171" cy="171" r="155"></circle><path d="M280.6 280.6L388.6 388.6"></path></svg>
+                  </div>
+                  <label class="nav_search_label">
                     <span class="u-sr-only">Search</span>
                     <input class="nav_search_field" maxlength="256" name="query" placeholder="Search…" type="search" />
                   </label>
-                </form>
-              </div>
-              <div class="nav_buttons_wrap u-button-wrapper">
-                <div class="ex_btn_wrap">
-                  <a class="ex_btn is-secondary" data-trigger="hover focus" href="#">
-                    <span class="ex_btn_text u-text-style-main">Button Text</span>
-                  </a>
                 </div>
-                <div class="ex_btn_wrap">
-                  <a class="ex_btn" data-trigger="hover focus" href="#">
-                    <span class="ex_btn_text u-text-style-main">Button Text</span>
-                  </a>
+                <div role="listitem" class="nav_buttons_item is-main">
+                  <div class="button_main_wrap" data-trigger="hover focus">
+                    <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
+                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                  </div>
+                </div>
+                <div role="listitem" class="nav_buttons_item">
+                  <div class="button_main_wrap" data-trigger="hover focus">
+                    <div class="clickable_wrap"><button class="clickable_btn" type="button" aria-label="Button Text"></button></div>
+                    <div class="button_main_text u-text-style-main" aria-hidden="true">Button Text</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </nav>
           </nav>
 
-          <button aria-controls="nav-mobile-panel" aria-expanded="false" aria-label="Menu" class="nav_toggle_wrap" data-nav-toggle="">
-            <span class="nav_toggle_line is-1"></span>
-            <span class="nav_toggle_line is-2"></span>
+          <button aria-controls="nav-mobile-menu" aria-expanded="false" aria-label="Menu" class="nav_button_wrap" id="nav-mobile-toggle" type="button">
+            <span class="nav_button_line is-1"></span>
+            <span class="nav_button_line is-2"></span>
           </button>
-        </div>
-
-        <div class="nav_mobile_panel" data-nav-mobile-panel="" aria-expanded="false" id="nav-mobile-panel">
-          <ul class="nav_mobile_list" role="list">
-            <li>
-              <button aria-expanded="false" class="nav_mobile_link" data-nav-dropdown-toggle="services-mobile">
-                Services
-                <svg class="nav_links_arrow" viewBox="0 0 66 70">
-                  <path class="nav_links_arrow_path" d="M17 2L50 35 17 68"></path>
-                </svg>
-              </button>
-              <div class="nav_mobile_dropdown_panel" data-nav-dropdown-panel="services-mobile" aria-expanded="false">
-                <ul class="nav_dropdown_list" role="list">
-                  {NAV_SERVICES_LINKS.map((label) => (
-                    <li><a class="nav_dropdown_link" href="#">{label}</a></li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-            {NAV_LINKS.map((label) => (
-              <li><a class="nav_mobile_link" href="#">{label}</a></li>
-            ))}
-          </ul>
-          <div class="nav_mobile_buttons u-button-wrapper">
-            <div class="ex_btn_wrap">
-              <a class="ex_btn is-secondary" data-trigger="hover focus" href="#">
-                <span class="ex_btn_text u-text-style-main">Button Text</span>
-              </a>
-            </div>
-            <div class="ex_btn_wrap">
-              <a class="ex_btn" data-trigger="hover focus" href="#">
-                <span class="ex_btn_text u-text-style-main">Button Text</span>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
 
+      <div class="nav_dropdown_backdrop"></div>
+      <div class="nav_menu_backdrop"></div>
+
       <script>
         document.addEventListener('DOMContentLoaded', function () {
-          document.querySelectorAll('.nav_wrap').forEach((nav) => {
+          document.querySelectorAll('.nav_component').forEach((nav) => {
             if (nav.dataset.scriptInitialized) return;
             nav.dataset.scriptInitialized = 'true';
 
-            // Mobile hamburger toggle
-            const toggle = nav.querySelector('[data-nav-toggle]');
-            const panel = nav.querySelector('[data-nav-mobile-panel]');
-            toggle?.addEventListener('click', () => {
-              const open = toggle.getAttribute('aria-expanded') === 'true';
-              toggle.setAttribute('aria-expanded', String(!open));
-              if (panel) panel.setAttribute('aria-expanded', String(!open));
-            });
-
-            // Dropdown toggles (desktop + mobile)
-            nav.querySelectorAll('[data-nav-dropdown-toggle]').forEach((btn) => {
-              const id = btn.getAttribute('data-nav-dropdown-toggle');
-              const dropdownPanel = nav.querySelector(`[data-nav-dropdown-panel="${id}"]`);
+            // Dropdown toggles: click flips aria-expanded, CSS :has() does
+            // the rest. Only one open at a time within the same tree.
+            nav.querySelectorAll('.nav_dropdown_component > [aria-controls]').forEach((btn) => {
               btn.addEventListener('click', () => {
                 const open = btn.getAttribute('aria-expanded') === 'true';
+                btn.closest('.nav_links_wrap')?.querySelectorAll('.nav_dropdown_component > [aria-controls]').forEach((other) => {
+                  if (other !== btn) other.setAttribute('aria-expanded', 'false');
+                });
                 btn.setAttribute('aria-expanded', String(!open));
-                if (dropdownPanel) dropdownPanel.setAttribute('aria-expanded', String(!open));
               });
             });
 
-            // Search reveal
-            const searchToggle = nav.querySelector('[data-nav-search-toggle]');
-            const searchForm = nav.querySelector('[data-nav-search-form]');
-            searchToggle?.addEventListener('click', () => {
-              const open = searchToggle.getAttribute('aria-expanded') === 'true';
-              searchToggle.setAttribute('aria-expanded', String(!open));
-              if (searchForm) {
-                searchForm.setAttribute('aria-expanded', String(!open));
-                if (!open) searchForm.querySelector('input')?.focus();
-              }
+            // Mobile hamburger toggle
+            const menuToggle = nav.querySelector('.nav_button_wrap');
+            menuToggle?.addEventListener('click', () => {
+              const open = menuToggle.getAttribute('aria-expanded') === 'true';
+              menuToggle.setAttribute('aria-expanded', String(!open));
             });
           });
         });
       </script>
-    </header>
+    </div>
 
     <main id="main">
       <style>
