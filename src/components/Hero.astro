@@ -30,6 +30,11 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  /* nav is position:sticky, which (unlike the old fixed nav) occupies real space in
+     document flow — its own height pushes this section down instead of floating over
+     it. Pull the section back up by nav's flow height so the background still starts
+     at the true top of the window, with nav rendering on top via its higher z-index. */
+  margin-top: calc(-1 * (var(--site--margin) + var(--nav--height-total)));
   position: relative;
   display: block;
   overflow: clip;
