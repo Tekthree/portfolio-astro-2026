@@ -41,7 +41,8 @@ const images = [
 .marquee-badge {
   position: absolute;
   z-index: 50;
-  width: 13.7em;
+  /* fluid clamp, min 8.8rem @ 20rem viewport → max 13.7rem @ 90rem viewport */
+  width: clamp(8.8rem, 7.4rem + 7vw, 13.7rem);
   left: 12%;
   top: -6%;
   pointer-events: none;
@@ -61,8 +62,10 @@ const images = [
 
 .marquee-item {
   flex: none;
-  width: 29.7em;
-  height: 22.1em;
+  /* fluid clamp, min 13.7rem @ 20rem viewport → max 29.7rem @ 90rem viewport */
+  width: clamp(13.7rem, 9.13rem + 22.86vw, 29.7rem);
+  /* fluid clamp, min 13rem @ 20rem viewport → max 22.1rem @ 90rem viewport */
+  height: clamp(13rem, 10.4rem + 13vw, 22.1rem);
   overflow: clip;
 }
 
@@ -79,16 +82,13 @@ const images = [
   100% { transform: translateX(-50%); }
 }
 
-/* Mobile: smaller badge, smaller items */
+/* Mobile — badge/item repositioning only; sizes now fluid */
 @media screen and (max-width: 767px) {
-  .marquee-badge { width: 11em; left: 7%; top: -5%; }
-  .marquee-item  { width: 18em; height: 13em; }
+  .marquee-badge { left: 7%; top: -5%; }
 }
 
 @media screen and (max-width: 479px) {
-  .marquee-section { padding-top: 0.29em; padding-bottom: 0.29em; }
-  .marquee-badge { width: 8.8em; left: 5%; top: -20%; }
-  .marquee-item  { width: 13.7em; height: 13.4em; }
+  .marquee-badge { left: 5%; top: -20%; }
 }
 </style>
 

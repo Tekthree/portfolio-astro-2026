@@ -15,7 +15,8 @@
 .spline-sec {
   /* fade the section background into the footer's dark-800 so there's no hard seam */
   background: linear-gradient(180deg, var(--swatch--dark-900) 0%, var(--swatch--dark-900) 40%, var(--swatch--dark-800) 100%);
-  height: 54.2rem;
+  /* fluid clamp, min 14rem @ 20rem viewport → max 54.2rem @ 90rem viewport */
+  height: clamp(14rem, 2.51rem + 57.43vw, 54.2rem);
   position: relative;
   overflow: clip;
 }
@@ -42,15 +43,4 @@
   display: block;
 }
 
-@media screen and (max-width: 991px) {
-  .spline-sec { height: 34rem; }
-}
-
-@media screen and (max-width: 767px) {
-  .spline-sec { height: 20rem; }
-}
-
-@media screen and (max-width: 479px) {
-  .spline-sec { height: 14rem; }
-}
 </style>

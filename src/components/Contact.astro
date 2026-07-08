@@ -205,8 +205,9 @@ details[open] .faq-arrow { transform: rotate(180deg); }
 }
 
 .stream-img {
-  width: 10rem;
-  height: 10rem;
+  /* fluid clamp, min 5rem @ 20rem viewport → max 10rem @ 90rem viewport */
+  width: clamp(5rem, 3.57rem + 7.14vw, 10rem);
+  height: clamp(5rem, 3.57rem + 7.14vw, 10rem);
   object-fit: cover;
   border-radius: var(--radius--main);
   display: block;
@@ -249,19 +250,16 @@ details[open] .faq-arrow { transform: rotate(180deg); }
 @media screen and (max-width: 991px) {
   .contact-photo-wrap { align-self: auto; min-height: auto; }
   .contact-photo { height: auto; max-height: 30em; object-position: top; }
-  .stream-img { width: 8rem; height: 8rem; }
 }
 
-/* Mobile */
+/* Mobile — stream-img size now fluid */
 @media screen and (max-width: 767px) {
   .contact-photo { max-height: 20em; }
-  .stream-img { width: 6.5rem; height: 6.5rem; }
   .stream-label { max-width: 14ch; }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .stream-img { width: 5rem; height: 5rem; }
   .stream-footer { flex-direction: var(--column-xsmall, row); align-items: flex-start; gap: var(--_spacing---space--4); }
 }
 </style>

@@ -134,36 +134,30 @@
 }
 
 .side-left  {
-  width: 15.1em;
-  max-width: 18.8em;
+  /* fluid clamp, min 6.8rem @ 20rem viewport → max 15.1rem @ 90rem viewport */
+  width: clamp(6.8rem, 4.43rem + 11.86vw, 15.1rem);
   top: 26%;
   left: 0;
   bottom: 0;
 }
 
 .side-right {
-  width: 19.1em;
-  max-width: 22.2em;
+  /* fluid clamp, min 6.9rem @ 20rem viewport → max 19.1rem @ 90rem viewport */
+  width: clamp(6.9rem, 3.41rem + 17.43vw, 19.1rem);
   top: 21%;
   right: -1%;
   bottom: 0;
 }
 
-/* Tablet — decorative side-art repositioning only; spacing/type now scale via fluid tokens */
-@media screen and (max-width: 991px) {
-  .side-left  { width: 9.1em; max-width: 11.9em; }
-  .side-right { width: 9.9em; max-width: 10.1em; }
-}
-
-/* Mobile */
+/* Mobile — decorative side-art repositioning only; size now scales via fluid clamp() above */
 @media screen and (max-width: 767px) {
-  .side-left  { width: 9.2em; top: 5%; bottom: auto; left: -5%; }
-  .side-right { width: 8.3em; top: 64%; bottom: auto; right: -4%; }
+  .side-left  { top: 5%; bottom: auto; left: -5%; }
+  .side-right { top: 64%; bottom: auto; right: -4%; }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .side-left  { width: 6.8em; left: -7%; }
-  .side-right { width: 6.9em; max-width: 8.2em; top: 78%; right: -10%; }
+  .side-left  { left: -7%; }
+  .side-right { top: 78%; right: -10%; }
 }
 </style>

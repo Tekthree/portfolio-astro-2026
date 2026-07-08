@@ -86,7 +86,8 @@ const projects = [
   position: absolute;
   top: 43%;
   left: 0;
-  height: 31.7em;
+  /* fluid clamp, min 13.6rem @ 20rem viewport → max 31.7rem @ 90rem viewport */
+  height: clamp(13.6rem, 8.43rem + 25.86vw, 31.7rem);
   z-index: 0;
   pointer-events: none;
 }
@@ -159,7 +160,8 @@ const projects = [
 
 .work-card-img {
   width: 100%;
-  height: 22.1em;
+  /* fluid clamp, min 13.4rem @ 20rem viewport → max 22.1rem @ 90rem viewport */
+  height: clamp(13.4rem, 10.91rem + 12.43vw, 22.1rem);
   object-fit: cover;
   display: block;
   border-radius: var(--radius--main);
@@ -207,23 +209,20 @@ const projects = [
 
 /* Tablet */
 @media screen and (max-width: 991px) {
-  .work-art-left { height: 23.5em; top: 89%; }
-  .work-card-img { height: 18.9em; }
+  .work-art-left { top: 89%; }
 }
 
-/* Mobile */
+/* Mobile — decorative art repositioning + carousel overflow only; sizes now fluid */
 @media screen and (max-width: 767px) {
-  .work-art-left { height: 23.5em; top: 94%; }
+  .work-art-left { top: 94%; }
   .work-watermark-text { font-size: 5em; }
   .work-splide { overflow: clip !important; }
   .work-splide .splide__track { overflow: clip !important; }
-  .work-card-img { height: 18.9em; }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .work-art-left { height: 13.6em; left: -7%; }
-  .work-card-img { height: 13.4em; }
+  .work-art-left { left: -7%; }
 }
 </style>
 
