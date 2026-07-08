@@ -210,8 +210,11 @@ const SHOWCASE = [
           flex-direction: row;
         }
         .nav_links_wrap {
+          flex: 1;
           display: flex;
-          align-items: center;
+          flex-flow: row;
+          justify-content: center;
+          align-items: stretch;
         }
         .nav_links_item {
           height: 100%;
@@ -231,7 +234,7 @@ const SHOWCASE = [
            attribute to point down at rest. Same rotation applied here directly
            since this port has no equivalent attribute-driven variant system. */
         .nav_links_svg {
-          width: 0.6rem;
+          width: 1rem;
           aspect-ratio: 1;
           flex-shrink: 0;
           transform: rotate(90deg);
