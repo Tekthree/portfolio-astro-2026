@@ -61,8 +61,10 @@ const projects = [
             <li class="splide__slide work-card" data-trigger="hover">
               <img src={proj.src} alt={proj.title} class="work-card-img" loading="lazy" />
               <div class="work-card-overlay"></div>
-              <p class="work-card-tag">{proj.tag}</p>
-              <h5 class="work-card-title">{proj.title}</h5>
+              <div class="work-card-info">
+                <p class="work-card-tag">{proj.tag}</p>
+                <h5 class="work-card-title">{proj.title}</h5>
+              </div>
             </li>
           ))}
         </ul>
@@ -73,8 +75,9 @@ const projects = [
 
 <style>
 .work-sec {
-  background-color: var(--background-blue);
-  padding: 5em 0 11.1em;
+  background-color: var(--swatch--dark-900);
+  padding-top: var(--_spacing---section-space--small);
+  padding-bottom: var(--_spacing---section-space--large);
   overflow: clip;
   position: relative;
 }
@@ -89,9 +92,10 @@ const projects = [
 }
 
 .work-container {
-  max-width: 100em;
+  max-width: var(--max-width--main);
   margin: 0 auto;
-  padding: 0 6em;
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
   position: relative;
   z-index: 1;
 }
@@ -109,7 +113,7 @@ const projects = [
   font-family: 'Mortend Outline', sans-serif;
   font-weight: 800;
   font-size: 11em;
-  color: var(--font-light);
+  color: var(--swatch--light-100);
   opacity: 0.04;
   white-space: nowrap;
   text-transform: uppercase;
@@ -120,11 +124,12 @@ const projects = [
 .work-recent-label {
   opacity: 0.37;
   text-transform: uppercase;
-  font-size: 1.1em;
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-main);
   font-weight: 700;
-  font-family: Poppins, sans-serif;
-  color: var(--font-light);
-  margin: 4.13em 0 1em;
+  color: var(--swatch--light-100);
+  margin-top: var(--_spacing---space--8);
+  margin-bottom: var(--_spacing---space--3);
   position: relative;
   z-index: 1;
 }
@@ -132,7 +137,7 @@ const projects = [
 .work-divider {
   position: relative;
   z-index: 1;
-  margin-bottom: 2em;
+  margin-bottom: var(--_spacing---space--5);
 }
 
 /* Splide carousel — full width */
@@ -147,7 +152,7 @@ const projects = [
 
 .work-card {
   position: relative;
-  border-radius: 1rem;
+  border-radius: var(--radius--main);
   overflow: clip;
   cursor: pointer;
 }
@@ -157,7 +162,7 @@ const projects = [
   height: 22.1em;
   object-fit: cover;
   display: block;
-  border-radius: 1rem;
+  border-radius: var(--radius--main);
   transition: transform 0.6s cubic-bezier(.544,.375,.25,1);
   transform: scale(calc(1 + 0.08 * var(--_trigger---on, 0))) rotate(calc(2deg * var(--_trigger---on, 0)));
 }
@@ -165,18 +170,24 @@ const projects = [
 .work-card-overlay {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(5deg, #2a0946eb, rgba(255,255,255,0) 55%);
-  border-radius: 1rem;
+  background-image: linear-gradient(5deg, color-mix(in srgb, var(--swatch--dark-900) 92%, transparent), rgba(255,255,255,0) 55%);
+  border-radius: var(--radius--main);
   pointer-events: none;
 }
 
-.work-card-tag {
+.work-card-info {
   position: absolute;
-  inset: auto 0% 14% 4%;
-  font-family: Poppins, sans-serif;
-  font-size: 0.85em;
+  inset: auto 4% 6% 4%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--_spacing---space--1);
+}
+
+.work-card-tag {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
   font-weight: 400;
-  color: var(--font-light);
+  color: var(--swatch--light-100);
   opacity: 0.7;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -184,13 +195,11 @@ const projects = [
 }
 
 .work-card-title {
-  font-family: Mortend, sans-serif;
+  font-family: var(--_typography---font--heading-family);
   font-weight: 800;
-  font-size: clamp(0.875rem, 1.4vw, 1.375rem);
-  line-height: 1;
-  position: absolute;
-  inset: auto 0% 6% 4%;
-  color: var(--font-light);
+  font-size: var(--_typography---font-size--h5);
+  line-height: 1.1;
+  color: var(--swatch--light-100);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin: 0;
@@ -198,15 +207,12 @@ const projects = [
 
 /* Tablet */
 @media screen and (max-width: 991px) {
-  .work-container { padding: 0 3vw; }
   .work-art-left { height: 23.5em; top: 89%; }
   .work-card-img { height: 18.9em; }
 }
 
 /* Mobile */
 @media screen and (max-width: 767px) {
-  .work-sec { padding: 2em 0 5em; }
-  .work-container { padding: 0 5vw; }
   .work-art-left { height: 23.5em; top: 94%; }
   .work-watermark-text { font-size: 5em; }
   .work-splide { overflow: clip !important; }
