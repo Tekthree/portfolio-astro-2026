@@ -14,14 +14,14 @@ const logos = [
 ];
 ---
 
-<section class="logo-strip-sec" style="background-color:var(--background-blue);">
-  <div style="background-color:var(--ashy-black);max-width:none;padding:0;overflow:clip;">
-    <div class="logo-marquee-track" style="display:flex;width:max-content;align-items:center;padding-top:2.08em;padding-bottom:2.08em;">
+<section class="logo-strip-sec">
+  <div class="logo-strip-inner">
+    <div class="logo-marquee-track">
       {[...logos, ...logos].map(logo => (
         <img
           src={logo.src}
           alt={logo.alt}
-          style="height:3.4em;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.68;flex:none;margin-right:7.1em;"
+          class="logo-strip-img"
           loading="lazy"
         />
       ))}
@@ -30,15 +30,42 @@ const logos = [
 </section>
 
 <style>
-  @keyframes logo-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+  .logo-strip-sec {
+    background-color: var(--swatch--dark-900);
   }
+
+  .logo-strip-inner {
+    background-color: var(--swatch--dark-800);
+    max-width: none;
+    padding: 0;
+    overflow: clip;
+  }
+
   .logo-marquee-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    padding-top: var(--_spacing---space--6);
+    padding-bottom: var(--_spacing---space--6);
     animation: logo-scroll 35s linear infinite;
   }
   .logo-marquee-track:hover {
     animation-play-state: paused;
+  }
+
+  .logo-strip-img {
+    height: 3.4em;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.68;
+    flex: none;
+    margin-right: var(--_spacing---section-space--main);
+  }
+
+  @keyframes logo-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 </style>
 
