@@ -88,10 +88,6 @@ html, body {
    @container queries below cascade responsive variables to all descendants. */
 body { container-type: inline-size; width: 100%; }
 
-@media screen and (max-width: 991px) {
-  html, body { font-size: 14px; }
-}
-
 main { width: 100%; }
 
 @container (width < 992px) {
