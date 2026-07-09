@@ -68,8 +68,13 @@
   /* Custom clamp instead of the h1 token's font-size: this headline is hard-wrapped into
      3 fixed phrases (not natural reflow), so the longest line ("DEVELOPER &") needs more
      side margin at mid-narrow widths than the general-purpose h1 scale gives it — the h1
-     token's own min (3rem) left almost no breathing room around 600px viewport width. */
-  font-size: clamp(2.25rem, 1.46rem + 3.93vw, 5rem);
+     token's own min (3rem) left almost no breathing room around 600px viewport width.
+     Floor tuned so "developer &" (the longest line) doesn't word-wrap down to 360px —
+     verified empirically, that line's natural width exceeds the container's available
+     width above ~2.05rem at 360px. Below 360px it wraps to 2 lines rather than shrink
+     further, since going smaller there started looking disproportionate to the other
+     two lines. Same 5rem ceiling at 1440px as before. */
+  font-size: clamp(2rem, 1rem + 4.4444vw, 5rem);
   overflow-wrap: break-word;
   text-align: center;
   color: var(--swatch--light-100);
