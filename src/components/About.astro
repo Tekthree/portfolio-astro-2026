@@ -93,21 +93,17 @@
 .about-outline-text {
   font-family: 'Mortend Outline', sans-serif;
   font-weight: 800;
-  /* fluid clamp, min 1.98rem @ 20rem viewport → max 5rem @ 118.5rem viewport.
-     Sized (with the top offset below) so the text's full height clears above the
-     photo card's top edge — the photo is opaque and spans the section's full
-     available height, so with z-index behind everything, any part of the
-     watermark that dips below the photo's top edge is completely hidden, not
-     just dimmed. This was the real reason it "wasn't showing up," not the nav. */
-  font-size: clamp(1.98rem, 1rem + 4vw, 5rem);
+  /* Narrow clamp range (was 1.98rem-5rem, shrank a lot) — "barely shrinks" per
+     request, stays close to full size even on small screens. */
+  font-size: clamp(4rem, 3.3rem + 3.5vw, 5.5rem);
   color: var(--swatch--accent-500);
   opacity: 0.18;
   white-space: nowrap;
   position: absolute;
-  /* -1.3em clears the ~1.5em-tall text almost entirely above the container's top
-     edge (i.e. above the photo), while staying well within the section's own top
-     padding so it doesn't reach up into the sticky nav either. */
-  top: -1.3em;
+  /* Sits in the space opened up by .about-photo-card's margin-top below — bottom
+     edge lands just above the photo, roughly level with the bottom of the "Hello,"
+     line in the neighboring column (both columns share the same top). */
+  top: -1em;
   left: -20%;
   z-index: -1;
   pointer-events: none;
@@ -117,6 +113,10 @@
 .about-photo-card {
   background-color: var(--swatch--muted-500);
   border-radius: var(--radius--main);
+  /* opens up room above the photo for the watermark to actually be visible in —
+     it sits behind everything (z-index -1), so without this gap the opaque photo
+     just covers it completely */
+  margin-top: var(--_spacing---space--8);
   display: flex;
   justify-content: center;
   align-items: stretch;
