@@ -3,13 +3,6 @@
 <section id="about" class="about-sec u-theme-light">
   <div class="about-container">
 
-    <!-- blurb -->
-    <div class="about-blurb-wrap">
-      <h1 class="about-blurb-heading u-text-style-h3">
-        My <em class="about-italic">mission</em> is to solve user challenges and convert them into loyal customers.
-      </h1>
-    </div>
-
     <!-- photo + text row -->
     <div class="about-split">
 
@@ -79,25 +72,6 @@
   padding-right: var(--site--margin);
 }
 
-.about-blurb-wrap {
-  margin-bottom: var(--_spacing---section-space--large);
-  position: relative;
-  max-width: 38em;
-}
-
-.about-blurb-heading {
-  font-family: var(--_typography---font--heading-family);
-  color: var(--swatch--heading-dark);
-  opacity: 0.74;
-  position: relative;
-  z-index: 10;
-}
-
-.about-italic {
-  font-style: italic;
-  color: var(--swatch--accent-500);
-}
-
 /* photo + text row — uses responsive variable, no @media needed for direction */
 .about-split {
   display: flex;
@@ -114,18 +88,28 @@
   z-index: 100;
 }
 
-/* watermark outline */
+/* watermark outline — sits behind the photo card and all other content in this
+   section (was z-index:10, painting on TOP of the photo where they overlapped) */
 .about-outline-text {
   font-family: 'Mortend Outline', sans-serif;
   font-weight: 800;
-  font-size: 6.9em;
+  /* fluid clamp, min 1.98rem @ 20rem viewport → max 5rem @ 118.5rem viewport.
+     Sized (with the top offset below) so the text's full height clears above the
+     photo card's top edge — the photo is opaque and spans the section's full
+     available height, so with z-index behind everything, any part of the
+     watermark that dips below the photo's top edge is completely hidden, not
+     just dimmed. This was the real reason it "wasn't showing up," not the nav. */
+  font-size: clamp(1.98rem, 1rem + 4vw, 5rem);
   color: var(--swatch--accent-500);
   opacity: 0.18;
   white-space: nowrap;
   position: absolute;
-  top: -0.69em;
-  left: -63%;
-  z-index: 10;
+  /* -1.3em clears the ~1.5em-tall text almost entirely above the container's top
+     edge (i.e. above the photo), while staying well within the section's own top
+     padding so it doesn't reach up into the sticky nav either. */
+  top: -1.3em;
+  left: -20%;
+  z-index: -1;
   pointer-events: none;
   text-transform: uppercase;
 }
@@ -235,8 +219,8 @@
 .stat-suffix {
   font-size: 0.6em;
   /* highlight-500 (yellow) only reads ~1.2:1 against this light section's stats bar —
-     effectively invisible. accent-500 is already this section's proven on-light accent
-     color (same as .about-italic) and gives ~7.7:1. */
+     effectively invisible. accent-500 is this section's proven on-light accent color
+     and gives ~7.7:1. */
   color: var(--swatch--accent-500);
 }
 
@@ -260,12 +244,12 @@
   align-self: center;
 }
 
-/* Tablet: flex-direction handled by --column-medium variable; width swap and
-   watermark-hide have no responsive-variable equivalent, kept as @media */
+/* Tablet: flex-direction handled by --column-medium variable; width swap has no
+   responsive-variable equivalent, kept as @media. Watermark now fluid + behind
+   everything, no longer needs hiding at this breakpoint. */
 @media screen and (max-width: 991px) {
   .about-left,
   .about-right   { width: 100%; }
-  .about-outline-text { display: none; }
 }
 
 /* Mobile — about-photo height now fluid */
