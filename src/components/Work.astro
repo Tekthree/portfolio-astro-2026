@@ -39,13 +39,6 @@ const projects = [
 ---
 
 <section id="work" class="work-sec">
-  <img
-    src="/assets/images/62f6c3cffd7b99342f2f8896_right-art.avif"
-    alt=""
-    class="work-art-left"
-    aria-hidden="true"
-  />
-
   <div class="work-container">
     <div class="work-watermark" aria-hidden="true">
       <span class="work-watermark-text">MY WORK MY WORK MY WORK</span>
@@ -82,15 +75,6 @@ const projects = [
   position: relative;
 }
 
-.work-art-left {
-  position: absolute;
-  top: 43%;
-  left: 0;
-  /* fluid clamp, min 13.6rem @ 20rem viewport → max 31.7rem @ 90rem viewport */
-  height: clamp(13.6rem, 8.43rem + 25.86vw, 31.7rem);
-  z-index: 0;
-  pointer-events: none;
-}
 
 .work-container {
   max-width: var(--max-width--main);
@@ -207,22 +191,11 @@ const projects = [
   margin: 0;
 }
 
-/* Tablet */
-@media screen and (max-width: 991px) {
-  .work-art-left { top: 89%; }
-}
-
-/* Mobile — decorative art repositioning + carousel overflow only; sizes now fluid */
+/* Mobile — carousel overflow only */
 @media screen and (max-width: 767px) {
-  .work-art-left { top: 94%; }
   .work-watermark-text { font-size: 5em; }
   .work-splide { overflow: clip !important; }
   .work-splide .splide__track { overflow: clip !important; }
-}
-
-/* Small mobile */
-@media screen and (max-width: 479px) {
-  .work-art-left { left: -7%; }
 }
 </style>
 

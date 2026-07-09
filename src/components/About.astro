@@ -1,14 +1,6 @@
 ---
 ---
 <section id="about" class="about-sec u-theme-light">
-  <!-- decorative art — top-right of about section -->
-  <img
-    src="/assets/images/62f6c3e27640277a801c55cc_left-art.avif"
-    alt=""
-    class="about-art-right"
-    aria-hidden="true"
-  />
-
   <div class="about-container">
 
     <!-- blurb -->
@@ -78,18 +70,6 @@
   padding-top: var(--_spacing---section-space--main);
   padding-bottom: var(--_spacing---section-space--large);
   position: relative;
-}
-
-/* Decorative art image — right side, matches Webflow image-5 */
-.about-art-right {
-  position: absolute;
-  top: 9%;
-  right: 0;
-  /* fluid clamp, min 15.1rem @ 20rem viewport → max 25.1rem @ 90rem viewport */
-  height: clamp(15.1rem, 12.24rem + 14.29vw, 25.1rem);
-  opacity: 1;
-  z-index: 1;
-  pointer-events: none;
 }
 
 .about-container {
@@ -300,6 +280,5 @@
 /* Small mobile */
 @media screen and (max-width: 479px) {
   .stat-divider  { margin-left: var(--_spacing---space--3); margin-right: var(--_spacing---space--3); }
-  .about-art-right { display: none; }
 }
 </style>
