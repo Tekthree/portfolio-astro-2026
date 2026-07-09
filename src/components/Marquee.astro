@@ -61,11 +61,11 @@ const images = [
 
 .marquee-item {
   flex: none;
-  /* fluid clamp, min 11.4rem @ 414px viewport → max 26rem @ 1896px viewport —
-     measured against the original Webflow file's two reference sizes */
-  width: clamp(11.4rem, 7.32rem + 15.76vw, 26rem);
-  /* fluid clamp, min 11.9rem @ 414px viewport → max 21.3rem @ 1896px viewport */
-  height: clamp(11.9rem, 9.27rem + 10.15vw, 21.3rem);
+  /* Same formula as before scaled up 1.1x on both dimensions (10% bigger) — scaling
+     width and height by the identical factor keeps the aspect ratio exactly the same
+     at every viewport width, not just at the min/max endpoints. */
+  width: clamp(12.54rem, 8.05rem + 17.34vw, 28.6rem);
+  height: clamp(13.09rem, 10.2rem + 11.17vw, 23.43rem);
   overflow: clip;
 }
 
