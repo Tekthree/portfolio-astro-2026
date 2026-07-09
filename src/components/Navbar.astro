@@ -142,7 +142,9 @@ document.addEventListener("DOMContentLoaded", function () {
   padding-left: var(--_spacing---space--5);
   padding-right: var(--_spacing---space--5);
   border-radius: var(--radius--small);
-  background-color: var(--swatch--nav-bg);
+  background-color: color-mix(in srgb, var(--swatch--nav-bg) 70%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .navbar_desktop_layout {
@@ -248,7 +250,9 @@ document.addEventListener("DOMContentLoaded", function () {
   padding-left: var(--_spacing---space--5);
   padding-right: var(--_spacing---space--5);
   border-radius: var(--radius--small);
-  background-color: var(--swatch--nav-bg);
+  background-color: color-mix(in srgb, var(--swatch--nav-bg) 70%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   pointer-events: auto;
 }
 
