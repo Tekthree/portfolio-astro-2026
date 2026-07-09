@@ -138,12 +138,20 @@
   filter: blur(20px);
   pointer-events: none;
 }
+/* Corner-anchored with top:0/left:0 (or bottom:0/right:0) so the anchor point never
+   moves; the "hanging off the edge" bleed is a transform (relative to the blob's own
+   box) instead of a percentage inset (relative to the parent's width, which drifted
+   visually since the hero's aspect ratio changes a lot between mobile and desktop). */
 .bg-gradient--left {
   width: 65%;
-  inset: -9% auto auto -46%;
+  top: 0;
+  left: 0;
+  transform: translate(-38%, -20%);
 }
 .bg-gradient--right {
   width: 70%;
-  inset: 7% -49% 0% auto;
+  bottom: 0;
+  right: 0;
+  transform: translate(38%, 15%);
 }
 </style>
