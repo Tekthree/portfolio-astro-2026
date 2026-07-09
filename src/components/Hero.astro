@@ -147,6 +147,10 @@
 }
 .bg-gradient--right {
   width: 70%;
-  inset: 7% -49% 0% auto;
+  /* top:auto (not the original 7%) — with both top and bottom set, height stretches
+     between them, which on a tall mobile hero pulled the blob's visible top edge way
+     up instead of it sitting compactly at the bottom corner. Height now follows the
+     image's own aspect ratio at width:70%, anchored purely by bottom+right. */
+  inset: auto -49% 0% auto;
 }
 </style>
