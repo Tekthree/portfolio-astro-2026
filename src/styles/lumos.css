@@ -173,7 +173,10 @@
   --swatch--brand-700: color-mix(in srgb, var(--swatch--brand-500), black 40%);
   --swatch--brand-800: color-mix(in srgb, var(--swatch--brand-500), black 60%);
   --swatch--brand-900: color-mix(in srgb, var(--swatch--brand-500), black 80%);
-  --swatch--brand-text: var(--swatch--light-100);
+  /* light-100 alone only reads ~2.6:1 against brand-500 button backgrounds — well under
+     WCAG AA's 4.5:1 floor for normal text. Lightened toward white to ~4.7:1 while keeping
+     a hint of the lavender tint, rather than switching to flat white. */
+  --swatch--brand-text: color-mix(in srgb, var(--swatch--light-100), white 85%);
   --swatch--brand-text-o20: color-mix(in srgb, var(--swatch--brand-text) 20%, transparent);
 
   --swatch--accent-500: #420f6d;    /* was --submt-purple — secondary/decorative accent (dividers, nav gradient) */

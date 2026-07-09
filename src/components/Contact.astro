@@ -225,7 +225,8 @@ details[open] .faq-arrow { transform: rotate(180deg); }
   font-weight: 300;
   font-size: var(--_typography---font-size--h5);
   text-transform: uppercase;
-  color: var(--swatch--muted-500);
+  /* raw muted-500 only reads ~1.9:1 against this light section's bg — darkened to ~4.5:1 */
+  color: color-mix(in srgb, var(--swatch--muted-500), black 40%);
   margin: 0;
   max-width: 17ch;
 }

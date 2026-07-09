@@ -254,7 +254,10 @@
 
 .stat-suffix {
   font-size: 0.6em;
-  color: var(--swatch--highlight-500);
+  /* highlight-500 (yellow) only reads ~1.2:1 against this light section's stats bar —
+     effectively invisible. accent-500 is already this section's proven on-light accent
+     color (same as .about-italic) and gives ~7.7:1. */
+  color: var(--swatch--accent-500);
 }
 
 .stat-label {

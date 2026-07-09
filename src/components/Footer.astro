@@ -127,7 +127,8 @@
 .footer-meta-right { flex: 1; }
 
 .footer-meta-label {
-  color: color-mix(in srgb, var(--swatch--accent-500), white 25%);
+  /* 25% white only reads ~3:1 against this dark footer bg — lightened further to ~5.5:1 */
+  color: color-mix(in srgb, var(--swatch--accent-500), white 45%);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-family: var(--_typography---font--primary-family);
