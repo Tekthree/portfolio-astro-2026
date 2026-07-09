@@ -95,14 +95,17 @@ const images = [
     // Track and badge share one scrubbed timeline so they're driven by the exact same
     // scroll position — track slides left, badge turns left, scrolling down; both
     // reverse automatically (slide right / turn right) scrolling back up, since scrub
-    // ties directly to scroll position rather than playing on a timer.
+    // ties directly to scroll position rather than playing on a timer. Lenis (site-wide,
+    // see BaseLayout) smooths the underlying scroll signal itself; track distance was
+    // also cut well down (was -50%, felt like a blur) and badge movement bumped up
+    // (was barely perceptible next to the track) so the two read as comparable speeds.
     gsap.timeline({
       scrollTrigger: {
         trigger: '.marquee-section',
         scrub: 0.8,
       },
     })
-      .to('.marquee-badge', { y: -24, rotation: -20, ease: 'none' }, 0)
-      .to('.marquee-track', { xPercent: -50, ease: 'none' }, 0);
+      .to('.marquee-badge', { y: -40, rotation: -35, ease: 'none' }, 0)
+      .to('.marquee-track', { xPercent: -20, ease: 'none' }, 0);
   });
 </script>
