@@ -179,7 +179,7 @@
   --swatch--accent-500: #420f6d;    /* was --submt-purple — secondary/decorative accent (dividers, nav gradient) */
   --swatch--highlight-500: #dbdd3a; /* was --highlight-yellow — heading accent */
   --swatch--muted-500: #a58fb8;     /* was --font-plum — About photo-card bg, Contact stream label/buttons */
-  --swatch--nav-bg: #0e082c;        /* nav pill background — its own color, not shared with background-2 */
+  --swatch--nav-bg: #170f34;        /* nav pill background — its own color, not shared with background-2 */
 }
 
 .u-theme-light {
