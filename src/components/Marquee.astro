@@ -41,8 +41,9 @@ const images = [
 .marquee-badge {
   position: absolute;
   z-index: 50;
-  /* fluid clamp, min 8.8rem @ 20rem viewport → max 13.7rem @ 90rem viewport */
-  width: clamp(8.8rem, 7.4rem + 7vw, 13.7rem);
+  /* fluid clamp, min 8.1rem @ 414px viewport → max 13.5rem @ 1896px viewport —
+     measured directly against the original Webflow file's two reference sizes */
+  width: clamp(8.1rem, 6.59rem + 5.83vw, 13.5rem);
   left: 12%;
   top: -6%;
   pointer-events: none;
@@ -53,19 +54,18 @@ const images = [
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 30s linear infinite;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
+  /* Movement now comes entirely from the scroll-linked GSAP tween below (xPercent on
+     this element) — no CSS autoplay animation. */
+  will-change: transform;
 }
 
 .marquee-item {
   flex: none;
-  /* fluid clamp, min 13.7rem @ 20rem viewport → max 29.7rem @ 90rem viewport */
-  width: clamp(13.7rem, 9.13rem + 22.86vw, 29.7rem);
-  /* fluid clamp, min 13rem @ 20rem viewport → max 22.1rem @ 90rem viewport */
-  height: clamp(13rem, 10.4rem + 13vw, 22.1rem);
+  /* fluid clamp, min 11.4rem @ 414px viewport → max 26rem @ 1896px viewport —
+     measured against the original Webflow file's two reference sizes */
+  width: clamp(11.4rem, 7.32rem + 15.76vw, 26rem);
+  /* fluid clamp, min 11.9rem @ 414px viewport → max 21.3rem @ 1896px viewport */
+  height: clamp(11.9rem, 9.27rem + 10.15vw, 21.3rem);
   overflow: clip;
 }
 
@@ -75,11 +75,6 @@ const images = [
   object-fit: cover;
   border-radius: var(--radius--main);
   padding: var(--_spacing---space--1);
-}
-
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 
 /* Mobile — badge/item repositioning only; sizes now fluid */
@@ -96,13 +91,18 @@ const images = [
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
-    gsap.to('.marquee-badge', {
-      y: -24,
-      ease: 'none',
+
+    // Track and badge share one scrubbed timeline so they're driven by the exact same
+    // scroll position — track slides left, badge turns left, scrolling down; both
+    // reverse automatically (slide right / turn right) scrolling back up, since scrub
+    // ties directly to scroll position rather than playing on a timer.
+    gsap.timeline({
       scrollTrigger: {
         trigger: '.marquee-section',
         scrub: 0.8,
       },
-    });
+    })
+      .to('.marquee-badge', { y: -24, rotation: -20, ease: 'none' }, 0)
+      .to('.marquee-track', { xPercent: -50, ease: 'none' }, 0);
   });
 </script>
