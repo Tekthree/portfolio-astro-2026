@@ -161,6 +161,7 @@
   --swatch--light-200: #d9cfe0;   /* was --bg-contact — light theme's page background */
   --swatch--dark-800: #070419;    /* was --ashy-black — dark theme's background-2 (footer, nav overlay) */
   --swatch--dark-900: #0c042c;    /* was --background-blue — dark theme's primary background, and light theme's text */
+  --swatch--heading-dark: #3a3351; /* lighter dark-purple specifically for light-theme headings, distinct from dark-900 body text */
   --swatch--brand-500: #6d62b4;   /* was --slate-blue — primary interactive/button color */
 
   --swatch--light-100-o20: color-mix(in srgb, var(--swatch--light-100) 20%, transparent);

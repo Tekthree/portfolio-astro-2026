@@ -97,6 +97,7 @@
   font-family: var(--_typography---font--primary-family);
   text-align: center;
   color: var(--swatch--light-100);
+  opacity: 0.85;
   margin-bottom: var(--_spacing---space--5);
 }
 
@@ -108,7 +109,9 @@
 .hero-cta {
   display: block;
   background-color: color-mix(in hsl, var(--_theme---button-primary--background) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--background-hover) calc(100% * var(--_trigger---off)));
-  color: color-mix(in hsl, var(--_theme---button-primary--text) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--text-hover) calc(100% * var(--_trigger---off)));
+  /* dark text on the brand-500 bg per explicit request, overriding the shared
+     brand-text token (which nav/mobile-menu buttons still use) */
+  color: color-mix(in hsl, var(--swatch--dark-900) calc(100% * var(--_trigger---on)), var(--_theme---button-primary--text-hover) calc(100% * var(--_trigger---off)));
   font-family: var(--_typography---font--heading-family);
   font-weight: 700;
   letter-spacing: var(--_typography---letter-spacing--tight);
