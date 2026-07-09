@@ -137,6 +137,16 @@
   opacity: 0.77;
   filter: blur(20px);
   pointer-events: none;
+  /* Source image is nearly square (705x723) — at width:65-70% of a wide hero, auto
+     height balloons to 800-900px. On a wide-but-short browser window that's taller
+     than the visible viewport, pushing most of the blob off-screen so the corner it's
+     anchored to reads as empty. Capping height independently (object-fit crops the
+     soft blur imperceptibly) keeps both blobs visible near their corner regardless of
+     window aspect ratio, without changing the width/position already matched to the
+     original Webflow file. */
+  height: auto;
+  max-height: clamp(18rem, 42vh, 38rem);
+  object-fit: cover;
 }
 /* Matches the original Webflow source's background-gradient element exactly:
    width 65%/70%, inset -9%/-46% (left) and 7%/-49% (right), relative to the
