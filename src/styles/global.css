@@ -85,8 +85,11 @@ html, body {
 }
 
 /* body is the Lumos root container — explicit 100% width prevents inline-size contain shrinkage.
-   @container queries below cascade responsive variables to all descendants. */
-body { container-type: inline-size; width: 100%; }
+   @container queries below cascade responsive variables to all descendants. position:relative
+   makes body the containing block for .design-grain (container-type alone didn't do it —
+   computed position stayed 'static', so the grain's inset:0 was resolving against the
+   viewport-sized initial containing block instead of body's full document height). */
+body { container-type: inline-size; width: 100%; position: relative; }
 
 main { width: 100%; }
 
@@ -128,7 +131,10 @@ main { width: 100%; }
   }
 }
 
-/* noise grain overlay — fixed on top of everything */
+/* noise grain overlay — scrolls with the page content (was position:fixed,
+   pinned to the viewport regardless of scroll). body already establishes a
+   containing block via container-type:inline-size above, so absolute here
+   sizes to and scrolls with the full document height. */
 .design-grain {
   pointer-events: none;
   z-index: 2000;
@@ -136,10 +142,8 @@ main { width: 100%; }
   background-image: url('/assets/images/61ccdb9520976e21b4e3b387_619165385dfed2318d6046fa_noise-transparent-intense.png');
   background-position: 0 0;
   background-size: auto;
-  width: 100%;
-  height: 100%;
   display: block;
-  position: fixed;
+  position: absolute;
   inset: 0;
 }
 

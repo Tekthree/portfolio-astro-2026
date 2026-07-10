@@ -91,8 +91,27 @@ const stream = [
       <div class="stream-footer">
         <p class="stream-label">Current Work Stream</p>
         <div class="stream-nav">
-          <button class="stream-btn stream-btn-prev" aria-label="Previous">&lt;</button>
-          <button class="stream-btn stream-btn-next" aria-label="Next">&gt;</button>
+          <!-- Arrow style ported from lumos-example-components.astro's
+               .button_arrow_wrap/.button_arrow_element pattern (same SVG,
+               same rotate(180deg) left/right trick), recolored to this
+               site's own palette instead of the vendor's abstract button
+               tokens. -->
+          <button class="stream-btn stream-btn-prev" aria-label="Previous">
+            <span class="stream-btn-icon stream-btn-icon-prev" aria-hidden="true">
+              <svg viewBox="0 0 240 188" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M135 184.805L234 93.8053L135 2.80469" stroke="currentColor" stroke-width="7.61538"/>
+                <path d="M234 93.8047H0" stroke="currentColor" stroke-width="7.66941"/>
+              </svg>
+            </span>
+          </button>
+          <button class="stream-btn stream-btn-next" aria-label="Next">
+            <span class="stream-btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 240 188" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M135 184.805L234 93.8053L135 2.80469" stroke="currentColor" stroke-width="7.61538"/>
+                <path d="M234 93.8047H0" stroke="currentColor" stroke-width="7.66941"/>
+              </svg>
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -168,22 +187,21 @@ const stream = [
   font-family: var(--_typography---font--primary-family);
   font-size: var(--_typography---font-size--text-small);
   color: var(--_theme---text);
-  opacity: 0.75;
+  opacity: 0.55;
   padding-bottom: var(--_spacing---space--3);
   line-height: 1.6;
   margin: 0;
 }
 
-/* right photo — stretch to fill the grid cell height set by the FAQ column */
-.contact-photo-wrap {
-  align-self: stretch;
-  min-height: 20em;
-}
-
 .contact-photo {
   width: 100%;
-  height: 100%;
+  /* locked square, at every breakpoint — was height:100% stretching to
+     match the FAQ column's height (whatever that happened to be), which
+     wasn't a consistent ratio. object-position:top favors his face/upper
+     body over centering the square crop. */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: top;
   border-radius: var(--radius--main);
 }
 
@@ -221,12 +239,17 @@ details[open] .faq-arrow { transform: rotate(180deg); }
 }
 
 .stream-label {
-  font-family: var(--_typography---font--primary-family);
-  font-weight: 300;
+  /* Reference uses the Mortend display font here, not Poppins — confirmed
+     against the real Webflow site. */
+  font-family: var(--_typography---font--heading-family);
+  font-weight: 400;
   font-size: var(--_typography---font-size--h5);
   text-transform: uppercase;
-  /* raw muted-500 only reads ~1.9:1 against this light section's bg — darkened to ~4.5:1 */
-  color: color-mix(in srgb, var(--swatch--muted-500), black 40%);
+  /* Raw muted-500 matches the reference exactly (also already the token
+     comment's stated purpose: "Contact stream label"). The darkened
+     version here was another instance of an unrequested contrast "fix"
+     that drifted from the actual design, like the stat-suffix color was. */
+  color: var(--swatch--muted-500);
   margin: 0;
   max-width: 17ch;
 }
@@ -234,25 +257,61 @@ details[open] .faq-arrow { transform: rotate(180deg); }
 .stream-nav { display: flex; gap: var(--_spacing---space--3); align-items: center; }
 
 .stream-btn {
-  background-color: var(--swatch--muted-500);
-  border: none;
+  width: var(--button-size--medium);
+  aspect-ratio: 1;
   border-radius: var(--radius--round);
-  padding: var(--_spacing---space--3) var(--_spacing---space--8);
-  font-size: var(--_typography---font-size--h4);
-  font-weight: 600;
-  color: var(--_theme---text);
-  display: inline-block;
-  line-height: 1.6;
+  border: calc(var(--border-width--main) * 2) solid var(--swatch--muted-500);
+  background-color: var(--swatch--muted-500);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   cursor: pointer;
-  font-family: var(--_typography---font--primary-family);
+  transition: background-color 0.2s ease, color 0.2s ease, border-width 0.2s ease;
 }
 
-/* Tablet: display switch handled by --flex-medium variable. Below 992px the photo
-   drops out of the FAQ-column-height stretch and gets its own fluid cap instead. */
-@media screen and (max-width: 991px) {
-  .contact-photo-wrap { align-self: auto; min-height: auto; }
-  /* fluid clamp, min 20rem @ 20rem viewport → max 30rem @ 90rem viewport */
-  .contact-photo { height: auto; max-height: clamp(20rem, 17.14rem + 14.29vw, 30rem); object-position: top; }
+.stream-btn:hover {
+  /* Reversed: white fill, purple arrow (swapped from rest's purple
+     fill/white arrow), border thickens further on top of that. */
+  background-color: white;
+  color: var(--swatch--muted-500);
+  border-width: calc(var(--border-width--main) * 3.5);
+}
+
+.stream-btn-icon {
+  width: 36%;
+  display: block;
+}
+
+.stream-btn-icon svg { width: 100%; display: block; }
+
+.stream-btn-icon svg path {
+  stroke-width: 14;
+  transition: stroke-width 0.2s ease;
+}
+
+.stream-btn:hover .stream-btn-icon svg path {
+  stroke-width: 22;
+}
+
+.stream-btn-icon-prev { transform: rotate(180deg); }
+
+/* --flex-medium/--column-medium (used by .contact-split above) flip via the
+   @container (width < 992px) rule in global.css — a *container*-width query
+   on body's inline-size, not viewport width. A plain @media(max-width:991px)
+   here would miss a dead zone: body's content-box is slightly narrower than
+   the viewport (scrollbar), so the container query can already be active a
+   few px before a viewport media query of the same nominal breakpoint
+   fires. Using the identical @container condition keeps this perfectly in
+   sync with the actual layout switch. */
+@container (width < 992px) {
+  /* align-items:center is for vertically centering the two grid columns at
+     desktop — once --flex-medium switches display to flex + column here,
+     "center" becomes horizontal (cross-axis) centering instead, shrinking
+     the FAQ block and photo to content-width and centering them rather
+     than stretching full-width. Same bug as About's .about-split had. */
+  .contact-split { align-items: stretch; }
 }
 
 /* Mobile — stream-img size now fluid */

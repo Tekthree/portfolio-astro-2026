@@ -40,9 +40,7 @@ const projects = [
 
 <section id="work" class="work-sec">
   <div class="work-container">
-    <div class="work-watermark" aria-hidden="true">
-      <span class="work-watermark-text">MY WORK MY WORK MY WORK</span>
-    </div>
+    <h1 class="work-watermark-text" aria-hidden="true">my work my work my work</h1>
 
     <p class="work-recent-label">Recent Work</p>
     <div class="nav-divider work-divider"></div>
@@ -53,6 +51,7 @@ const projects = [
           {projects.map(proj => (
             <li class="splide__slide work-card" data-trigger="hover">
               <img src={proj.src} alt={proj.title} class="work-card-img" loading="lazy" />
+              <div class="work-card-blur"></div>
               <div class="work-card-overlay"></div>
               <div class="work-card-info">
                 <p class="work-card-tag">{proj.tag}</p>
@@ -85,25 +84,27 @@ const projects = [
   z-index: 1;
 }
 
-.work-watermark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  overflow: clip;
-  pointer-events: none;
-  z-index: 0;
-}
+/* Full-bleed watermark — same technique and size as About's
+   .about-outline-text: left:50% of a centered container always lands at
+   50vw regardless of container width, so translateX(-50vw) walks it back
+   to the true viewport edge on any screen size. Opacity is higher than
+   About's (0.18) — that value reads fine on About's light background, but
+   the same purple-on-dark-navy blend here was nearly invisible against
+   this section's dark background, per request to make it more visible. */
 .work-watermark-text {
   font-family: 'Mortend Outline', sans-serif;
   font-weight: 800;
-  font-size: 11em;
-  color: var(--swatch--light-100);
-  opacity: 0.04;
+  font-size: clamp(5rem, 4.1rem + 4.5vw, 7rem);
+  color: var(--swatch--accent-500);
+  opacity: 0.45;
   white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50vw);
+  z-index: -1;
+  pointer-events: none;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
-  display: block;
 }
 
 .work-recent-label {
@@ -130,6 +131,12 @@ const projects = [
   overflow: visible;
   position: relative;
   z-index: 1;
+  /* Hard-clip the starting left edge only, so the loop carousel's overflow
+     (the previous/last slide peeking in before the user interacts) is fully
+     hidden there — no blur/fade, an instant cutoff. Right side stays
+     un-clipped (inset's right value pushed 100vw out) so slides still bleed
+     past the container edge on that side as before. */
+  clip-path: inset(0 -100vw 0 0);
 }
 .work-splide .splide__track { overflow: visible; }
 /* hide Splide arrows entirely */
@@ -140,12 +147,22 @@ const projects = [
   border-radius: var(--radius--main);
   overflow: clip;
   cursor: pointer;
+  /* Splide sets each slide's width via inline style from its perPage/gap
+     math, which keeps growing on very wide screens even past
+     --max-width--main's cap. max-width still overrides that (CSS always
+     clamps width regardless of where it's declared), capping the card size
+     on the largest screens — height follows via the locked aspect-ratio. */
+  max-width: 24rem;
 }
 
 .work-card-img {
   width: 100%;
-  /* fluid clamp, min 13.4rem @ 20rem viewport → max 22.1rem @ 90rem viewport */
-  height: clamp(13.4rem, 10.91rem + 12.43vw, 22.1rem);
+  /* aspect-ratio instead of an independent height clamp — width already
+     scales fluidly via Splide's perPage/padding math (a different curve at
+     every breakpoint), so a height clamp with its own min/max drifted the
+     card's shape in and out at different sizes instead of scaling with it.
+     4/5 matches the previous desktop proportions (~478px/377px ≈ 1.27). */
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
   border-radius: var(--radius--main);
@@ -153,10 +170,27 @@ const projects = [
   transform: scale(calc(1 + 0.08 * var(--_trigger---on, 0))) rotate(calc(2deg * var(--_trigger---on, 0)));
 }
 
+/* Frosted-glass blur behind the bottom third of the card, under the title —
+   blurs the image itself (not just a color wash) so the text stays legible
+   over busy photos. */
+.work-card-blur {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 40%;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  /* Masking this element's own alpha (not the image) fades the blur's
+     visibility from 0 at the top edge to fully on at the bottom, so it
+     reads as a gradual ramp instead of a hard on/off line. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+  pointer-events: none;
+}
+
 .work-card-overlay {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(5deg, color-mix(in srgb, var(--swatch--dark-900) 92%, transparent), rgba(255,255,255,0) 55%);
+  background-image: linear-gradient(to top, #2A0946EB 0%, transparent 60%);
   border-radius: var(--radius--main);
   pointer-events: none;
 }
@@ -191,11 +225,17 @@ const projects = [
   margin: 0;
 }
 
-/* Mobile — carousel overflow only */
+/* Mobile — carousel overflow only (watermark clamp already scales itself) */
 @media screen and (max-width: 767px) {
-  .work-watermark-text { font-size: 5em; }
   .work-splide { overflow: clip !important; }
   .work-splide .splide__track { overflow: clip !important; }
+  /* Splide's padding:{right} option (peek amount) is relative to this
+     element's own box, which normally stops at .work-container's right
+     padding (site--margin) — short of the true screen edge, unlike the
+     larger breakpoints where the overflowing card's content touches the
+     edge with zero gap. Pulling this element's right edge out by that same
+     margin makes the peek reach flush to the true edge too. */
+  .work-splide { margin-right: calc(-1 * var(--site--margin)); }
 }
 </style>
 
@@ -204,7 +244,7 @@ const projects = [
     const el = document.querySelector('.work-splide');
     if (!el || typeof Splide === 'undefined') return;
     new Splide(el, {
-      type: 'loop',
+      type: 'slide',
       perMove: 1,
       perPage: 3,
       focus: 0,
@@ -215,8 +255,13 @@ const projects = [
       updateOnMove: true,
       breakpoints: {
         991: { perPage: 2, gap: '1em' },
-        767: { perPage: 1, gap: '1em' },
-        479: { perPage: 1, gap: '1em' },
+        // padding shrinks the active slide so the next one peeks in on the
+        // right (~1/3 of a slide) — perPage:1 alone fills the full track
+        // width with zero peek. Applied at both mobile breakpoints — a
+        // width in the 479-767 range only picks up the 767 config, so it
+        // needs its own padding too, not just the 479 one.
+        767: { perPage: 1, gap: '1em', padding: { left: '0.5rem', right: '25%' } },
+        479: { perPage: 1, gap: '1em', padding: { left: '0.5rem', right: '25%' } },
       },
     }).mount();
   });

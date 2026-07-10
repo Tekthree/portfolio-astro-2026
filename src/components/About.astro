@@ -2,13 +2,13 @@
 ---
 <section id="about" class="about-sec u-theme-light">
   <div class="about-container">
+    <h1 class="about-outline-text">about me about me about me</h1>
 
     <!-- photo + text row -->
     <div class="about-split">
 
       <!-- left: photo -->
       <div class="about-left">
-        <h1 class="about-outline-text">about me about me about me</h1>
         <div class="about-photo-card">
           <img
             src="/assets/images/6881cb528375b87c1cf2b7e3_outline_tek_jones.avif"
@@ -60,6 +60,10 @@
 
 <style>
 .about-sec {
+  /* Reference has this section on --font-light (light-100), distinct from
+     u-theme-light's default light-200 background — Contact keeps the
+     u-theme-light default, this section overrides it. */
+  background-color: var(--swatch--light-100);
   padding-top: var(--_spacing---section-space--main);
   padding-bottom: var(--_spacing---section-space--large);
   position: relative;
@@ -70,6 +74,12 @@
   margin: 0 auto;
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
+  /* z-index:0 (not just position:relative) pins this as the stacking context
+     for .about-outline-text's z-index:-1 — otherwise that negative z-index
+     escapes past this element's own background and disappears behind the
+     section entirely. */
+  position: relative;
+  z-index: 0;
 }
 
 /* photo + text row — uses responsive variable, no @media needed for direction */
@@ -77,8 +87,9 @@
   display: flex;
   flex-direction: var(--column-medium, row);
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
+  margin-top: var(--_spacing---space--3);
   position: relative;
 }
 
@@ -94,8 +105,9 @@
   font-family: 'Mortend Outline', sans-serif;
   font-weight: 800;
   /* Narrow clamp range (was 1.98rem-5rem, shrank a lot) — "barely shrinks" per
-     request, stays close to full size even on small screens. */
-  font-size: clamp(4rem, 3.3rem + 3.5vw, 5.5rem);
+     request, stays close to full size even on small screens. Bumped up again
+     per request (bigger, moved down). */
+  font-size: clamp(5rem, 4.1rem + 4.5vw, 7rem);
   color: var(--swatch--accent-500);
   opacity: 0.18;
   white-space: nowrap;
@@ -103,8 +115,15 @@
   /* Sits in the space opened up by .about-photo-card's margin-top below — bottom
      edge lands just above the photo, roughly level with the bottom of the "Hello,"
      line in the neighboring column (both columns share the same top). */
-  top: -1em;
-  left: -20%;
+  top: 0.1em;
+  /* True full-bleed to the viewport edge, not just this max-width container's
+     edge — left:50% of a centered container always lands at 50vw regardless
+     of container width, so translateX(-50vw) walks it back to viewport x:0
+     on any screen size, including ones wider than --max-width--main. */
+  left: 50%;
+  /* extra -0.65em bleeds it further left past the edge, so it's cropped
+     mid-word (around the "O" in "ABOUT") instead of starting clean on the "A" */
+  transform: translateX(calc(-50vw - 0.65em));
   z-index: -1;
   pointer-events: none;
   text-transform: uppercase;
@@ -140,20 +159,24 @@
 .about-text-wrap {
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
-  padding-bottom: var(--_spacing---section-space--small);
 }
 
 .about-name-heading {
   font-family: var(--_typography---font--heading-family);
   color: var(--swatch--heading-dark);
-  margin-bottom: var(--_text-style---h3-margin-bottom);
+  text-transform: uppercase;
+  margin-bottom: var(--_spacing---space--3);
   max-width: 12.8em;
 }
 
 .about-body {
   color: var(--_theme---text);
   margin-bottom: var(--_spacing---space--4);
-  opacity: 0.85;
+  opacity: 0.55;
+  /* No-op at desktop (the 50%-wide column is already narrower than this),
+     but caps line length for readability once the layout stacks full-width
+     at ≤991px — lines were running edge-to-edge otherwise. */
+  max-width: 36em;
 }
 
 .about-cv-btn {
@@ -171,7 +194,9 @@
 
 /* stats bar */
 .about-stats {
-  background-color: var(--_theme---background-2);
+  /* --bg-stats (#c7bbd0) is the reference's dedicated card color — distinct
+     from the section's own light-100 background it sits on top of. */
+  background-color: var(--bg-stats);
   border-radius: var(--radius--main);
   display: flex;
   justify-content: center;
@@ -218,10 +243,8 @@
 
 .stat-suffix {
   font-size: 0.6em;
-  /* highlight-500 (yellow) only reads ~1.2:1 against this light section's stats bar —
-     effectively invisible. accent-500 is this section's proven on-light accent color
-     and gives ~7.7:1. */
-  color: var(--swatch--accent-500);
+  /* Matches reference .achieve-headline-span (highlight-yellow). */
+  color: var(--swatch--highlight-500);
 }
 
 .stat-label {
@@ -229,6 +252,7 @@
   font-size: var(--_typography---font-size--text-large);
   font-weight: 400;
   color: var(--_theme---text);
+  opacity: 0.55;
   margin: 0;
   line-height: 1.3;
   white-space: pre-line;
@@ -236,7 +260,7 @@
 
 .stat-divider {
   flex: 0 auto;
-  background-color: color-mix(in srgb, var(--swatch--light-200), black 15%);
+  background-color: var(--stat-divider-color);
   width: 4px;
   height: 10.1em;
   margin-left: var(--_spacing---space--6);
@@ -244,25 +268,61 @@
   align-self: center;
 }
 
-/* Tablet: flex-direction handled by --column-medium variable; width swap has no
-   responsive-variable equivalent, kept as @media. Watermark now fluid + behind
+/* --column-medium flips via the @container (width < 992px) rule in
+   global.css — a *container*-width query on body's inline-size, not
+   viewport width. A plain @media(max-width:991px) here would miss a dead
+   zone: body's content-box is slightly narrower than the viewport
+   (scrollbar), so the container query can already be active a few px
+   before a viewport media query of the same nominal breakpoint fires.
+   Using the identical @container condition keeps every fix below perfectly
+   in sync with the actual layout switch. Watermark now fluid + behind
    everything, no longer needs hiding at this breakpoint. */
-@media screen and (max-width: 991px) {
+@container (width < 992px) {
   .about-left,
   .about-right   { width: 100%; }
+  /* .about-split's align-items:center is for vertically centering the two
+     columns in row layout — but once flex-direction flips to column here,
+     "center" becomes the CROSS-axis (horizontal) alignment instead, which
+     shrinks each column to content width and centers it rather than
+     stretching it full-width. stretch restores full-width columns. */
+  .about-split { align-items: stretch; }
+  /* Header had zero gap from the photo above it in stacked layout (the row
+     layout's vertical centering doesn't apply here). */
+  .about-name-heading { padding-top: var(--_spacing---space--6); }
+  /* about-text-wrap's left/right padding is the gutter between the photo
+     and text columns in row layout — once stacked, it just indents the
+     heading/paragraph/button relative to the photo and stats card below,
+     which don't have that padding. Zero it so everything shares the same
+     left edge. */
+  .about-text-wrap { padding-left: 0; padding-right: 0; }
+  /* Stack the 3 stat items instead of squeezing them into one cramped row
+     — matches the photo/text column stacking at this same breakpoint. */
+  .about-stats { flex-direction: column; align-items: stretch; }
+  /* Divider was a vertical bar between row items (fixed width, horizontal
+     margins) — stacked, it needs to be a horizontal rule between rows
+     instead (full width, vertical margins). */
+  .stat-divider {
+    width: auto;
+    height: 4px;
+    align-self: stretch;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: var(--_spacing---space--3);
+    margin-bottom: var(--_spacing---space--3);
+  }
 }
 
 /* Mobile — about-photo height now fluid */
 @media screen and (max-width: 767px) {
   .about-photo-card { padding-right: var(--_spacing---space--5); }
 
-  /* stats: allow horizontal scroll */
-  .about-stats   { overflow-x: auto; justify-content: flex-start; padding: 0 var(--_spacing---space--3); }
+  /* Stats are already stacked (vertical) since 991px — no more horizontal
+     scroll needed, just a smaller icon on the tightest screens. */
   .stat-logo     { width: clamp(2rem, 10vw, 4rem); height: clamp(2rem, 10vw, 4rem); }
 }
 
 /* Small mobile */
 @media screen and (max-width: 479px) {
-  .stat-divider  { margin-left: var(--_spacing---space--3); margin-right: var(--_spacing---space--3); }
+  .stat-divider  { margin-top: var(--_spacing---space--2); margin-bottom: var(--_spacing---space--2); }
 }
 </style>
