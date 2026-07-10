@@ -92,17 +92,17 @@ const { study, prevSlug, nextSlug } = Astro.props;
    the first pass over-designed this with eyebrow labels and boxed/grid
    "solution cards" that don't exist in the reference at all. The real
    reference is plain: a heading, a paragraph, a bullet list, repeated —
-   no decoration between sections. This version matches that: --max-width--main
-   (this site's own standard container, matching About/Work/Contact) instead
-   of a one-off narrow container, with body text capped to a readable
-   measure via cs-text's own max-width rather than narrowing the container. */
+   no decoration between sections. --max-width--medium (~930px, added to
+   lumos.css) is narrower than the site's other sections on purpose — body
+   text runs the full width of this container instead of being additionally
+   capped to a reading measure. */
 .cs-sec {
   padding-top: var(--_spacing---section-space--page-top);
   padding-bottom: var(--_spacing---section-space--large);
 }
 
 .cs-container {
-  max-width: var(--max-width--main);
+  max-width: var(--max-width--medium);
   margin: 0 auto;
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
@@ -169,7 +169,6 @@ const { study, prevSlug, nextSlug } = Astro.props;
   font-size: var(--_typography---font-size--text-main);
   color: var(--_theme---text);
   opacity: 0.85;
-  max-width: 40em;
   margin: 0 0 var(--_spacing---space--4);
   line-height: 1.6;
 }
@@ -179,7 +178,6 @@ const { study, prevSlug, nextSlug } = Astro.props;
   font-size: var(--_typography---font-size--text-main);
   font-weight: 600;
   color: var(--_theme---text);
-  max-width: 40em;
   margin: 0 0 var(--_spacing---space--3);
 }
 
@@ -189,7 +187,6 @@ const { study, prevSlug, nextSlug } = Astro.props;
   gap: var(--_spacing---space--2);
   margin: 0 0 var(--_spacing---space--4);
   padding-left: var(--_spacing---space--5);
-  max-width: 40em;
 }
 
 .cs-bullets li {

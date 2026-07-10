@@ -14,6 +14,9 @@
   --site--gutter: clamp(1rem, ((1 - ((2 - 1) / (var(--site--viewport-max) - var(--site--viewport-min)) * var(--site--viewport-min))) * 1rem + ((2 - 1) / (var(--site--viewport-max) - var(--site--viewport-min))) * 100vw), 2rem);
 
   --max-width--small: 50rem;
+  /* ~930px — sits between --small (800px) and --main (1440px), no existing
+     token was close. rem-based like the others, not a one-off px value. */
+  --max-width--medium: 58rem;
   --max-width--main: calc(var(--site--viewport-max) * 1rem);
   --max-width--full: 100%;
 
