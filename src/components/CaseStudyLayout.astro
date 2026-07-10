@@ -22,11 +22,11 @@ const { study, prevSlug, nextSlug } = Astro.props;
     </div>
 
     <!-- overview -->
-    <h2 class="cs-heading u-text-style-h3">Overview</h2>
+    <h2 class="cs-heading u-text-style-h5">Overview</h2>
     <p class="cs-text">{study.overview}</p>
 
     <!-- problem -->
-    <h2 class="cs-heading u-text-style-h3">The Problem</h2>
+    <h2 class="cs-heading u-text-style-h5">The Problem</h2>
     <p class="cs-text">{study.problem.intro}</p>
     <p class="cs-text-lead">Key challenges included:</p>
     <ul class="cs-bullets">
@@ -34,11 +34,11 @@ const { study, prevSlug, nextSlug } = Astro.props;
     </ul>
 
     <!-- solution -->
-    <h2 class="cs-heading u-text-style-h3">The Solution</h2>
+    <h2 class="cs-heading u-text-style-h5">The Solution</h2>
     <p class="cs-text">{study.solution.intro}</p>
     {study.solution.blocks && study.solution.blocks.map(block => (
       <>
-        <h3 class="cs-subheading u-text-style-h4">{block.heading}</h3>
+        <h3 class="cs-subheading u-text-style-h6">{block.heading}</h3>
         <p class="cs-text">{block.body}</p>
       </>
     ))}
@@ -46,7 +46,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
     <!-- timeline (optional) -->
     {study.timeline && (
       <>
-        <h2 class="cs-heading u-text-style-h3">Timeline</h2>
+        <h2 class="cs-heading u-text-style-h5">Timeline</h2>
         <ul class="cs-bullets">
           {study.timeline.map(entry => (
             <li><strong>{entry.label}:</strong> {entry.detail}</li>
@@ -56,7 +56,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
     )}
 
     <!-- outcome -->
-    <h2 class="cs-heading u-text-style-h3">The Outcome</h2>
+    <h2 class="cs-heading u-text-style-h5">The Outcome</h2>
     <p class="cs-text">{study.outcome}</p>
 
     <!-- prev/next nav -->
@@ -120,7 +120,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
 
 .cs-title {
   font-family: var(--_typography---font--heading-family);
-  font-size: var(--_typography---font-size--h1);
+  font-size: var(--_typography---font-size--h2);
   color: var(--swatch--heading-dark);
   text-transform: uppercase;
   margin: 0 0 var(--_spacing---space--6);
@@ -151,6 +151,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
 .cs-heading {
   font-family: var(--_typography---font--heading-family);
   color: var(--swatch--heading-dark);
+  text-transform: uppercase;
   margin: 0 0 var(--_spacing---space--4);
 }
 
@@ -161,6 +162,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
 .cs-subheading {
   font-family: var(--_typography---font--heading-family);
   color: var(--swatch--heading-dark);
+  text-transform: uppercase;
   margin: var(--_spacing---space--5) 0 var(--_spacing---space--3);
 }
 
@@ -250,7 +252,4 @@ const { study, prevSlug, nextSlug } = Astro.props;
   stroke-width: 8;
 }
 
-@media screen and (max-width: 767px) {
-  .cs-title { font-size: var(--_typography---font-size--h2); }
-}
 </style>
