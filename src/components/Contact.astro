@@ -231,8 +231,13 @@ details[open] .faq-arrow svg { transform: rotate(-90deg); }
 /* work stream */
 .contact-stream { margin-top: var(--_spacing---section-space--small); }
 
-.stream-splide { overflow: visible; }
-.stream-splide .splide__track { overflow: visible; }
+/* Hard clip at the container edge on both sides — was overflow:visible,
+   letting the free-drag thumbnail strip bleed past the container on the
+   right (and left, once dragged) instead of stopping at the same edge as
+   the photo above it. No fade/mask, matches the hard-clip treatment
+   already used on the Work carousel's left edge. */
+.stream-splide { overflow: clip; }
+.stream-splide .splide__track { overflow: clip; }
 
 .stream-slide {
   width: auto;
