@@ -1,15 +1,54 @@
 ---
 ---
 <section class="spline-sec">
-  <div class="spline-mask">
-    <spline-viewer
-      url="https://prod.spline.design/HnX4nUFdAucbN4E1/scene.splinecode"
-      class="spline-viewer"
-    ></spline-viewer>
-  </div>
+  <div class="spline-mask" id="spline-mask"></div>
 </section>
 
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+<script>
+  // Spline's WebGL canvas renders continuously (its own idle/camera
+  // animation loop) the moment the <spline-viewer> element exists with a
+  // url attribute — CSS visibility doesn't pause it. Loaded/mounted eagerly,
+  // that's constant GPU load competing with Lenis's scroll-position
+  // interpolation for main-thread time for the entire session, which reads
+  // as jitter site-wide, not just near this section. Deferring both the
+  // ~1MB viewer script and the element itself until the section is close to
+  // the viewport means nothing Spline-related runs at all until the user
+  // has nearly scrolled to it.
+  document.addEventListener('DOMContentLoaded', () => {
+    const mask = document.getElementById('spline-mask');
+    const section = document.querySelector('.spline-sec');
+    if (!mask || !section) return;
+
+    let mounted = false;
+    const mount = () => {
+      if (mounted) return;
+      mounted = true;
+      const viewer = document.createElement('spline-viewer');
+      viewer.setAttribute('url', 'https://prod.spline.design/HnX4nUFdAucbN4E1/scene.splinecode');
+      viewer.className = 'spline-viewer';
+      mask.appendChild(viewer);
+
+      if (!document.querySelector('script[data-spline-viewer]')) {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = 'https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js';
+        script.dataset.splineViewer = 'true';
+        document.head.appendChild(script);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          mount();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' }
+    );
+    observer.observe(section);
+  });
+</script>
 
 <style>
 .spline-sec {
