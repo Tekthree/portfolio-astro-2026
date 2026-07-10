@@ -154,7 +154,11 @@ const { study, prevSlug, nextSlug } = Astro.props;
 
 .cs-title {
   font-family: var(--_typography---font--heading-family);
-  font-size: var(--_typography---font-size--display);
+  /* h1 token (5rem max), not display (7rem max) — display overflowed past
+     this section's narrower --max-width--small container on longer
+     two-word titles like "Shameless Productions". Matches Hero.astro's
+     own headline, which caps at the same h1 scale for the same reason. */
+  font-size: var(--_typography---font-size--h1);
   color: var(--swatch--heading-dark);
   text-transform: uppercase;
   margin: 0 0 var(--_spacing---space--6);
