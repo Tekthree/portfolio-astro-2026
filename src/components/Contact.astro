@@ -51,12 +51,21 @@ const stream = [
       <div class="contact-faq">
         <h1 class="contact-heading u-text-style-h3">got questions?<br>let's go!</h1>
 
+        <!-- Sizing/functionality ported from lumos-example-components.astro's
+             .accordion_* pattern (same chevron SVG + rotate-on-open trick,
+             same border-bottom hairline via --border-width--main/--_theme---border),
+             kept as native <details> like the rest of the site instead of
+             porting Webflow's own interaction JS. -->
         <div class="faq-list">
           {faqs.map(faq => (
-            <details class="faq-item">
+            <details class="faq-item" name="faq-accordion">
               <summary class="faq-summary">
                 {faq.q}
-                <span class="faq-arrow">⌄</span>
+                <span class="faq-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 66 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 2L50 34.9999L17 68" stroke="currentColor" stroke-width="6"/>
+                  </svg>
+                </span>
               </summary>
               <p class="faq-answer">{faq.a}</p>
             </details>
@@ -151,36 +160,46 @@ const stream = [
   max-width: 12.8em;
 }
 
-.faq-list { }
+/* Hairline top rule above the first item — each .faq-item below supplies
+   its own bottom rule, matching the accordion reference's evenly-spaced
+   divider lines (one above item 1, one after every item). */
+.faq-list { border-top: var(--border-width--main) solid var(--_theme---border); }
 
 .faq-item {
-  border-top: 4px solid color-mix(in srgb, var(--swatch--light-200), black 25%);
-}
-.faq-item:last-child {
-  border-bottom: 4px solid color-mix(in srgb, var(--swatch--light-200), black 25%);
+  border-bottom: var(--border-width--main) solid var(--_theme---border);
 }
 
 .faq-summary {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--_spacing---space--3) 0;
+  gap: var(--_spacing---space--3);
+  padding: var(--_spacing---space--4) 0;
   cursor: pointer;
   list-style: none;
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-main);
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--_theme---text);
-  opacity: 0.74;
+  font-size: var(--_typography---font-size--h5);
+  font-weight: 600;
+  /* Matches the heading-dark convention used for prominent text elsewhere
+     (About/Contact headings) — was plain _theme---text, inconsistent with
+     that pattern. */
+  color: var(--swatch--heading-dark);
 }
 
 .faq-summary::-webkit-details-marker { display: none; }
 
 .faq-arrow {
-  font-size: 1.4em;
-  margin-left: var(--_spacing---space--3);
-  flex-shrink: 0;
+  width: 1.4rem;
+  aspect-ratio: 1;
+  flex: none;
+  display: block;
+}
+
+.faq-arrow svg {
+  width: 100%;
+  display: block;
+  transform: rotate(90deg);
+  transition: transform 0.2s ease;
 }
 
 .faq-answer {
@@ -188,7 +207,7 @@ const stream = [
   font-size: var(--_typography---font-size--text-small);
   color: var(--_theme---text);
   opacity: 0.55;
-  padding-bottom: var(--_spacing---space--3);
+  padding-bottom: var(--_spacing---space--5);
   line-height: 1.6;
   margin: 0;
 }
@@ -205,12 +224,9 @@ const stream = [
   border-radius: var(--radius--main);
 }
 
-/* FAQ arrow rotation */
-.faq-arrow {
-  transition: transform 0.3s ease;
-  display: inline-block;
-}
-details[open] .faq-arrow { transform: rotate(180deg); }
+/* FAQ arrow rotation — base chevron points right, rotate(90deg) points it
+   down at rest (closed), open flips it to point up. */
+details[open] .faq-arrow svg { transform: rotate(-90deg); }
 
 /* work stream */
 .contact-stream { margin-top: var(--_spacing---section-space--small); }
