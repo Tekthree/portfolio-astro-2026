@@ -1,0 +1,334 @@
+---
+import type { CaseStudy } from '../data/caseStudies';
+
+interface Props {
+  study: CaseStudy;
+  prevSlug: string | null;
+  nextSlug: string | null;
+}
+
+const { study, prevSlug, nextSlug } = Astro.props;
+---
+
+<section class="cs-sec u-theme-light">
+  <div class="cs-container">
+
+    <!-- eyebrow + hero -->
+    <div class="cs-eyebrow">
+      <span class="cs-eyebrow-marker" aria-hidden="true"></span>
+      <span class="cs-eyebrow-text">{study.tag} · {study.client}</span>
+    </div>
+    <h1 class="cs-title">{study.title}</h1>
+
+    <div class="cs-hero-image-wrap">
+      <img src={study.heroImage} alt={study.title} class="cs-hero-image" loading="eager" />
+    </div>
+
+    <!-- overview -->
+    <p class="cs-overview">{study.overview}</p>
+
+    <!-- problem -->
+    <div class="cs-block">
+      <div class="cs-eyebrow">
+        <span class="cs-eyebrow-marker" aria-hidden="true"></span>
+        <span class="cs-eyebrow-text">Problem</span>
+      </div>
+      <p class="cs-block-intro">{study.problem.intro}</p>
+      <ul class="cs-bullets">
+        {study.problem.bullets.map(bullet => <li>{bullet}</li>)}
+      </ul>
+    </div>
+
+    <!-- solution -->
+    <div class="cs-block">
+      <div class="cs-eyebrow">
+        <span class="cs-eyebrow-marker" aria-hidden="true"></span>
+        <span class="cs-eyebrow-text">Solution</span>
+      </div>
+      <p class="cs-block-intro">{study.solution.intro}</p>
+      {study.solution.blocks && (
+        <div class="cs-solution-grid">
+          {study.solution.blocks.map(block => (
+            <div class="cs-solution-card">
+              <h3 class="cs-solution-card-heading">{block.heading}</h3>
+              <p class="cs-solution-card-body">{block.body}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- timeline (optional) -->
+    {study.timeline && (
+      <div class="cs-block">
+        <div class="cs-eyebrow">
+          <span class="cs-eyebrow-marker" aria-hidden="true"></span>
+          <span class="cs-eyebrow-text">Timeline</span>
+        </div>
+        <ul class="cs-timeline">
+          {study.timeline.map(entry => (
+            <li class="cs-timeline-item">
+              <span class="cs-timeline-label">{entry.label}</span>
+              <span class="cs-timeline-detail">{entry.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <!-- outcome -->
+    <div class="cs-block">
+      <div class="cs-eyebrow">
+        <span class="cs-eyebrow-marker" aria-hidden="true"></span>
+        <span class="cs-eyebrow-text">Outcome</span>
+      </div>
+      <p class="cs-block-intro">{study.outcome}</p>
+    </div>
+
+    <!-- prev/next nav -->
+    <nav class="cs-nav" aria-label="Other case studies">
+      {prevSlug ? (
+        <a href={`/work/${prevSlug}`} class="cs-nav-link cs-nav-prev">
+          <span class="cs-nav-arrow" aria-hidden="true">
+            <svg viewBox="0 0 66 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17 2L50 34.9999L17 68" stroke="currentColor" stroke-width="6"/>
+            </svg>
+          </span>
+          <span>Previous project</span>
+        </a>
+      ) : <span />}
+      <a href="/#work" class="cs-nav-back">All work</a>
+      {nextSlug ? (
+        <a href={`/work/${nextSlug}`} class="cs-nav-link cs-nav-next">
+          <span>Next project</span>
+          <span class="cs-nav-arrow cs-nav-arrow-next" aria-hidden="true">
+            <svg viewBox="0 0 66 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17 2L50 34.9999L17 68" stroke="currentColor" stroke-width="6"/>
+            </svg>
+          </span>
+        </a>
+      ) : <span />}
+    </nav>
+
+  </div>
+</section>
+
+<style>
+.cs-sec {
+  padding-top: var(--_spacing---section-space--page-top);
+  padding-bottom: var(--_spacing---section-space--large);
+}
+
+.cs-container {
+  max-width: var(--max-width--small);
+  margin: 0 auto;
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
+}
+
+/* eyebrow — ported from lumos-example-components.astro's
+   .u-eyebrow-wrapper/-layout/-marker/-text (vendor CSS lines ~814-838):
+   a vertical bar + small caps label, used above every section heading. */
+.cs-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_spacing---space--3);
+  margin-bottom: var(--_spacing---space--4);
+}
+
+.cs-eyebrow-marker {
+  width: var(--border-width--main);
+  align-self: stretch;
+  background-color: currentColor;
+  flex: none;
+}
+
+.cs-eyebrow-text {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--swatch--muted-500);
+}
+
+.cs-title {
+  font-family: var(--_typography---font--heading-family);
+  font-size: var(--_typography---font-size--display);
+  color: var(--swatch--heading-dark);
+  text-transform: uppercase;
+  margin: 0 0 var(--_spacing---space--6);
+  line-height: 1;
+}
+
+/* image wrapper — ported from lumos-example-components.astro's
+   .u-image-wrapper aspect-ratio technique (vendor CSS line ~737): a
+   position:relative wrapper with a fixed aspect-ratio, image absolutely
+   filling it via object-fit. Reused here at 16/9 for the hero. */
+.cs-hero-image-wrap {
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: clip;
+  border-radius: var(--radius--main);
+  margin-bottom: var(--_spacing---space--7);
+}
+
+.cs-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.cs-overview {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-large);
+  color: var(--_theme---text);
+  opacity: 0.85;
+  max-width: 36em;
+  margin: 0 0 var(--_spacing---section-space--small);
+}
+
+.cs-block {
+  margin-bottom: var(--_spacing---section-space--small);
+}
+
+.cs-block-intro {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-main);
+  color: var(--_theme---text);
+  opacity: 0.85;
+  max-width: 40em;
+  margin: 0 0 var(--_spacing---space--4);
+}
+
+.cs-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_spacing---space--3);
+  margin: 0;
+  padding-left: var(--_spacing---space--5);
+  max-width: 40em;
+}
+
+.cs-bullets li {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-main);
+  color: var(--_theme---text);
+  opacity: 0.7;
+}
+
+.cs-solution-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--_spacing---space--5);
+}
+
+.cs-solution-card {
+  background-color: var(--bg-stats);
+  border-radius: var(--radius--main);
+  padding: var(--_spacing---space--5);
+}
+
+.cs-solution-card-heading {
+  font-family: var(--_typography---font--heading-family);
+  font-size: var(--_typography---font-size--h6);
+  text-transform: uppercase;
+  color: var(--swatch--heading-dark);
+  margin: 0 0 var(--_spacing---space--3);
+}
+
+.cs-solution-card-body {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  color: var(--_theme---text);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.cs-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 30em;
+}
+
+.cs-timeline-item {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--_spacing---space--4);
+  padding: var(--_spacing---space--3) 0;
+  border-bottom: var(--border-width--main) solid var(--_theme---border);
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+}
+
+.cs-timeline-label {
+  font-weight: 600;
+  color: var(--swatch--heading-dark);
+  flex: none;
+}
+
+.cs-timeline-detail {
+  color: var(--_theme---text);
+  opacity: 0.7;
+  text-align: right;
+}
+
+/* prev/next nav — reuses the same circular arrow-button pattern already
+   ported into Contact.astro's .stream-btn (itself ported from
+   lumos-example-components.astro's .button_arrow_wrap/.button_arrow_element). */
+.cs-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--_spacing---space--6);
+  border-top: var(--border-width--main) solid var(--_theme---border);
+}
+
+.cs-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_spacing---space--3);
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-main);
+  font-weight: 600;
+  color: var(--swatch--heading-dark);
+  text-decoration: none;
+}
+
+.cs-nav-back {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  color: var(--_theme---text);
+  opacity: 0.55;
+  text-decoration: underline;
+}
+
+.cs-nav-arrow {
+  width: 1.2rem;
+  aspect-ratio: 1;
+  display: block;
+  transform: rotate(180deg);
+}
+
+.cs-nav-arrow-next {
+  transform: none;
+}
+
+.cs-nav-arrow svg {
+  width: 100%;
+  display: block;
+  stroke-width: 8;
+}
+
+@media screen and (max-width: 767px) {
+  .cs-solution-grid { grid-template-columns: 1fr; }
+  .cs-title { font-size: var(--_typography---font-size--h1); }
+}
+</style>
