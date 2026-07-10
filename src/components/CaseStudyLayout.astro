@@ -13,11 +13,8 @@ const { study, prevSlug, nextSlug } = Astro.props;
 <section class="cs-sec u-theme-light">
   <div class="cs-container">
 
-    <!-- eyebrow + hero -->
-    <div class="cs-eyebrow">
-      <span class="cs-eyebrow-marker" aria-hidden="true"></span>
-      <span class="cs-eyebrow-text">{study.tag} · {study.client}</span>
-    </div>
+    <!-- title -->
+    <p class="cs-meta">{study.tag} · {study.client}</p>
     <h1 class="cs-title">{study.title}</h1>
 
     <div class="cs-hero-image-wrap">
@@ -25,65 +22,42 @@ const { study, prevSlug, nextSlug } = Astro.props;
     </div>
 
     <!-- overview -->
-    <p class="cs-overview">{study.overview}</p>
+    <h2 class="cs-heading u-text-style-h3">Overview</h2>
+    <p class="cs-text">{study.overview}</p>
 
     <!-- problem -->
-    <div class="cs-block">
-      <div class="cs-eyebrow">
-        <span class="cs-eyebrow-marker" aria-hidden="true"></span>
-        <span class="cs-eyebrow-text">Problem</span>
-      </div>
-      <p class="cs-block-intro">{study.problem.intro}</p>
-      <ul class="cs-bullets">
-        {study.problem.bullets.map(bullet => <li>{bullet}</li>)}
-      </ul>
-    </div>
+    <h2 class="cs-heading u-text-style-h3">The Problem</h2>
+    <p class="cs-text">{study.problem.intro}</p>
+    <p class="cs-text-lead">Key challenges included:</p>
+    <ul class="cs-bullets">
+      {study.problem.bullets.map(bullet => <li>{bullet}</li>)}
+    </ul>
 
     <!-- solution -->
-    <div class="cs-block">
-      <div class="cs-eyebrow">
-        <span class="cs-eyebrow-marker" aria-hidden="true"></span>
-        <span class="cs-eyebrow-text">Solution</span>
-      </div>
-      <p class="cs-block-intro">{study.solution.intro}</p>
-      {study.solution.blocks && (
-        <div class="cs-solution-grid">
-          {study.solution.blocks.map(block => (
-            <div class="cs-solution-card">
-              <h3 class="cs-solution-card-heading">{block.heading}</h3>
-              <p class="cs-solution-card-body">{block.body}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <h2 class="cs-heading u-text-style-h3">The Solution</h2>
+    <p class="cs-text">{study.solution.intro}</p>
+    {study.solution.blocks && study.solution.blocks.map(block => (
+      <>
+        <h3 class="cs-subheading u-text-style-h4">{block.heading}</h3>
+        <p class="cs-text">{block.body}</p>
+      </>
+    ))}
 
     <!-- timeline (optional) -->
     {study.timeline && (
-      <div class="cs-block">
-        <div class="cs-eyebrow">
-          <span class="cs-eyebrow-marker" aria-hidden="true"></span>
-          <span class="cs-eyebrow-text">Timeline</span>
-        </div>
-        <ul class="cs-timeline">
+      <>
+        <h2 class="cs-heading u-text-style-h3">Timeline</h2>
+        <ul class="cs-bullets">
           {study.timeline.map(entry => (
-            <li class="cs-timeline-item">
-              <span class="cs-timeline-label">{entry.label}</span>
-              <span class="cs-timeline-detail">{entry.detail}</span>
-            </li>
+            <li><strong>{entry.label}:</strong> {entry.detail}</li>
           ))}
         </ul>
-      </div>
+      </>
     )}
 
     <!-- outcome -->
-    <div class="cs-block">
-      <div class="cs-eyebrow">
-        <span class="cs-eyebrow-marker" aria-hidden="true"></span>
-        <span class="cs-eyebrow-text">Outcome</span>
-      </div>
-      <p class="cs-block-intro">{study.outcome}</p>
-    </div>
+    <h2 class="cs-heading u-text-style-h3">The Outcome</h2>
+    <p class="cs-text">{study.outcome}</p>
 
     <!-- prev/next nav -->
     <nav class="cs-nav" aria-label="Other case studies">
@@ -114,50 +88,38 @@ const { study, prevSlug, nextSlug } = Astro.props;
 </section>
 
 <style>
+/* Rebuilt against the actual reference (case-study-match.webflow.io) —
+   the first pass over-designed this with eyebrow labels and boxed/grid
+   "solution cards" that don't exist in the reference at all. The real
+   reference is plain: a heading, a paragraph, a bullet list, repeated —
+   no decoration between sections. This version matches that: --max-width--main
+   (this site's own standard container, matching About/Work/Contact) instead
+   of a one-off narrow container, with body text capped to a readable
+   measure via cs-text's own max-width rather than narrowing the container. */
 .cs-sec {
   padding-top: var(--_spacing---section-space--page-top);
   padding-bottom: var(--_spacing---section-space--large);
 }
 
 .cs-container {
-  max-width: var(--max-width--small);
+  max-width: var(--max-width--main);
   margin: 0 auto;
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
 }
 
-/* eyebrow — ported from lumos-example-components.astro's
-   .u-eyebrow-wrapper/-layout/-marker/-text (vendor CSS lines ~814-838):
-   a vertical bar + small caps label, used above every section heading. */
-.cs-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--_spacing---space--3);
-  margin-bottom: var(--_spacing---space--4);
-}
-
-.cs-eyebrow-marker {
-  width: var(--border-width--main);
-  align-self: stretch;
-  background-color: currentColor;
-  flex: none;
-}
-
-.cs-eyebrow-text {
+.cs-meta {
   font-family: var(--_typography---font--primary-family);
   font-size: var(--_typography---font-size--text-small);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--swatch--muted-500);
+  margin: 0 0 var(--_spacing---space--3);
 }
 
 .cs-title {
   font-family: var(--_typography---font--heading-family);
-  /* h1 token (5rem max), not display (7rem max) — display overflowed past
-     this section's narrower --max-width--small container on longer
-     two-word titles like "Shameless Productions". Matches Hero.astro's
-     own headline, which caps at the same h1 scale for the same reason. */
   font-size: var(--_typography---font-size--h1);
   color: var(--swatch--heading-dark);
   text-transform: uppercase;
@@ -174,7 +136,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
   position: relative;
   overflow: clip;
   border-radius: var(--radius--main);
-  margin-bottom: var(--_spacing---space--7);
+  margin-bottom: var(--_spacing---section-space--small);
 }
 
 .cs-hero-image {
@@ -186,33 +148,46 @@ const { study, prevSlug, nextSlug } = Astro.props;
   display: block;
 }
 
-.cs-overview {
-  font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-large);
-  color: var(--_theme---text);
-  opacity: 0.85;
-  max-width: 36em;
-  margin: 0 0 var(--_spacing---section-space--small);
+.cs-heading {
+  font-family: var(--_typography---font--heading-family);
+  color: var(--swatch--heading-dark);
+  margin: 0 0 var(--_spacing---space--4);
 }
 
-.cs-block {
-  margin-bottom: var(--_spacing---section-space--small);
+.cs-heading:not(:first-of-type) {
+  margin-top: var(--_spacing---section-space--small);
 }
 
-.cs-block-intro {
+.cs-subheading {
+  font-family: var(--_typography---font--heading-family);
+  color: var(--swatch--heading-dark);
+  margin: var(--_spacing---space--5) 0 var(--_spacing---space--3);
+}
+
+.cs-text {
   font-family: var(--_typography---font--primary-family);
   font-size: var(--_typography---font-size--text-main);
   color: var(--_theme---text);
   opacity: 0.85;
   max-width: 40em;
   margin: 0 0 var(--_spacing---space--4);
+  line-height: 1.6;
+}
+
+.cs-text-lead {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-main);
+  font-weight: 600;
+  color: var(--_theme---text);
+  max-width: 40em;
+  margin: 0 0 var(--_spacing---space--3);
 }
 
 .cs-bullets {
   display: flex;
   flex-direction: column;
-  gap: var(--_spacing---space--3);
-  margin: 0;
+  gap: var(--_spacing---space--2);
+  margin: 0 0 var(--_spacing---space--4);
   padding-left: var(--_spacing---space--5);
   max-width: 40em;
 }
@@ -221,67 +196,13 @@ const { study, prevSlug, nextSlug } = Astro.props;
   font-family: var(--_typography---font--primary-family);
   font-size: var(--_typography---font-size--text-main);
   color: var(--_theme---text);
-  opacity: 0.7;
+  opacity: 0.85;
+  line-height: 1.6;
 }
 
-.cs-solution-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--_spacing---space--5);
-}
-
-.cs-solution-card {
-  background-color: var(--bg-stats);
-  border-radius: var(--radius--main);
-  padding: var(--_spacing---space--5);
-}
-
-.cs-solution-card-heading {
-  font-family: var(--_typography---font--heading-family);
-  font-size: var(--_typography---font-size--h6);
-  text-transform: uppercase;
+.cs-bullets li strong {
   color: var(--swatch--heading-dark);
-  margin: 0 0 var(--_spacing---space--3);
-}
-
-.cs-solution-card-body {
-  font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-small);
-  color: var(--_theme---text);
-  opacity: 0.7;
-  margin: 0;
-}
-
-.cs-timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  max-width: 30em;
-}
-
-.cs-timeline-item {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--_spacing---space--4);
-  padding: var(--_spacing---space--3) 0;
-  border-bottom: var(--border-width--main) solid var(--_theme---border);
-  font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-small);
-}
-
-.cs-timeline-label {
-  font-weight: 600;
-  color: var(--swatch--heading-dark);
-  flex: none;
-}
-
-.cs-timeline-detail {
-  color: var(--_theme---text);
-  opacity: 0.7;
-  text-align: right;
+  opacity: 1;
 }
 
 /* prev/next nav — reuses the same circular arrow-button pattern already
@@ -291,6 +212,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: var(--_spacing---section-space--small);
   padding-top: var(--_spacing---space--6);
   border-top: var(--border-width--main) solid var(--_theme---border);
 }
@@ -332,7 +254,6 @@ const { study, prevSlug, nextSlug } = Astro.props;
 }
 
 @media screen and (max-width: 767px) {
-  .cs-solution-grid { grid-template-columns: 1fr; }
-  .cs-title { font-size: var(--_typography---font-size--h1); }
+  .cs-title { font-size: var(--_typography---font-size--h2); }
 }
 </style>
