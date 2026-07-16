@@ -3,12 +3,14 @@ import type { CaseStudy } from '../data/caseStudies';
 
 interface Props {
   study: CaseStudy;
-  prevSlug: string | null;
-  nextSlug: string | null;
+  prevStudy: CaseStudy | null;
+  nextStudy: CaseStudy | null;
 }
 
-const { study, prevSlug, nextSlug } = Astro.props;
+const { study, prevStudy, nextStudy } = Astro.props;
 ---
+
+<div class="cs-progress" aria-hidden="true"><div class="cs-progress-fill"></div></div>
 
 <section class="cs-sec u-theme-light">
   <div class="cs-container">
@@ -21,71 +23,164 @@ const { study, prevSlug, nextSlug } = Astro.props;
       <img src={study.heroImage} alt={study.title} class="cs-hero-image" loading="eager" />
     </div>
 
-    <!-- overview -->
-    <h2 class="cs-heading u-text-style-h5">Overview</h2>
-    <p class="cs-text">{study.overview}</p>
+    <div class="cs-layout">
+      <div class="cs-main">
 
-    <!-- problem -->
-    <h2 class="cs-heading u-text-style-h5">The Problem</h2>
-    <p class="cs-text">{study.problem.intro}</p>
-    <p class="cs-text-lead">Key challenges included:</p>
-    <ul class="cs-bullets">
-      {study.problem.bullets.map(bullet => <li>{bullet}</li>)}
-    </ul>
+        <!-- overview -->
+        <h2 id="overview" class="cs-heading u-text-style-h5">Overview</h2>
+        <p class="cs-text">{study.overview}</p>
 
-    <!-- solution -->
-    <h2 class="cs-heading u-text-style-h5">The Solution</h2>
-    <p class="cs-text">{study.solution.intro}</p>
-    {study.solution.blocks && study.solution.blocks.map(block => (
-      <>
-        <h3 class="cs-subheading u-text-style-h6">{block.heading}</h3>
-        <p class="cs-text">{block.body}</p>
-      </>
-    ))}
-
-    <!-- timeline (optional) -->
-    {study.timeline && (
-      <>
-        <h2 class="cs-heading u-text-style-h5">Timeline</h2>
+        <!-- problem -->
+        <h2 id="problem" class="cs-heading u-text-style-h5">The Problem</h2>
+        <p class="cs-text">{study.problem.intro}</p>
+        <p class="cs-text-lead">Key challenges included:</p>
         <ul class="cs-bullets">
-          {study.timeline.map(entry => (
-            <li><strong>{entry.label}:</strong> {entry.detail}</li>
-          ))}
+          {study.problem.bullets.map(bullet => <li>{bullet}</li>)}
         </ul>
-      </>
-    )}
 
-    <!-- outcome -->
-    <h2 class="cs-heading u-text-style-h5">The Outcome</h2>
-    <p class="cs-text">{study.outcome}</p>
+        <!-- solution -->
+        <h2 id="solution" class="cs-heading u-text-style-h5">The Solution</h2>
+        <p class="cs-text">{study.solution.intro}</p>
+        {study.solution.blocks && study.solution.blocks.map(block => (
+          <>
+            <h3 class="cs-subheading">{block.heading}</h3>
+            <p class="cs-text">{block.body}</p>
+          </>
+        ))}
+
+        <!-- timeline (optional) -->
+        {study.timeline && (
+          <>
+            <h2 id="timeline" class="cs-heading u-text-style-h5">Timeline</h2>
+            <ul class="cs-bullets">
+              {study.timeline.map(entry => (
+                <li><strong>{entry.label}:</strong> {entry.detail}</li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <!-- outcome -->
+        <h2 id="outcome" class="cs-heading u-text-style-h5">The Outcome</h2>
+        <p class="cs-text">{study.outcome}</p>
+
+      </div>
+
+      <aside class="cs-sidebar">
+        <div class="cs-toc">
+          <p class="cs-toc-label">In This Article</p>
+          <ul class="cs-toc-list">
+            <li><a href="#overview" data-toc-link>Overview</a></li>
+            <li><a href="#problem" data-toc-link>The Problem</a></li>
+            <li><a href="#solution" data-toc-link>The Solution</a></li>
+            {study.timeline && <li><a href="#timeline" data-toc-link>Timeline</a></li>}
+            <li><a href="#outcome" data-toc-link>The Outcome</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
 
     <!-- prev/next nav -->
-    <nav class="cs-nav" aria-label="Other case studies">
-      {prevSlug ? (
-        <a href={`/work/${prevSlug}`} class="cs-nav-link cs-nav-prev">
-          <span class="cs-nav-arrow" aria-hidden="true">
-            <svg viewBox="0 0 66 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17 2L50 34.9999L17 68" stroke="currentColor" stroke-width="6"/>
-            </svg>
-          </span>
-          <span>Previous project</span>
-        </a>
-      ) : <span />}
-      <a href="/#work" class="cs-nav-back">All work</a>
-      {nextSlug ? (
-        <a href={`/work/${nextSlug}`} class="cs-nav-link cs-nav-next">
-          <span>Next project</span>
-          <span class="cs-nav-arrow cs-nav-arrow-next" aria-hidden="true">
-            <svg viewBox="0 0 66 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17 2L50 34.9999L17 68" stroke="currentColor" stroke-width="6"/>
-            </svg>
-          </span>
-        </a>
-      ) : <span />}
-    </nav>
+    {(prevStudy || nextStudy) && (
+      <nav class="cs-nav" aria-label="Other case studies">
+        {prevStudy ? (
+          <a href={`/work/${prevStudy.slug}`} class="cs-nav-card">
+            <div class="cs-nav-card-img-wrap">
+              <img src={prevStudy.heroImage} alt="" class="cs-nav-card-img" loading="lazy" />
+            </div>
+            <div class="cs-nav-card-info">
+              <p class="cs-nav-card-label">
+                <span class="cs-nav-arrow cs-nav-arrow-prev" aria-hidden="true">
+                  <svg viewBox="0 0 66 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 2L50 34.9999L17 68" stroke="currentColor" stroke-width="6"/>
+                  </svg>
+                </span>
+                Previous project
+              </p>
+              <p class="cs-nav-card-tag">{prevStudy.tag}</p>
+              <h3 class="cs-nav-card-title">{prevStudy.title}</h3>
+            </div>
+          </a>
+        ) : <span />}
+        {nextStudy ? (
+          <a href={`/work/${nextStudy.slug}`} class="cs-nav-card cs-nav-card-next">
+            <div class="cs-nav-card-img-wrap">
+              <img src={nextStudy.heroImage} alt="" class="cs-nav-card-img" loading="lazy" />
+            </div>
+            <div class="cs-nav-card-info">
+              <p class="cs-nav-card-label cs-nav-card-label-next">
+                Next project
+                <span class="cs-nav-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 66 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 2L50 34.9999L17 68" stroke="currentColor" stroke-width="6"/>
+                  </svg>
+                </span>
+              </p>
+              <p class="cs-nav-card-tag">{nextStudy.tag}</p>
+              <h3 class="cs-nav-card-title">{nextStudy.title}</h3>
+            </div>
+          </a>
+        ) : <span />}
+      </nav>
+    )}
 
   </div>
 </section>
+
+<script>
+  function initCaseStudyReading() {
+    const main = document.querySelector('.cs-main');
+    const progressFill = document.querySelector('.cs-progress-fill');
+    const tocLinks = Array.from(document.querySelectorAll('[data-toc-link]'));
+    if (!main || !progressFill || tocLinks.length === 0) return;
+
+    // Full-page scroll progress (0% at the very top, 100% at the very
+    // bottom) — not scoped to .cs-main, so it starts filling immediately
+    // and reaches full width exactly at the page's bottom edge.
+    const updateProgress = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? Math.min(100, Math.max(0, (window.scrollY / total) * 100)) : 0;
+      progressFill.style.width = `${pct}%`;
+    };
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+
+    const headings = tocLinks
+      .map(link => document.getElementById(link.getAttribute('href').slice(1)))
+      .filter(el => el !== null);
+
+    const setActive = (id) => {
+      tocLinks.forEach(link => {
+        link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+      });
+    };
+
+    // Was IntersectionObserver watching a narrow band near the top of the
+    // viewport — but each heading line is only ~30-90px tall crossing a
+    // ~90px band, so a fast scroll (or a discrete jump) could pass through
+    // both in a single frame and never register, leaving the active state
+    // stuck. This instead just checks, on every scroll, which heading has
+    // scrolled past a fixed line and takes the last one — no band to miss,
+    // works regardless of scroll speed.
+    const activeLineY = () =>
+      parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav--actual-height')) || 104;
+
+    const updateActiveHeading = () => {
+      const line = activeLineY() + 32;
+      let currentId = headings[0].id;
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top - line <= 0) currentId = h.id;
+      }
+      setActive(currentId);
+    };
+    updateActiveHeading();
+    window.addEventListener('scroll', updateActiveHeading, { passive: true });
+    window.addEventListener('resize', updateActiveHeading);
+  }
+
+  initCaseStudyReading();
+</script>
 
 <style>
 /* Rebuilt against the actual reference (case-study-match.webflow.io) —
@@ -102,7 +197,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
 }
 
 .cs-container {
-  max-width: var(--max-width--medium);
+  max-width: var(--max-width--main);
   margin: 0 auto;
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
@@ -120,8 +215,15 @@ const { study, prevSlug, nextSlug } = Astro.props;
 
 .cs-title {
   font-family: var(--_typography---font--heading-family);
-  font-size: var(--_typography---font-size--h2);
-  color: var(--swatch--heading-dark);
+  /* Fixed, not the fluid --_typography---font-size--h2 clamp (34px-64px) —
+     matched to the reference (case-study-match.webflow.io/projects/ember-field),
+     which holds the same px size from mobile to desktop instead of scaling.
+     Sized down from the reference's literal 48px/3rem — uppercase reads
+     noticeably bigger than the reference's mixed-case type at the same
+     size, so a direct px match ran oversized here. */
+  font-size: 2.5rem;
+  color: var(--_theme---text);
+  opacity: 0.75;
   text-transform: uppercase;
   margin: 0 0 var(--_spacing---space--6);
   line-height: 1;
@@ -150,25 +252,52 @@ const { study, prevSlug, nextSlug } = Astro.props;
 
 .cs-heading {
   font-family: var(--_typography---font--heading-family);
-  color: var(--swatch--heading-dark);
+  /* Fixed size instead of u-text-style-h5's fluid clamp (~18.7px-24px),
+     which read too small — but dialed back from a literal reference match
+     (2.2rem/35.2px), which read too big/heavy once combined with this
+     site's uppercase heading treatment (the reference is mixed-case). */
+  font-size: 1.75rem;
+  line-height: 1.15;
+  /* Lighter than --swatch--heading-dark (84% opacity baked in) — that
+     token felt too heavy at this size/weight combo per feedback. */
+  color: var(--_theme---text);
+  opacity: 0.75;
   text-transform: uppercase;
   margin: 0 0 var(--_spacing---space--4);
+  /* Anchor-jump offset for the fixed navbar + TOC links below — native
+     scroll-margin instead of a JS scroll handler, since nothing here
+     competes with a framework's own hash router (the Webflow build this
+     pattern originated on needed JS specifically to route around that). */
+  scroll-margin-top: calc(var(--nav--actual-height, 6.5rem) + var(--_spacing---space--5));
 }
 
 .cs-heading:not(:first-of-type) {
   margin-top: var(--_spacing---section-space--small);
 }
 
+/* Sub-block labels (Brand & Logo, Website, Guestbook, ...) — these are
+   minor in-section labels, not real headings. Downgraded to bold body
+   text (primary font, paragraph size, no uppercase) instead of a second
+   tier of heading styling, per feedback that they read as over-weighted. */
 .cs-subheading {
-  font-family: var(--_typography---font--heading-family);
-  color: var(--swatch--heading-dark);
-  text-transform: uppercase;
-  margin: var(--_spacing---space--5) 0 var(--_spacing---space--3);
+  font-family: var(--_typography---font--primary-family);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  /* Same opacity as .cs-text (0.55), not a darker in-between value — "bold
+     p text" means it should match the paragraph color exactly and stand
+     out on weight alone. 0.85 was still reading as near-black once bold. */
+  color: var(--_theme---text);
+  opacity: 0.55;
+  margin: var(--_spacing---space--5) 0 var(--_spacing---space--2);
 }
 
 .cs-text {
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-main);
+  /* Fixed size (matches reference paragraph: 19.2px) instead of the fluid
+     --_typography---font-size--text-main clamp (~13.6px-18px) — same fix
+     as the headings above, held static across breakpoints on purpose. */
+  font-size: 1.2rem;
   color: var(--_theme---text);
   opacity: 0.55;
   margin: 0 0 var(--_spacing---space--4);
@@ -177,7 +306,7 @@ const { study, prevSlug, nextSlug } = Astro.props;
 
 .cs-text-lead {
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-main);
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--_theme---text);
   opacity: 0.55;
@@ -194,9 +323,11 @@ const { study, prevSlug, nextSlug } = Astro.props;
 
 .cs-bullets li {
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-main);
+  font-size: 1.2rem;
   color: var(--_theme---text);
-  opacity: 0.85;
+  /* Was 0.85 — inconsistent with .cs-text's 0.55, the opacity every other
+     body-copy element on the site uses (About, Contact). Matched it. */
+  opacity: 0.55;
   line-height: 1.6;
 }
 
@@ -205,45 +336,203 @@ const { study, prevSlug, nextSlug } = Astro.props;
   opacity: 1;
 }
 
-/* prev/next nav — reuses the same circular arrow-button pattern already
-   ported into Contact.astro's .stream-btn (itself ported from
-   lumos-example-components.astro's .button_arrow_wrap/.button_arrow_element). */
-.cs-nav {
+/* main article + sticky "In This Article" sidebar — same responsive
+   display-swap pattern as Contact.astro's .contact-split (grid on desktop,
+   flex/column on tablet+mobile, driven by --flex-medium/--column-medium).
+   No align-items:start here — .cs-sidebar needs to stretch to .cs-main's
+   full height (default grid stretch) so .cs-toc has room inside it to
+   travel and stick as the page scrolls. Capping it at the shorter content
+   height leaves zero room for position:sticky to do anything. */
+.cs-layout {
+  display: var(--flex-medium, grid);
+  flex-direction: column;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  column-gap: var(--_spacing---section-space--small);
+}
+
+.cs-main {
+  min-width: 0;
+}
+
+.cs-sidebar {
+  /* Column-medium (tablet/mobile) stacks the sidebar under the article —
+     order keeps it there rather than floating it above the content. */
+  order: 2;
+}
+
+.cs-toc {
+  background-color: var(--bg-stats);
+  border-radius: var(--radius--main);
+  padding: var(--_spacing---space--5);
+  position: sticky;
+  top: calc(var(--nav--actual-height, 6.5rem) + var(--_spacing---space--5));
+}
+
+.cs-toc-label {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--swatch--muted-500);
+  margin: 0 0 var(--_spacing---space--3);
+}
+
+.cs-toc-list {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--_spacing---space--3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-toc-list a {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  color: var(--swatch--heading-dark);
+  opacity: 0.7;
+  text-decoration: none;
+  line-height: 1.4;
+  display: block;
+  /* Transparent by default (same width as the active state's real border)
+     so the active link's indicator line doesn't shift the text when it
+     toggles on. */
+  border-left: 2px solid transparent;
+  padding-left: var(--_spacing---space--3);
+  transition: border-color 150ms, opacity 150ms;
+}
+
+.cs-toc-list a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.cs-toc-list a.is-active {
+  opacity: 1;
+  color: var(--swatch--accent-500);
+  font-weight: 600;
+  border-left-color: var(--swatch--accent-500);
+}
+
+/* prev/next nav — image cards reusing Work.astro's .work-card visual
+   pattern (image + dark gradient overlay + tag/title info block) so this
+   page reads as part of the same site instead of a bare text link pair. */
+.cs-nav {
+  display: var(--flex-medium, grid);
+  flex-direction: column;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--_spacing---space--5);
   margin-top: var(--_spacing---section-space--small);
   padding-top: var(--_spacing---space--6);
   border-top: var(--border-width--main) solid var(--_theme---border);
 }
 
-.cs-nav-link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--_spacing---space--3);
-  font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-main);
-  font-weight: 600;
-  color: var(--swatch--heading-dark);
+.cs-nav-card {
+  position: relative;
+  display: block;
+  border-radius: var(--radius--main);
+  border: var(--border-width--main) solid var(--_theme---border);
+  overflow: clip;
   text-decoration: none;
+  color: inherit;
 }
 
-.cs-nav-back {
+.cs-nav-card-next {
+  text-align: right;
+}
+
+.cs-nav-card-img-wrap {
+  position: relative;
+  overflow: clip;
+  /* Half the height of the original 16/9 card — same width, double the
+     ratio denominator halves the resulting height. */
+  aspect-ratio: 32 / 9;
+  /* Solid backing color behind the faded image below — this, not a blend
+     mode, is what actually guarantees nothing on the card reads darker
+     than this tone. mix-blend-mode:color kept letting dark photo shadows
+     and bright highlights show through unpredictably depending on the
+     source image; a mostly-transparent image over a flat color doesn't
+     have that problem, since the flat color is what's actually visible.
+     Matched to the section's own background (--swatch--light-200) so the
+     cards read close to the page tone instead of a distinctly darker block. */
+  background-color: var(--swatch--light-200);
+}
+
+.cs-nav-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1);
+  /* Faded to a ghost of the photo over the backing color above, instead of
+     fighting to tint/cap the photo's own brightness and contrast. */
+  opacity: 0.2;
+  transition: transform 0.6s cubic-bezier(.544,.375,.25,1);
+}
+
+.cs-nav-card:hover .cs-nav-card-img {
+  transform: scale(1.05);
+}
+
+.cs-nav-card-info {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--_spacing---space--4) var(--_spacing---space--5);
+}
+
+.cs-nav-card-label {
+  display: flex;
+  align-items: center;
+  gap: var(--_spacing---space--2);
   font-family: var(--_typography---font--primary-family);
   font-size: var(--_typography---font-size--text-small);
-  color: var(--_theme---text);
-  opacity: 0.55;
-  text-decoration: underline;
+  font-weight: 600;
+  /* Darker now that the card background is pale purple, not a dark photo —
+     light-100 was washing out. The arrow icon inherits this via
+     currentColor since it's nested inside this label. */
+  color: var(--swatch--heading-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--_spacing---space--2);
+}
+
+.cs-nav-card-label-next {
+  justify-content: flex-end;
+}
+
+.cs-nav-card-tag {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  color: var(--swatch--heading-dark);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--_spacing---space--1);
+}
+
+.cs-nav-card-title {
+  font-family: var(--_typography---font--heading-family);
+  font-weight: 800;
+  font-size: var(--_typography---font-size--h5);
+  line-height: 1.1;
+  color: var(--swatch--heading-dark);
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .cs-nav-arrow {
-  width: 1.2rem;
+  width: 1.1rem;
   aspect-ratio: 1;
-  display: block;
+  display: inline-block;
   transform: rotate(180deg);
 }
 
-.cs-nav-arrow-next {
+.cs-nav-arrow-prev {
+  transform: rotate(180deg);
+}
+
+.cs-nav-card-label-next .cs-nav-arrow {
   transform: none;
 }
 
@@ -251,6 +540,26 @@ const { study, prevSlug, nextSlug } = Astro.props;
   width: 100%;
   display: block;
   stroke-width: 8;
+}
+
+/* reading-progress bar — fixed at the very top of the viewport, above the
+   navbar (Navbar.astro's .navbar_component is z-index:1000, sticky top:0 —
+   this needs to outrank it to sit visually above it, not tuck underneath). */
+.cs-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: transparent;
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.cs-progress-fill {
+  height: 100%;
+  width: 0%;
+  background-color: var(--swatch--accent-500);
 }
 
 </style>
