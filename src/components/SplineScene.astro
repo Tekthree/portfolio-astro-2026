@@ -7,44 +7,68 @@
 <script>
   // Spline's WebGL canvas renders continuously (its own idle/camera
   // animation loop) the moment the <spline-viewer> element exists with a
-  // url attribute — CSS visibility doesn't pause it. Loaded/mounted eagerly,
-  // that's constant GPU load competing with Lenis's scroll-position
-  // interpolation for main-thread time for the entire session, which reads
-  // as jitter site-wide, not just near this section. Deferring both the
-  // ~1MB viewer script and the element itself until the section is close to
-  // the viewport means nothing Spline-related runs at all until the user
-  // has nearly scrolled to it.
+  // url attribute — CSS visibility doesn't pause it. That's constant GPU
+  // load competing with Lenis's scroll-position interpolation for
+  // main-thread time, which reads as jitter.
+  //
+  // The scene is toggled by adding/removing the <spline-viewer url="..."> DOM
+  // element itself, not by calling its load()/unload() methods. Those methods
+  // exist on this version but don't reliably reproduce the same render —
+  // real testing showed the scene simply not appearing when toggled that way.
+  // The url-attribute-driven mount is the one path proven to work (it's what
+  // rendered the scene correctly before any of this lazy-load work started),
+  // so the fix keeps using exactly that path and only adds teardown: remove
+  // the element (and with it, its WebGL context) once scrolled well away,
+  // recreate it fresh once scrolled back near.
+  //
+  // The ~1MB viewer script is loaded once, up front, on an idle callback
+  // right after page load rather than gated behind scroll position — it's a
+  // fixed parse cost with no reason to be paid mid-scroll, and keeping it
+  // resident means recreating the element later is cheap (no re-fetch, the
+  // custom element is already registered).
+  const SPLINE_URL = 'https://prod.spline.design/HnX4nUFdAucbN4E1/scene.splinecode';
+  const SPLINE_SCRIPT_SRC = 'https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js';
+
+  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
+
   document.addEventListener('DOMContentLoaded', () => {
     const mask = document.getElementById('spline-mask');
     const section = document.querySelector('.spline-sec');
     if (!mask || !section) return;
 
+    idle(() => {
+      if (document.querySelector('script[data-spline-viewer]')) return;
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = SPLINE_SCRIPT_SRC;
+      script.dataset.splineViewer = 'true';
+      document.head.appendChild(script);
+    });
+
     let mounted = false;
+
     const mount = () => {
       if (mounted) return;
       mounted = true;
       const viewer = document.createElement('spline-viewer');
-      viewer.setAttribute('url', 'https://prod.spline.design/HnX4nUFdAucbN4E1/scene.splinecode');
+      viewer.setAttribute('url', SPLINE_URL);
       viewer.className = 'spline-viewer';
       mask.appendChild(viewer);
+    };
 
-      if (!document.querySelector('script[data-spline-viewer]')) {
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = 'https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js';
-        script.dataset.splineViewer = 'true';
-        document.head.appendChild(script);
-      }
+    const unmount = () => {
+      if (!mounted) return;
+      mounted = false;
+      mask.querySelector('spline-viewer')?.remove();
     };
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          mount();
-          observer.disconnect();
-        }
+        const near = entries.some((entry) => entry.isIntersecting);
+        if (near) mount();
+        else unmount();
       },
-      { rootMargin: '600px 0px' }
+      { rootMargin: '1800px 0px' }
     );
     observer.observe(section);
   });

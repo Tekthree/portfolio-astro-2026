@@ -34,14 +34,14 @@
     <!-- stats bar -->
     <div class="about-stats">
       {[
-        { num: '12', suffix: '+', label: 'Years of design\nexperience' },
-        { num: '3', suffix: '+', label: 'graduate from\ncode fellows' },
-        { num: '5', suffix: 'k+', label: 'completed\nprojects' },
+        { num: '12', suffix: '+', label: 'Years of design\nexperience', icon: '/assets/icons/screens.svg' },
+        { num: '3', suffix: '+', label: 'graduate from\ncode fellows', icon: '/assets/icons/rockets.svg' },
+        { num: '5', suffix: 'k+', label: 'completed\nprojects', icon: '/assets/icons/dimonds.svg' },
       ].map((stat, i) => (
         <>
           <div class="stat-item">
             <div class="stat-icon">
-              <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="" class="stat-logo" loading="lazy" />
+              <img src={stat.icon} alt="" class="stat-logo" loading="lazy" />
             </div>
             <div class="stat-text">
               <h5 class="stat-num">
@@ -220,8 +220,11 @@
 }
 
 .stat-logo {
-  width: clamp(2rem, 3.5em, 4.5rem);
-  height: clamp(2rem, 3.5em, 4.5rem);
+  /* Fluid across the full viewport range, not a per-breakpoint jump — 2.75rem
+     @ ~400px wide up to 6rem @ ~1600px wide, same authored pattern as
+     .about-outline-text / .about-photo above. */
+  width: clamp(2.75rem, 1.7rem + 4.3vw, 6rem);
+  height: clamp(2.75rem, 1.7rem + 4.3vw, 6rem);
   object-fit: contain;
 }
 
@@ -310,15 +313,23 @@
     margin-top: var(--_spacing---space--3);
     margin-bottom: var(--_spacing---space--3);
   }
+
+  /* Centers the outline watermark's own vertical midpoint directly over the
+     photo card's top edge — only applies here because it's specifically a
+     side-effect of the stacked (photo-above-text) layout this breakpoint
+     creates; the row layout above 992px already reads fine as a full-width
+     band and doesn't have this overlap. Measured live across the entire
+     375-991px stacked range: the gap between the two was a consistent
+     ~0.35em regardless of viewport width (both the text's clamp() and the
+     card's spacing token scale together), so one fixed em offset from the
+     base `top: 0.1em` holds across the whole range rather than needing a
+     fluid clamp of its own. */
+  .about-outline-text { top: -0.25em; }
 }
 
 /* Mobile — about-photo height now fluid */
 @media screen and (max-width: 767px) {
   .about-photo-card { padding-right: var(--_spacing---space--5); }
-
-  /* Stats are already stacked (vertical) since 991px — no more horizontal
-     scroll needed, just a smaller icon on the tightest screens. */
-  .stat-logo     { width: clamp(2rem, 10vw, 4rem); height: clamp(2rem, 10vw, 4rem); }
 }
 
 /* Small mobile */
