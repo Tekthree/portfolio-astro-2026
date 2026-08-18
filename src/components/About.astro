@@ -34,9 +34,9 @@
     <!-- stats bar -->
     <div class="about-stats">
       {[
-        { num: '12', suffix: '+', label: 'Years of design\nexperience', icon: '/assets/icons/screens.svg' },
-        { num: '3', suffix: '+', label: 'graduate from\ncode fellows', icon: '/assets/icons/rockets.svg' },
-        { num: '5', suffix: 'k+', label: 'completed\nprojects', icon: '/assets/icons/dimonds.svg' },
+        { num: '12', suffix: '+', label: 'Years Crafting\nDigital Work', icon: '/assets/icons/screens.svg' },
+        { num: '100', suffix: '+', label: 'Projects Launched\nWeb & Print', icon: '/assets/icons/rockets.svg' },
+        { num: '100', suffix: '%', label: 'High-Impact\nDesign & Code', icon: '/assets/icons/dimonds.svg' },
       ].map((stat, i) => (
         <>
           <div class="stat-item">
@@ -245,7 +245,7 @@
 }
 
 .stat-suffix {
-  font-size: 0.6em;
+  font-size: 1em;
   /* Matches reference .achieve-headline-span (highlight-yellow). */
   color: var(--swatch--highlight-500);
 }
@@ -313,6 +313,20 @@
     margin-top: var(--_spacing---space--3);
     margin-bottom: var(--_spacing---space--3);
   }
+  /* Icon stays left, text block stays right — align-items:center vertically
+     centers the icon against the text block's full height (not the group
+     as a whole, which would drift the icon off the left edge). */
+  .stat-item { justify-content: space-between; align-items: center; }
+  /* Number sits beside the label instead of stacked above it — was two
+     block-level children (h5 + p), so the number's own line took up its
+     own row before the label even started. align-items:center (not
+     baseline) keeps the number vertically centered against the label even
+     when the label wraps to multiple lines. */
+  .stat-text { display: flex; align-items: center; gap: var(--_spacing---space--3); }
+  /* Room to breathe now that the row is centered and full-width — let the
+     number grow to fill that space instead of staying pinned at the same
+     size used in the cramped 3-across desktop row. */
+  .stat-num { font-size: var(--_typography---font-size--h2); }
 
   /* Centers the outline watermark's own vertical midpoint directly over the
      photo card's top edge — only applies here because it's specifically a
@@ -330,6 +344,9 @@
 /* Mobile — about-photo height now fluid */
 @media screen and (max-width: 767px) {
   .about-photo-card { padding-right: var(--_spacing---space--5); }
+  /* Bigger icons at this size — the fluid clamp() shrinks too far on narrow
+     viewports, so pin a fixed floor here instead. */
+  .stat-logo { width: 3.75rem; height: 3.75rem; }
 }
 
 /* Small mobile */

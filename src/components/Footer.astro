@@ -3,40 +3,77 @@
 <footer class="footer-sec">
   <div class="footer-container">
 
-    <div class="footer-head">
-      <div class="footer-title-wrap">
-        <h1 class="footer-title u-text-style-h1">Let's work together</h1>
-      </div>
-      <span class="footer-arrow">↙</span>
-    </div>
-
     <div class="nav-divider"></div>
 
-    <!-- contact pills -->
-    <div class="footer-pills">
-      <a href="mailto:tekthree@gmail.com" class="footer-pill">tekthree@gmail.com</a>
-      <a href="tel:7206565560" class="footer-pill">720-656-5560</a>
-    </div>
-
-    <!-- social/version row -->
-    <div class="footer-meta">
-      <div class="footer-meta-left">
-        <div class="footer-meta-col">
-          <p class="footer-meta-label">version</p>
-          <p class="footer-meta-value">1.0 EDITION ©️ 2022</p>
+    <!-- brand/links/services/map columns -->
+    <div class="footer-columns">
+      <div class="footer-col footer-col--brand">
+        <div class="footer-brand-mark">
+          <img src="/assets/images/61ccd624703169e41884b4cf_logo3.avif" alt="Pixel Jones" class="footer-brand-icon" />
+          <span class="footer-brand-text">pixel<br>JONES</span>
         </div>
-        <div class="footer-meta-col">
-          <p class="footer-meta-label">local time</p>
-          <p id="local-time" class="footer-meta-value">—</p>
+        <p class="footer-brand-blurb">Seasoned creator of innovative digital experiences.</p>
+        <p class="footer-col-text footer-contact-line">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Seattle, WA · USA
+        </p>
+        <a href="tel:7206565560" class="footer-col-link footer-contact-line">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4h3.2l1.6 4-2 1.3a10.5 10.5 0 0 0 5.4 5.4l1.3-2 4 1.6v3.2a1.5 1.5 0 0 1-1.6 1.5A16.5 16.5 0 0 1 3 5.6 1.5 1.5 0 0 1 4.5 4Z"/></svg>
+          720-656-5560
+        </a>
+        <a href="mailto:tekthree@gmail.com" class="footer-col-link footer-contact-line">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          tekthree@gmail.com
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-meta-label">Quick Links</p>
+        <a href="#work" class="footer-col-link">Work</a>
+        <a href="#about" class="footer-col-link">About</a>
+        <a href="#contact" class="footer-col-link">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-meta-label">Services</p>
+        <p class="footer-col-text">Web Design &amp; Development</p>
+        <p class="footer-col-text">Branding</p>
+        <p class="footer-col-text">SEO</p>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-meta-label">Google Business Profile</p>
+        <div class="footer-map-placeholder">
+          <div class="footer-map-stars" aria-hidden="true">
+            {Array.from({ length: 5 }).map(() => (
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 16.9 5.8 20.8l1.6-6.8-5.2-4.6 6.9-.6L12 2.5Z"/></svg>
+            ))}
+          </div>
+          <p class="footer-map-text">Listing coming soon — hours, reviews, and directions will live here.</p>
         </div>
       </div>
-      <div class="footer-meta-divider"></div>
-      <div class="footer-meta-right">
-        <p class="footer-meta-label">socials</p>
-        <div class="footer-socials">
-          <a href="https://www.linkedin.com/in/ryan-jones-54b39562/" target="_blank" class="footer-social-link">LinkedIn</a>
-          <a href="https://github.com/Tekthree" target="_blank" class="footer-social-link">GitHub</a>
-        </div>
+    </div>
+
+    <!-- meta row -->
+    <div class="footer-meta">
+      <div class="footer-meta-text">
+        <span>© 2026 Pixel Jones</span>
+        <span class="footer-meta-dot" aria-hidden="true">·</span>
+        <span>1.0 Edition</span>
+        <span class="footer-meta-dot" aria-hidden="true">·</span>
+        <span>Seattle, WA · <span id="local-time">—</span></span>
+      </div>
+      <div class="footer-meta-actions">
+        <a href="https://www.linkedin.com/in/ryan-jones-54b39562/" target="_blank" rel="noopener" aria-label="LinkedIn" class="footer-icon-btn">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.5 0h-11A2.5 2.5 0 0 0 0 2.5v11A2.5 2.5 0 0 0 2.5 16h11a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 13.5 0ZM5 13.5H2.5V6H5v7.5Zm-1.25-8.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM13.5 13.5h-2.5V9.75c0-.9-.02-2.05-1.25-2.05-1.25 0-1.44.98-1.44 1.99v3.81H5.81V6h2.4v1.03h.03c.33-.63 1.15-1.3 2.37-1.3 2.53 0 3 1.67 3 3.83v3.94Z"/></svg>
+        </a>
+        <a href="https://github.com/Tekthree" target="_blank" rel="noopener" aria-label="GitHub" class="footer-icon-btn">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        </a>
+        <a href="#top" class="footer-back-top">
+          Back to top
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg>
+        </a>
       </div>
     </div>
 
@@ -64,127 +101,193 @@
 .footer-container {
   max-width: var(--max-width--main);
   margin: 0 auto;
-  padding-top: var(--_spacing---section-space--large);
+  padding-top: var(--_spacing---section-space--small);
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
   padding-bottom: var(--_spacing---section-space--main);
 }
 
-.footer-head {
+/* link/services/map columns */
+.footer-columns {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: var(--_spacing---section-space--small);
+  gap: var(--_spacing---section-space--main);
+  margin-top: var(--_spacing---section-space--small);
+  padding-bottom: var(--_spacing---space--5);
+  border-bottom: 1px solid color-mix(in srgb, var(--swatch--light-100), transparent 90%);
 }
 
-.footer-title-wrap { max-width: 54.2em; }
+.footer-col { flex: 1; }
 
-.footer-title {
+.footer-col .footer-meta-label {
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 45%);
+  margin-bottom: var(--_spacing---space--3);
+}
+
+.footer-col--brand { flex: 1.3; }
+
+.footer-brand-mark {
+  display: flex;
+  align-items: center;
+  gap: var(--_spacing---space--2);
+  margin-bottom: var(--_spacing---space--4);
+}
+
+.footer-brand-icon {
+  height: 2.5em;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer-brand-text {
   font-family: var(--_typography---font--heading-family);
+  font-weight: var(--_typography---font--primary-bold);
   color: var(--swatch--light-100);
+  line-height: 1.1;
+  letter-spacing: var(--_typography---letter-spacing--tight);
+  text-transform: uppercase;
+  font-size: var(--_typography---font-size--text-main);
+}
+
+.footer-brand-blurb {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 25%);
+  max-width: 22em;
+  margin: 0 0 var(--_spacing---space--5);
+}
+
+.footer-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25em;
+  height: 2.25em;
+  border-radius: var(--radius--round);
+  border: 2px solid color-mix(in srgb, var(--swatch--muted-500), white 20%);
+  color: var(--swatch--light-100);
+  transition: border-color 200ms;
+}
+
+.footer-icon-btn svg { width: 1em; height: 1em; }
+
+.footer-icon-btn:hover { border-color: var(--swatch--brand-500); }
+
+.footer-col-link,
+.footer-col-text {
+  display: block;
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--swatch--light-100);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  margin: 0 0 var(--_spacing---space--2);
+}
+
+.footer-map-placeholder {
+  border-radius: var(--radius--main);
+  border: 1px dashed color-mix(in srgb, var(--swatch--muted-500), white 20%);
+  background-color: color-mix(in srgb, var(--swatch--dark-800), white 4%);
+  padding: var(--_spacing---space--5);
+  min-height: 8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-map-stars {
+  display: flex;
+  gap: var(--_spacing---space--1);
+  margin-bottom: var(--_spacing---space--3);
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 75%);
+}
+
+.footer-map-stars svg { width: 0.9em; height: 0.9em; }
+
+.footer-map-text {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 25%);
   margin: 0;
 }
 
-.footer-arrow {
-  font-size: 3em;
-  color: var(--swatch--light-100);
-  opacity: 0.5;
-}
-
-/* contact pills */
-.footer-pills {
-  margin-top: var(--_spacing---section-space--small);
+/* contact icons (brand column) */
+.footer-contact-line {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_spacing---space--2);
 }
 
-.footer-pill {
-  display: inline-block;
-  border: 2px solid color-mix(in srgb, var(--swatch--muted-500), white 20%);
-  border-radius: var(--radius--round);
-  padding: var(--_spacing---space--3) var(--_spacing---space--8);
-  margin-right: var(--_spacing---space--7);
-  font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--h4);
-  font-weight: 500;
-  color: var(--swatch--light-100);
-  text-decoration: none;
-  white-space: nowrap;
+.footer-contact-icon {
+  flex: none;
+  width: 0.95em;
+  height: 0.95em;
+  color: var(--swatch--accent-500);
 }
 
 /* meta row */
 .footer-meta {
   display: flex;
-  margin-top: var(--_spacing---section-space--main);
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--_spacing---space--4);
+  margin-top: var(--_spacing---space--5);
 }
 
-.footer-meta-left {
-  flex: 1;
+.footer-meta-text {
   display: flex;
-  gap: var(--_spacing---space--8);
-}
-
-.footer-meta-right { flex: 1; }
-
-.footer-meta-label {
-  /* 25% white only reads ~3:1 against this dark footer bg — lightened further to ~5.5:1 */
-  color: color-mix(in srgb, var(--swatch--accent-500), white 45%);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_spacing---space--2);
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-main);
-  font-weight: 800;
-  margin: 0 0 var(--_spacing---space--1);
-}
-
-.footer-meta-value {
-  font-size: var(--_typography---font-size--h5);
-  font-weight: 400;
-  color: var(--swatch--light-100);
-  margin: 0;
+  font-size: var(--_typography---font-size--text-small);
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 40%);
   letter-spacing: 0.03em;
 }
 
-.footer-socials { display: flex; gap: 0; }
+.footer-meta-dot { color: color-mix(in srgb, var(--swatch--light-100), transparent 65%); }
 
-.footer-social-link {
-  font-size: var(--_typography---font-size--h5);
-  font-weight: 400;
+.footer-meta-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--_spacing---space--3);
+}
+
+.footer-back-top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_spacing---space--2);
+  padding: var(--_spacing---space--2) var(--_spacing---space--4);
+  border-radius: var(--radius--round);
+  border: 2px solid color-mix(in srgb, var(--swatch--muted-500), white 20%);
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
   color: var(--swatch--light-100);
-  margin-right: var(--_spacing---space--5);
   text-decoration: none;
-  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transition: border-color 200ms;
 }
 
-/* Divider between meta-left and meta-right (hidden at desktop, shown at tablet) —
-   no responsive-variable equivalent for a none-at-large/block-at-medium toggle, kept as @media */
-.footer-meta-divider {
-  display: none;
-  background-color: var(--swatch--accent-500);
-  width: 100%;
-  height: 3px;
-}
+.footer-back-top svg { width: 0.85em; height: 0.85em; }
 
-/* Tablet — pill sizes auto-shrink from global font-size:14px */
+.footer-back-top:hover { border-color: var(--swatch--brand-500); }
+
+/* Tablet */
 @media screen and (max-width: 991px) {
   .footer-container { padding-bottom: 0; }
-  .footer-meta-divider { display: block; }
-  .footer-meta { flex-wrap: wrap; }
-  .footer-meta-left { width: 100%; }
-  .footer-meta-right { width: 100%; }
+  .footer-columns { flex-wrap: wrap; gap: var(--_spacing---section-space--small); }
+  .footer-col { flex: 1 1 40%; }
+  .footer-col--brand { flex: 1 1 100%; }
 }
 
 /* Mobile */
 @media screen and (max-width: 767px) {
-  .footer-pills { flex-direction: var(--column-small, row); gap: var(--_spacing---space--3); align-items: flex-start; }
-  .footer-pill  { white-space: normal; }
-  .footer-meta  { flex-direction: var(--column-small, row); gap: var(--_spacing---space--5); margin-bottom: var(--_spacing---space--8); }
-  .footer-meta-left { flex-direction: var(--column-small, row); gap: var(--_spacing---space--4); }
-  .footer-arrow { font-size: 2em; }
-}
-
-/* Small mobile */
-@media screen and (max-width: 479px) {
-  .footer-pill  { font-size: var(--_typography---font-size--h5); padding-left: var(--_spacing---space--3); padding-right: var(--_spacing---space--3); }
+  .footer-columns { flex-direction: var(--column-small, row); }
+  .footer-col { flex: 1 1 auto; }
+  .footer-meta { flex-direction: var(--column-small, row); align-items: flex-start; gap: var(--_spacing---space--4); margin-bottom: var(--_spacing---space--8); }
 }
 </style>

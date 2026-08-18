@@ -1,0 +1,238 @@
+---
+---
+<section class="scheduler-sec">
+  <div class="scheduler-container">
+
+    <div class="scheduler-copy">
+      <h2 class="scheduler-title u-text-style-h1">Let's work together</h2>
+      <p class="scheduler-subhead">Book a quick 15-min intro call to see if we're a fit.</p>
+
+      <div class="scheduler-ctas">
+        <a href="#cal-inline" class="scheduler-cta-primary">
+          Book an intro call
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 12 4M6 4h6v6"/></svg>
+        </a>
+        <a href="mailto:tekthree@gmail.com" class="scheduler-cta-secondary">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="m2 4.5 6 4 6-4"/></svg>
+          Email instead
+        </a>
+      </div>
+
+      <p class="scheduler-status">
+        <span class="scheduler-status-dot" aria-hidden="true"></span>
+        Currently available for new projects
+      </p>
+    </div>
+
+    <div class="scheduler-embed">
+      <div id="cal-inline"></div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function (C: any, A: string, L: string) {
+    let p = function (a: any, ar: any) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function (...ar: any[]) {
+      let cal = C.Cal;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement('script')).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function (...apiAr: any[]) { p(api, apiAr); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === 'string') {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          p(cal.ns[namespace], ar);
+          p(cal, ['initNamespace', namespace]);
+        } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+  // @ts-ignore
+  Cal('init', { origin: 'https://cal.com' });
+
+  // @ts-ignore
+  Cal('inline', {
+    elementOrSelector: '#cal-inline',
+    calLink: 'pixel-jones/15min',
+    config: {
+      theme: 'dark',
+      layout: 'month_view',
+    },
+  });
+
+  // @ts-ignore
+  Cal('ui', {
+    theme: 'dark',
+    styles: { branding: { brandColor: '#6d62b4' } },
+    hideEventTypeDetails: true,
+    layout: 'month_view',
+  });
+</script>
+
+<style>
+.scheduler-sec {
+  background-color: var(--swatch--dark-800);
+}
+
+.scheduler-container {
+  max-width: var(--max-width--main);
+  margin: 0 auto;
+  padding-top: var(--_spacing---section-space--large);
+  padding-left: var(--site--margin);
+  padding-right: var(--site--margin);
+  display: flex;
+  gap: var(--_spacing---section-space--main);
+  align-items: flex-start;
+}
+
+.scheduler-copy {
+  flex: 1;
+  max-width: 54.2em;
+}
+
+.scheduler-title {
+  font-family: var(--_typography---font--heading-family);
+  color: var(--swatch--light-100);
+  margin: 0 0 var(--_spacing---space--5);
+}
+
+.scheduler-subhead {
+  font-family: var(--_typography---font--primary-family);
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 25%);
+  font-size: var(--_typography---font-size--h5);
+  margin: 0;
+}
+
+.scheduler-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_spacing---space--4);
+  margin-top: var(--_spacing---space--6);
+}
+
+.scheduler-cta-primary,
+.scheduler-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_spacing---space--2);
+  padding: var(--_spacing---space--3) var(--_spacing---space--5);
+  border-radius: var(--radius--round);
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-main);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 200ms, border-color 200ms;
+}
+
+.scheduler-cta-primary svg,
+.scheduler-cta-secondary svg {
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.scheduler-cta-primary {
+  background-color: var(--swatch--brand-500);
+  color: var(--swatch--light-100);
+  border: 2px solid var(--swatch--brand-500);
+}
+
+.scheduler-cta-primary:hover { background-color: var(--swatch--brand-600); }
+
+.scheduler-cta-secondary {
+  background-color: transparent;
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 20%);
+  border: 2px solid color-mix(in srgb, var(--swatch--muted-500), white 20%);
+}
+
+.scheduler-cta-secondary:hover { border-color: var(--swatch--brand-500); }
+
+.scheduler-status {
+  display: flex;
+  align-items: center;
+  gap: var(--_spacing---space--2);
+  margin: var(--_spacing---space--5) 0 0;
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  color: color-mix(in srgb, var(--swatch--light-100), transparent 40%);
+}
+
+.scheduler-status-dot {
+  position: relative;
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background-color: #3ecf7a;
+}
+
+.scheduler-status-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: #3ecf7a;
+  opacity: 0.6;
+  animation: scheduler-pulse 1.8s ease-out infinite;
+}
+
+@keyframes scheduler-pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scheduler-status-dot::after { animation: none; display: none; }
+}
+
+.scheduler-embed {
+  flex: 0 1 31em;
+  max-width: 31em;
+  min-height: 30em;
+  border-radius: var(--radius--main);
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--swatch--dark-800), white 4%);
+}
+
+/* No height set here on purpose — the box should grow to fit however tall
+   the embedded calendar + time-slot list turns out to be, not clip it. */
+.scheduler-embed #cal-inline {
+  width: 100%;
+  min-height: 30em;
+}
+
+/* Tablet — stack copy above embed */
+@media screen and (max-width: 991px) {
+  .scheduler-container {
+    flex-direction: var(--column-small, row);
+    align-items: stretch;
+  }
+  .scheduler-embed {
+    flex: 1 1 auto;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  .scheduler-embed { min-height: 26em; }
+  .scheduler-embed #cal-inline { min-height: 26em; }
+}
+
+/* Small mobile */
+@media screen and (max-width: 479px) {
+  .scheduler-embed { min-height: 24em; }
+  .scheduler-embed #cal-inline { min-height: 24em; }
+}
+</style>
