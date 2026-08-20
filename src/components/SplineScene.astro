@@ -62,13 +62,19 @@
       mask.querySelector('spline-viewer')?.remove();
     };
 
+    // Margin reduced from 1800px to 400px on 2026-08-20 — at 1800px, Spline's
+    // continuous WebGL render loop (see the comment above) stayed mounted and
+    // competing with Lenis for main-thread time across roughly half the page's
+    // total scroll distance, not just near the section itself. That read as
+    // vague, site-wide jitter rather than a one-time cost tied to this section.
+    // 400px still mounts early enough to avoid a hard visual pop-in.
     const observer = new IntersectionObserver(
       (entries) => {
         const near = entries.some((entry) => entry.isIntersecting);
         if (near) mount();
         else unmount();
       },
-      { rootMargin: '1800px 0px' }
+      { rootMargin: '400px 0px' }
     );
     observer.observe(section);
   });
