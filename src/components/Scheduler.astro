@@ -32,6 +32,20 @@
 </section>
 
 <script>
+  // Calling Cal('init'/'inline'/...) is what triggers the real embed.js fetch
+  // and boots the full Cal.com Next.js app inside the iframe (~80 requests:
+  // dozens of JS/CSS chunks, fonts, a live tRPC schedule lookup). Doing that
+  // unconditionally on DOMContentLoaded means all of it fires and competes
+  // for main-thread time the instant the page loads, regardless of whether
+  // this section — near the bottom of the page — is anywhere close to being
+  // seen yet. That's the same class of problem the Spline scene had, and the
+  // fix is the same shape: gate the actual boot behind an IntersectionObserver
+  // so it only happens once the user has scrolled near this section.
+  //
+  // The queue-setup IIFE itself is cheap (just defines window.Cal as a queue
+  // function) and safe to run eagerly — Cal.com's own snippet is designed so
+  // Cal(...) calls queue up before the real script loads. Only the calls that
+  // actually trigger that load are deferred here.
   (function (C, A, L) {
     let p = function (a, ar) { a.q.push(ar); };
     let d = C.document;
@@ -58,25 +72,47 @@
     };
   })(window, 'https://app.cal.com/embed/embed.js', 'init');
 
-  // @ts-ignore
-  Cal('init', { origin: 'https://cal.com' });
+  document.addEventListener('DOMContentLoaded', () => {
+    const embedRoot = document.getElementById('cal-inline');
+    if (!embedRoot) return;
 
-  // @ts-ignore
-  Cal('inline', {
-    elementOrSelector: '#cal-inline',
-    calLink: 'pixel-jones/15min',
-    config: {
-      theme: 'dark',
-      layout: 'month_view',
-    },
-  });
+    let booted = false;
+    const boot = () => {
+      if (booted) return;
+      booted = true;
 
-  // @ts-ignore
-  Cal('ui', {
-    theme: 'dark',
-    styles: { branding: { brandColor: '#6d62b4' } },
-    hideEventTypeDetails: true,
-    layout: 'month_view',
+      // @ts-ignore
+      Cal('init', { origin: 'https://cal.com' });
+
+      // @ts-ignore
+      Cal('inline', {
+        elementOrSelector: '#cal-inline',
+        calLink: 'pixel-jones/15min',
+        config: {
+          theme: 'dark',
+          layout: 'month_view',
+        },
+      });
+
+      // @ts-ignore
+      Cal('ui', {
+        theme: 'dark',
+        styles: { branding: { brandColor: '#6d62b4' } },
+        hideEventTypeDetails: true,
+        layout: 'month_view',
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          boot();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' }
+    );
+    observer.observe(embedRoot);
   });
 </script>
 
