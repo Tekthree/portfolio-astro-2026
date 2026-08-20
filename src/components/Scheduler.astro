@@ -32,10 +32,10 @@
 </section>
 
 <script>
-  (function (C: any, A: string, L: string) {
-    let p = function (a: any, ar: any) { a.q.push(ar); };
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
     let d = C.document;
-    C.Cal = C.Cal || function (...ar: any[]) {
+    C.Cal = C.Cal || function (...ar) {
       let cal = C.Cal;
       if (!cal.loaded) {
         cal.ns = {};
@@ -44,7 +44,7 @@
         cal.loaded = true;
       }
       if (ar[0] === L) {
-        const api = function (...apiAr: any[]) { p(api, apiAr); };
+        const api = function (...apiAr) { p(api, apiAr); };
         const namespace = ar[1];
         api.q = api.q || [];
         if (typeof namespace === 'string') {
