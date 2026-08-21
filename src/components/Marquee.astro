@@ -43,9 +43,16 @@ const images = [
   z-index: 50;
   /* fluid clamp, min 8.1rem @ 414px viewport → max 13.5rem @ 1896px viewport —
      measured directly against the original Webflow file's two reference sizes */
-  width: clamp(8.1rem, 6.59rem + 5.83vw, 13.5rem);
+  --badge-size: clamp(8.1rem, 6.59rem + 5.83vw, 13.5rem);
+  width: var(--badge-size);
   left: 12%;
-  top: -6%;
+  /* Center the badge on the seam where the poster row starts (the section's own
+     padding-top), instead of a per-breakpoint % of the section's full height —
+     that height is dominated by the marquee track and shifts independently of
+     this badge, which is what let the 479px value drift out of sync with reality
+     after the Lumos token retrofit (dd6816c) dropped this breakpoint's old
+     near-zero padding-top override without recalibrating the badge's offset. */
+  top: calc(var(--_spacing---space--7) - (var(--badge-size) / 2));
   pointer-events: none;
 }
 
@@ -77,13 +84,14 @@ const images = [
   padding: var(--_spacing---space--1);
 }
 
-/* Mobile — badge/item repositioning only; sizes now fluid */
+/* Mobile — horizontal repositioning only; top is handled by the geometric
+   calc() above at every breakpoint now, sizes are fluid */
 @media screen and (max-width: 767px) {
-  .marquee-badge { left: 7%; top: -5%; }
+  .marquee-badge { left: 7%; }
 }
 
 @media screen and (max-width: 479px) {
-  .marquee-badge { left: 5%; top: -20%; }
+  .marquee-badge { left: 5%; }
 }
 </style>
 

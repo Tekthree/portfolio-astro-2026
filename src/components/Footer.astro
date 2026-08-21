@@ -41,7 +41,7 @@
         <p class="footer-col-text">SEO</p>
       </div>
 
-      <div class="footer-col">
+      <div class="footer-col footer-col--map">
         <p class="footer-meta-label">Google Business Profile</p>
         <div class="footer-map-placeholder">
           <div class="footer-map-stars" aria-hidden="true">
@@ -104,26 +104,37 @@
   padding-top: var(--_spacing---section-space--small);
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
-  padding-bottom: var(--_spacing---section-space--main);
+  padding-bottom: var(--_spacing---space--8);
 }
 
 /* link/services/map columns */
 .footer-columns {
   display: flex;
-  gap: var(--_spacing---section-space--main);
-  margin-top: var(--_spacing---section-space--small);
+  /* section-space tokens are sized for gaps between major page sections
+     (Hero/About/Work etc) — 4 narrow footer columns don't need that much
+     air between them, so this uses the plain space scale instead. */
+  gap: var(--_spacing---space--8);
+  margin-top: var(--_spacing---space--7);
   padding-bottom: var(--_spacing---space--5);
   border-bottom: 1px solid color-mix(in srgb, var(--swatch--light-100), transparent 90%);
 }
 
-.footer-col { flex: 1; }
+/* Quick Links / Services are just a handful of short words each — giving
+   them an equal flex:1 share stretched them out to the same width as the
+   brand column and the map card, padding them with empty space that read as
+   an oversized gap between columns. Sizing each column by how much it
+   actually needs (brand content + address/phone/email needs the most room,
+   the map card needs enough to not wrap its blurb, the two link lists need
+   the least) pulls the short columns closer together instead. */
+.footer-col { flex: 0.7 1 0; }
 
 .footer-col .footer-meta-label {
   color: color-mix(in srgb, var(--swatch--light-100), transparent 45%);
   margin-bottom: var(--_spacing---space--3);
 }
 
-.footer-col--brand { flex: 1.3; }
+.footer-col--brand { flex: 2.2 1 0; }
+.footer-col--map { flex: 1.3 1 0; }
 
 .footer-brand-mark {
   display: flex;
@@ -150,11 +161,13 @@
 
 .footer-brand-blurb {
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-small);
+  /* Matches the body-copy scale used elsewhere (e.g. About's blurb), not the
+     meta/fine-print scale — this line reads as real content, not a caption. */
+  font-size: var(--_typography---font-size--text-main);
   line-height: 1.5;
   color: color-mix(in srgb, var(--swatch--light-100), transparent 25%);
-  max-width: 22em;
-  margin: 0 0 var(--_spacing---space--5);
+  max-width: 24em;
+  margin: 0 0 var(--_spacing---space--6);
 }
 
 .footer-icon-btn {
@@ -177,13 +190,13 @@
 .footer-col-text {
   display: block;
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-small);
+  font-size: var(--_typography---font-size--text-main);
   line-height: 1.4;
   font-weight: 400;
   color: var(--swatch--light-100);
   text-decoration: none;
   letter-spacing: 0.03em;
-  margin: 0 0 var(--_spacing---space--2);
+  margin: 0 0 var(--_spacing---space--3);
 }
 
 .footer-map-placeholder {
@@ -223,8 +236,8 @@
 
 .footer-contact-icon {
   flex: none;
-  width: 0.95em;
-  height: 0.95em;
+  width: 1.2em;
+  height: 1.2em;
   color: var(--swatch--accent-500);
 }
 
@@ -278,7 +291,6 @@
 
 /* Tablet */
 @media screen and (max-width: 991px) {
-  .footer-container { padding-bottom: 0; }
   .footer-columns { flex-wrap: wrap; gap: var(--_spacing---section-space--small); }
   .footer-col { flex: 1 1 40%; }
   .footer-col--brand { flex: 1 1 100%; }
@@ -288,6 +300,6 @@
 @media screen and (max-width: 767px) {
   .footer-columns { flex-direction: var(--column-small, row); }
   .footer-col { flex: 1 1 auto; }
-  .footer-meta { flex-direction: var(--column-small, row); align-items: flex-start; gap: var(--_spacing---space--4); margin-bottom: var(--_spacing---space--8); }
+  .footer-meta { flex-direction: var(--column-small, row); align-items: flex-start; gap: var(--_spacing---space--4); }
 }
 </style>

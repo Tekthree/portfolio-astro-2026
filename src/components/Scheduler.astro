@@ -22,6 +22,8 @@
         <span class="scheduler-status-dot" aria-hidden="true"></span>
         Currently available for new projects
       </p>
+
+      <div class="scheduler-spline" id="scheduler-spline-mask" aria-hidden="true"></div>
     </div>
 
     <div class="scheduler-embed">
@@ -30,6 +32,58 @@
 
   </div>
 </section>
+
+<script>
+  // Same lazy-mount/unmount pattern as SplineScene.astro (see that file's comments
+  // for the full rationale): the WebGL render loop only exists while scrolled near,
+  // and desktop-only here since this fills the leftover column space next to the
+  // Cal embed that only appears in the two-column (992px+) layout.
+  const SPLINE_URL = 'https://prod.spline.design/HnX4nUFdAucbN4E1/scene.splinecode';
+  const SPLINE_SCRIPT_SRC = 'https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js';
+
+  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const mask = document.getElementById('scheduler-spline-mask');
+    if (!mask || !window.matchMedia('(min-width: 992px)').matches) return;
+
+    idle(() => {
+      if (document.querySelector('script[data-spline-viewer]')) return;
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = SPLINE_SCRIPT_SRC;
+      script.dataset.splineViewer = 'true';
+      document.head.appendChild(script);
+    });
+
+    let mounted = false;
+
+    const mount = () => {
+      if (mounted) return;
+      mounted = true;
+      const viewer = document.createElement('spline-viewer');
+      viewer.setAttribute('url', SPLINE_URL);
+      viewer.className = 'scheduler-spline-viewer';
+      mask.appendChild(viewer);
+    };
+
+    const unmount = () => {
+      if (!mounted) return;
+      mounted = false;
+      mask.querySelector('spline-viewer')?.remove();
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const near = entries.some((entry) => entry.isIntersecting);
+        if (near) mount();
+        else unmount();
+      },
+      { rootMargin: '400px 0px' }
+    );
+    observer.observe(mask);
+  });
+</script>
 
 <script>
   // Calling Cal('init'/'inline'/...) is what triggers the real embed.js fetch
@@ -135,6 +189,41 @@
 .scheduler-copy {
   flex: 1;
   max-width: 54.2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.scheduler-spline {
+  display: none;
+}
+
+/* Desktop only — fills the leftover height in the copy column next to the taller
+   Cal embed (the space visible below the CTAs/status line once the container
+   stretches both columns to match). Kept out of the tablet/mobile stacked layout
+   entirely rather than reworked to fit it. */
+@media screen and (min-width: 992px) {
+  .scheduler-container {
+    align-items: stretch;
+  }
+
+  .scheduler-spline {
+    display: block;
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 10em;
+    margin-top: var(--_spacing---space--6);
+    overflow: clip;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 85%, transparent 100%);
+  }
+
+  .scheduler-spline :global(spline-viewer) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
 }
 
 .scheduler-title {

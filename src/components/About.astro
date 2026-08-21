@@ -212,7 +212,15 @@
 }
 
 .stat-icon {
-  flex: 0 auto;
+  /* flex: none (not the default 0 auto) — the icon box must never shrink.
+     .stat-icon and .stat-text both live in the same flex row (.stat-item);
+     the label's longest unbreakable word sets a min-width .stat-text won't
+     go below, so any row whose label happens to be longer pushed all the
+     shrinkage onto this sibling instead, compressing .stat-logo's width
+     (not height, since shrink only applies along the row's main axis) —
+     which is why the 3 icons rendered at 3 different widths on narrow
+     screens despite sharing identical width/height rules. */
+  flex: none;
   justify-content: center;
   align-items: center;
   padding: var(--_spacing---space--3) var(--_spacing---space--4);
@@ -352,5 +360,11 @@
 /* Small mobile */
 @media screen and (max-width: 479px) {
   .stat-divider  { margin-top: var(--_spacing---space--2); margin-bottom: var(--_spacing---space--2); }
+  /* Number sits beside the label above 479px, but at this width the icon
+     (now fixed-size, see .stat-icon) plus the number plus the label side by
+     side left too little room for the label, forcing it into a cramped
+     multi-line wrap. Stack the label under the number instead so it gets
+     the full row width to itself. */
+  .stat-text { flex-direction: column; align-items: flex-start; gap: 0; }
 }
 </style>
