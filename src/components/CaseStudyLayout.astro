@@ -20,6 +20,13 @@ const { study, prevStudy, nextStudy } = Astro.props;
     <p class="cs-meta">{study.tag} · {study.client}</p>
     <h1 class="cs-title">{study.title}</h1>
 
+    {study.websiteUrl && (
+      <a href={study.websiteUrl} target="_blank" rel="noopener" class="cs-visit-link">
+        Visit the live site
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9.5 2H14v4.5M14 2 7 9"/></svg>
+      </a>
+    )}
+
     <div class="cs-hero-image-wrap">
       <img src={study.heroImage} alt={study.title} class="cs-hero-image" loading="eager" />
     </div>
@@ -233,6 +240,29 @@ const { study, prevStudy, nextStudy } = Astro.props;
   margin: 0 0 var(--_spacing---space--6);
   line-height: 1;
 }
+
+/* Same pill-button visual language as Footer.astro's .footer-back-top, so
+   this reads as an established site pattern rather than a one-off. */
+.cs-visit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_spacing---space--2);
+  padding: var(--_spacing---space--2) var(--_spacing---space--4);
+  border-radius: var(--radius--round);
+  border: 2px solid color-mix(in srgb, var(--swatch--muted-500), white 20%);
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  font-weight: 600;
+  color: var(--_theme---text);
+  text-decoration: none;
+  white-space: nowrap;
+  margin: 0 0 var(--_spacing---space--6);
+  transition: border-color 200ms;
+}
+
+.cs-visit-link svg { width: 0.9rem; height: 0.9rem; }
+
+.cs-visit-link:hover { border-color: var(--swatch--accent-500); }
 
 /* image wrapper — ported from lumos-example-components.astro's
    .u-image-wrapper aspect-ratio technique (vendor CSS line ~737): a

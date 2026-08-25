@@ -19,6 +19,10 @@ export interface CaseStudy {
   client: string;
   tag: string;
   heroImage: string;
+  /* Outbound link to the actual live site, rendered near the top of the case
+     study. Omitted (not guessed) where no live URL is confirmed -- Kobase is
+     an older/archived landing-page engagement with no documented live URL. */
+  websiteUrl?: string;
   overview: string;
   problem: {
     intro: string;
@@ -45,6 +49,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Jenn Sturgill',
     tag: 'Branding & Identity',
     heroImage: '/assets/images/69d55440de29525bb5ec52a8_the_butterfly_cfi_logo_mock_up.jpg',
+    websiteUrl: 'https://www.thebutterflycfi.com',
     overview:
       "The Butterfly CFI is a Seattle flight school built around a different kind of student: adults starting later, women, LGBTQIA+ pilots, and anyone who's been burned by a bad instructor or intimidated by the math. Jenn was building the brand and audience before her CFI certification was even finalized.",
     problem: {
@@ -96,6 +101,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Spencer Grey',
     tag: 'Web Design & Dev',
     heroImage: '/assets/images/69d555693be7d4ffefb2a937_spencer_grey_website_on_pixel_jones_portfolio_site.jpg',
+    websiteUrl: 'https://spencergreyart.com',
     overview:
       'Spencer Grey is a Seattle painter whose work draws on a cosmic, spiritual sensibility. The brief was a full artist portfolio and print store that felt nothing like a template.',
     problem: {
@@ -142,6 +148,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Brandon Williams',
     tag: 'Web Design',
     heroImage: '/assets/images/69d55e6c12ad0b79a8a3f9ae_dsc_family_reunion_pixel_jones.jpg',
+    websiteUrl: 'https://dscfamilyreunion.com',
     overview:
       "DSC Family Reunion is the site for a multi-generational family reunion — a Royal Caribbean cruise in 2026 for the Deal, Shepherd, Coleman, and Penland families. Built for Tek's brother Brandon, who coordinates the event.",
     problem: {
@@ -188,6 +195,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Joe Bellingham',
     tag: 'Print & Poster Design',
     heroImage: '/assets/images/69d55fe73960cc20e9554315_tremulant_poster_pixel_jones.jpg',
+    websiteUrl: 'https://tremulant.space',
     overview:
       'Tremulant is a Seattle underground electronic music series run by Joe Bellingham, hosting shows at Timbre Room and Cherry Seattle with a rotating lineup of touring and local acts.',
     problem: {
@@ -238,6 +246,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Dan Recess',
     tag: 'Web Design & Dev',
     heroImage: '/assets/images/6881dc72a12b39532697f0cd_Screenshot_2025-07-24_000936.avif',
+    websiteUrl: 'https://simplyshameless.com',
     overview:
       "Shameless Productions is a Seattle underground dance music collective running since 2003 — Deck'd Out, Reverie Society, Club Yes, and more. Tek has handled their design and digital presence since 2017, and DJs under their banner as a resident.",
     problem: {
@@ -329,6 +338,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Kyle & Jenn',
     tag: 'Web Design & Dev',
     heroImage: '/assets/images/6881dd39f62b061a6e246c06_Screenshot_2025-07-24_001343.avif',
+    websiteUrl: 'https://www.housecleaningrecords.com',
     overview:
       'House Cleaning Records is a Seattle house-music label and event company run by Kyle and Jenn, built around deep, groovy, west-coast house.',
     problem: {
