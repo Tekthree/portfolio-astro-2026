@@ -4,12 +4,23 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
   title = 'Pixel Jones — Creative Developer & Designer',
   description = 'Ryan "Tek" Jones. Full stack developer and designer based in Seattle, WA.',
+  image = '/og-image.jpg',
 } = Astro.props;
+
+// Astro.site comes from `site:` in astro.config.mjs (https://www.pixeljones.com). Building
+// share URLs off it (not a hardcoded string) is what fixes the actual bug here: og:url and
+// og:image previously pointed at the old pre-custom-domain Vercel URL
+// (pixel-jones-portfolio-astro.vercel.app), which is an orphaned project -- noted elsewhere
+// as "worth deleting eventually." Any link share (iMessage, Slack, Twitter/X, etc.) before
+// this fix would have pulled its preview from that stale project, not the real site.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -18,19 +29,27 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="theme-color" content="#0c042c" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>{title}</title>
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content="https://pixel-jones-portfolio-astro.vercel.app/" />
-    <meta property="og:image" content="https://pixel-jones-portfolio-astro.vercel.app/og-image.jpg" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Pixel Jones" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://pixel-jones-portfolio-astro.vercel.app/og-image.jpg" />
+    <meta name="twitter:image" content={ogImageURL} />
     <!-- Splide carousel -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide-core.min.css" />
     <script is:inline src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
