@@ -57,6 +57,15 @@
       aria-labelledby="navbar-mobile-toggle"
       class="navbar_mobile_menu_wrap"
     >
+      <!-- The opaque full-screen overlay below paints over the header bar entirely,
+           hiding the hamburger button that opened it (same DOM stacking context,
+           later in source order, no z-index difference) -- there was no visible way
+           to close the menu at all before this. A dedicated close button inside the
+           overlay itself is more robust than relying on the hamburger visually
+           morphing into an X, since nothing else covers this position. -->
+      <button type="button" id="navbar-mobile-close" aria-label="Close menu" class="navbar_menu_close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+      </button>
       <div role="list" class="navbar_mobile_menu_layout">
         <div role="listitem" class="navbar_links_item">
           <a href="/#work" class="navbar_mobile_link u-text-style-h4">Work</a>
@@ -83,10 +92,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const toggle = component.querySelector("#navbar-mobile-toggle");
     const menu = component.querySelector("#navbar-mobile-menu");
+    const closeBtn = component.querySelector("#navbar-mobile-close");
 
     toggle?.addEventListener("click", () => {
       const open = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", String(!open));
+    });
+
+    closeBtn?.addEventListener("click", () => {
+      toggle?.setAttribute("aria-expanded", "false");
     });
 
     menu?.querySelectorAll(".navbar_mobile_link, .navbar_button").forEach((link) => {
@@ -269,6 +283,27 @@ document.addEventListener("DOMContentLoaded", function () {
   height: var(--border-width--main);
   background-color: var(--_theme---text);
 }
+
+.navbar_menu_close {
+  position: absolute;
+  top: var(--_spacing---space--5);
+  right: var(--site--margin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75em;
+  height: 2.75em;
+  border-radius: var(--radius--round);
+  border: 2px solid color-mix(in srgb, var(--swatch--muted-500), white 20%);
+  background: transparent;
+  color: var(--_theme---text);
+  cursor: pointer;
+  transition: border-color 200ms;
+}
+
+.navbar_menu_close svg { width: 1.1em; height: 1.1em; }
+
+.navbar_menu_close:hover { border-color: var(--swatch--accent-500); }
 
 .navbar_mobile_menu_wrap {
   position: fixed;
