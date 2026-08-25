@@ -8,6 +8,11 @@ export interface CaseStudyTimelineEntry {
   detail: string;
 }
 
+export interface CaseStudyGalleryImage {
+  src: string;
+  alt: string;
+}
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -19,10 +24,16 @@ export interface CaseStudy {
     intro: string;
     bullets: string[];
   };
+  /* Image slider rendered right after the Problem section — placeholder
+     screenshots for now (see each project's comment below), to be swapped
+     for real curated images later. */
+  galleryAfterProblem?: CaseStudyGalleryImage[];
   solution: {
     intro: string;
     blocks?: CaseStudyBlock[];
   };
+  /* Second slider, after the Solution section — same placeholder status. */
+  galleryAfterSolution?: CaseStudyGalleryImage[];
   timeline?: CaseStudyTimelineEntry[];
   outcome: string;
 }
@@ -45,6 +56,10 @@ export const caseStudies: CaseStudy[] = [
         'Had to warm an audience months ahead of being able to actually teach anyone',
       ],
     },
+    galleryAfterProblem: [
+      { src: '/assets/images/case-study-temp/butterfly-cfi/shot-1.jpg', alt: 'The Butterfly CFI site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/butterfly-cfi/shot-2.jpg', alt: 'The Butterfly CFI site — placeholder screenshot' },
+    ],
     solution: {
       intro:
         'Built the brand from the ground up, then wrapped it in a full pre-launch marketing system instead of just a website.',
@@ -63,6 +78,10 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
+    galleryAfterSolution: [
+      { src: '/assets/images/case-study-temp/butterfly-cfi/shot-3.jpg', alt: 'The Butterfly CFI site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/butterfly-cfi/shot-4.jpg', alt: 'The Butterfly CFI site — placeholder screenshot' },
+    ],
     timeline: [
       { label: 'Jul 2024', detail: 'Kickoff' },
       { label: 'Aug 2024', detail: 'Site and brand shipped' },
@@ -88,6 +107,10 @@ export const caseStudies: CaseStudy[] = [
         'Wanted a "raw, intimate, cinematic" studio-visit feel instead',
       ],
     },
+    galleryAfterProblem: [
+      { src: '/assets/images/case-study-temp/spencer-grey-art/shot-1.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/spencer-grey-art/shot-2.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
+    ],
     solution: {
       intro:
         'A custom Next.js build instead of a page builder, with a full commerce layer underneath a deliberately quiet design.',
@@ -106,6 +129,10 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
+    galleryAfterSolution: [
+      { src: '/assets/images/case-study-temp/spencer-grey-art/shot-3.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/spencer-grey-art/shot-4.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
+    ],
     outcome:
       'Live at spencergreyart.com, running on Next.js, Neon, and Cloudflare R2 after a mid-project infrastructure migration off Supabase.',
   },
@@ -126,6 +153,10 @@ export const caseStudies: CaseStudy[] = [
         'Webflow could not support either without third-party workarounds',
       ],
     },
+    galleryAfterProblem: [
+      { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-1.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-2.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
+    ],
     solution: {
       intro:
         'Rebuilt on Astro with a real backend underneath, while keeping the visual identity the family already recognized.',
@@ -144,6 +175,10 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
+    galleryAfterSolution: [
+      { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-3.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-4.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
+    ],
     outcome:
       'Live at dscfamilyreunion.com ahead of the July 2026 cruise, with the guestbook and family tree both fully interactive.',
   },
@@ -164,6 +199,10 @@ export const caseStudies: CaseStudy[] = [
         'The brand needed an evergreen piece — a monthly poster series — to stay visible between events',
       ],
     },
+    galleryAfterProblem: [
+      { src: '/assets/images/case-study-temp/tremulant/shot-1.jpg', alt: 'Tremulant site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/tremulant/shot-2.jpg', alt: 'Tremulant site — placeholder screenshot' },
+    ],
     solution: {
       intro:
         'A multi-year design relationship built around one recognizable visual language, applied differently every time.',
@@ -182,6 +221,10 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
+    galleryAfterSolution: [
+      { src: '/assets/images/case-study-temp/tremulant/shot-3.jpg', alt: 'Tremulant site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/tremulant/shot-4.jpg', alt: 'Tremulant site — placeholder screenshot' },
+    ],
     timeline: [
       { label: '2021', detail: 'Relationship begins' },
       { label: '2021–2024', detail: 'Recurring posters, album art, monthly series' },
@@ -206,6 +249,10 @@ export const caseStudies: CaseStudy[] = [
         'That plan also competed directly with Eventbrite, which Shameless already uses for real ticket sales',
       ],
     },
+    galleryAfterProblem: [
+      { src: '/assets/images/case-study-temp/shameless-productions/shot-1.jpg', alt: 'Shameless Productions site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/shameless-productions/shot-2.jpg', alt: 'Shameless Productions site — placeholder screenshot' },
+    ],
     solution: {
       intro:
         'Cut the ticketing system entirely partway through and rebuilt around a simpler, Partiful-style scope instead.',
@@ -224,6 +271,10 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
+    galleryAfterSolution: [
+      { src: '/assets/images/case-study-temp/shameless-productions/shot-3.jpg', alt: 'Shameless Productions site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/shameless-productions/shot-4.jpg', alt: 'Shameless Productions site — placeholder screenshot' },
+    ],
     timeline: [
       { label: 'Apr 2026', detail: 'Scope cut from full ticketing to Partiful-style RSVP' },
       { label: 'Jul 2026', detail: 'Live at simplyshameless.com' },
@@ -247,6 +298,10 @@ export const caseStudies: CaseStudy[] = [
         'Needed to carry a full narrative arc — problem, solution, benefits, proof, pricing — without losing the reader',
       ],
     },
+    galleryAfterProblem: [
+      { src: '/assets/images/case-study-temp/kobase/shot-1.jpg', alt: 'Kobase landing page — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/kobase/shot-2.jpg', alt: 'Kobase landing page — placeholder screenshot' },
+    ],
     solution: {
       intro:
         'A full landing page built section by section in Figma, then in Webflow, with a custom visual system underneath.',
@@ -261,6 +316,10 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
+    galleryAfterSolution: [
+      { src: '/assets/images/case-study-temp/kobase/shot-3.jpg', alt: 'Kobase landing page — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/kobase/shot-4.jpg', alt: 'Kobase landing page — placeholder screenshot' },
+    ],
     outcome:
       'Shipped in 2023 as a paid landing-page engagement — the craft and structure are the story here; no launch metrics were tracked on this one.',
   },
@@ -280,6 +339,10 @@ export const caseStudies: CaseStudy[] = [
         'Needed to position against established house labels like Defected, Toolroom, Dirtybird, and Insomniac',
       ],
     },
+    galleryAfterProblem: [
+      { src: '/assets/images/case-study-temp/house-cleaning-records/shot-1.jpg', alt: 'House Cleaning Records site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/house-cleaning-records/shot-2.jpg', alt: 'House Cleaning Records site — placeholder screenshot' },
+    ],
     solution: {
       intro:
         'Started with real competitive research before touching design, then built a site meant to funnel bookings.',
@@ -294,6 +357,10 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
+    galleryAfterSolution: [
+      { src: '/assets/images/case-study-temp/house-cleaning-records/shot-3.jpg', alt: 'House Cleaning Records site — placeholder screenshot' },
+      { src: '/assets/images/case-study-temp/house-cleaning-records/shot-4.jpg', alt: 'House Cleaning Records site — placeholder screenshot' },
+    ],
     timeline: [
       { label: 'Sep 2022', detail: 'Contracted' },
       { label: 'Jul 2023', detail: 'Delivered' },

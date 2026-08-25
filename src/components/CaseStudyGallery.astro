@@ -1,0 +1,149 @@
+---
+interface Props {
+  images: { src: string; alt: string }[];
+  caption?: string;
+}
+
+const { images, caption } = Astro.props;
+---
+
+{images.length > 0 && (
+  <figure class="cs-gallery">
+    <div class="splide cs-gallery-splide">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {images.map(img => (
+            <li class="splide__slide cs-gallery-slide">
+              <img src={img.src} alt={img.alt} class="cs-gallery-img" loading="lazy" />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="splide__arrows"></div>
+      <ul class="splide__pagination"></ul>
+    </div>
+    {caption && <figcaption class="cs-gallery-caption">{caption}</figcaption>}
+  </figure>
+)}
+
+<script>
+  // Splide's core CSS only (BaseLayout loads splide-core, not the full skin), so
+  // arrows/pagination have zero visual styling out of the box beyond the icons
+  // Splide itself injects via JS — everything below in the <style> block is
+  // custom-themed to match the site rather than inheriting Splide's default look.
+  // Multiple galleries can exist on one case-study page, so this inits every
+  // instance found rather than assuming a single carousel per page (unlike
+  // Work.astro's single querySelector, which only ever has one on that page).
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof Splide === 'undefined') return;
+    document.querySelectorAll('.cs-gallery-splide').forEach((el) => {
+      new Splide(el, {
+        type: 'loop',
+        perPage: 1,
+        gap: '1rem',
+        padding: { right: '10%' },
+        arrows: true,
+        pagination: true,
+        speed: 600,
+        breakpoints: {
+          767: { padding: { right: '6%' } },
+        },
+      }).mount();
+    });
+  });
+</script>
+
+<style>
+.cs-gallery {
+  margin: var(--_spacing---section-space--small) 0;
+}
+
+.cs-gallery-slide {
+  border-radius: var(--radius--main);
+  overflow: clip;
+  aspect-ratio: 16 / 10;
+}
+
+.cs-gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cs-gallery-caption {
+  font-family: var(--_typography---font--primary-family);
+  font-size: var(--_typography---font-size--text-small);
+  color: var(--_theme---text);
+  opacity: 0.5;
+  margin-top: var(--_spacing---space--3);
+  text-align: center;
+}
+
+/* Arrows — circular buttons matching the footer's social icon-button style,
+   overlaid on the slide rather than pushing layout (Splide positions these
+   absolutely by default). */
+.cs-gallery :global(.splide__arrow) {
+  /* Core CSS (BaseLayout only loads splide-core, not the full skin) leaves
+     these static and unstyled — position:absolute + centering is needed
+     here, not just cosmetics, or both arrows stack in normal flow below
+     the slide instead of floating over it. */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius--round);
+  background-color: color-mix(in srgb, var(--swatch--dark-900), transparent 25%);
+  border: 2px solid color-mix(in srgb, var(--swatch--light-100), transparent 60%);
+  opacity: 1;
+  transition: border-color 200ms, background-color 200ms;
+}
+
+.cs-gallery :global(.splide__arrow:hover) {
+  background-color: var(--swatch--dark-900);
+  border-color: var(--swatch--accent-500);
+}
+
+.cs-gallery :global(.splide__arrow svg) {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--swatch--light-100);
+}
+
+.cs-gallery :global(.splide__arrow--prev) { left: 0.75rem; }
+.cs-gallery :global(.splide__arrow--next) { right: 0.75rem; }
+/* Splide injects the identical arrow icon into both buttons and expects
+   the theme CSS to mirror one — the default skin (not loaded here) is
+   what normally does this. */
+.cs-gallery :global(.splide__arrow--prev svg) { transform: scaleX(-1); }
+
+/* Pagination dots */
+.cs-gallery :global(.splide__pagination) {
+  position: static;
+  display: flex;
+  justify-content: center;
+  gap: var(--_spacing---space--2);
+  margin-top: var(--_spacing---space--3);
+  padding: 0;
+}
+
+.cs-gallery :global(.splide__pagination__page) {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius--round);
+  background-color: color-mix(in srgb, var(--swatch--muted-500), white 20%);
+  border: none;
+  opacity: 1;
+  transition: background-color 200ms, transform 200ms;
+}
+
+.cs-gallery :global(.splide__pagination__page.is-active) {
+  background-color: var(--swatch--accent-500);
+  transform: scale(1.3);
+}
+</style>

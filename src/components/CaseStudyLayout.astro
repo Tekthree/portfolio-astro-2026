@@ -1,5 +1,6 @@
 ---
 import type { CaseStudy } from '../data/caseStudies';
+import CaseStudyGallery from './CaseStudyGallery.astro';
 
 interface Props {
   study: CaseStudy;
@@ -38,6 +39,8 @@ const { study, prevStudy, nextStudy } = Astro.props;
           {study.problem.bullets.map(bullet => <li>{bullet}</li>)}
         </ul>
 
+        {study.galleryAfterProblem && <CaseStudyGallery images={study.galleryAfterProblem} />}
+
         <!-- solution -->
         <h2 id="solution" class="cs-heading u-text-style-h5">The Solution</h2>
         <p class="cs-text">{study.solution.intro}</p>
@@ -47,6 +50,8 @@ const { study, prevStudy, nextStudy } = Astro.props;
             <p class="cs-text">{block.body}</p>
           </>
         ))}
+
+        {study.galleryAfterSolution && <CaseStudyGallery images={study.galleryAfterSolution} />}
 
         <!-- timeline (optional) -->
         {study.timeline && (
