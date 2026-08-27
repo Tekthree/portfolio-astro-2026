@@ -119,24 +119,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    // Book a call scrolls to the Scheduler section. A plain href="#book" does not
-    // work on this site: Lenis owns scroll position and snaps a native anchor jump
-    // back on its next RAF frame — the same reason "Back to top" had to be rebuilt
-    // as a real handler (see Footer.astro). preventDefault, then hand the target to
-    // Lenis, falling back to native smooth scroll only if Lenis is missing.
-    component.querySelectorAll("[data-book-cta]").forEach((cta) => {
-      cta.addEventListener("click", (e) => {
-        const target = document.getElementById("book");
-        if (!target) return; // let the href do whatever it can
-        e.preventDefault();
-        toggle?.setAttribute("aria-expanded", "false");
-        if (window.lenis) {
-          window.lenis.scrollTo(target);
-        } else {
-          target.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    });
+    // The [data-book-cta] scroll handler lives in BaseLayout as one delegated
+    // document listener, so it covers the hero CTA and anything added later too.
+    // The menu-close above already fires for this button via .navbar_button.
 
     // Nav's flow height depends on fluid tokens, breakpoint tree switches, and
     // border-box padding math — too error-prone to hand-compute in CSS. Measuring

@@ -74,6 +74,29 @@ const ogImageURL = new URL(image, Astro.site);
         gsap.ticker.lagSmoothing(0);
       });
     </script>
+
+    <!-- Any [data-book-cta] anywhere on the site scrolls to the Scheduler section.
+         Delegated at document level on purpose: a per-component handler means every
+         new CTA has to remember to wire itself up, and eventually one won't.
+         Deliberately NOT a plain href="#book" — Lenis owns scroll position and snaps
+         native anchor jumps back on its next RAF frame. That is the same bug that made
+         "Back to top" a silent no-op (see Footer.astro). closest() rather than a direct
+         target check because these buttons contain an SVG icon, so the click often
+         originates on a child node. -->
+    <script is:inline>
+      document.addEventListener('click', (e) => {
+        const cta = e.target.closest && e.target.closest('[data-book-cta]');
+        if (!cta) return;
+        const target = document.getElementById('book');
+        if (!target) return;
+        e.preventDefault();
+        if (window.lenis) {
+          window.lenis.scrollTo(target);
+        } else {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    </script>
   </head>
   <body class="u-theme-dark">
     <slot />
