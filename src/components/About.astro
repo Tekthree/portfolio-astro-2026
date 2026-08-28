@@ -184,10 +184,9 @@
      section break mid-thought. Tighter between paragraphs, full gap restored
      on the last one below. */
   margin-bottom: var(--_spacing---space--2);
-  /* .7 matches .faq-answer, the only other body copy on this page. Was .55,
-     which at the same font size read as smaller and weaker than the FAQ text
-     rather than as the same paragraph style. */
-  opacity: 0.7;
+  /* .55 is the softer body tone Tek picked off the design. .faq-answer is set
+     to match, so every paragraph on the page shares one treatment. */
+  opacity: 0.55;
   /* No-op at desktop (the 50%-wide column is already narrower than this),
      but caps line length for readability once the layout stacks full-width
      at ≤991px — lines were running edge-to-edge otherwise. */
