@@ -191,7 +191,10 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--swatch--heading-dark);
-  opacity: 0.5;
+  /* Shares the heading's line-height so the subline sits on the same
+     vertical rhythm as the two lines above it rather than opening a gap. */
+  line-height: var(--_text-style---h3-line-height);
+  opacity: 0.8;
   margin: 0 0 var(--_spacing---space--3);
 }
 
