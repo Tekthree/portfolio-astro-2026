@@ -24,10 +24,10 @@
         <div class="about-text-wrap">
           <h1 class="about-name-heading u-text-style-h3">hello, <br>my name is ryan</h1>
           <p class="about-body u-text-style-main">
-            Most people know me by Tek. I've been doing this out of Seattle for fifteen years.
+            Most people know me by Tek. I design and build websites that look good and get found.
           </p>
           <p class="about-body u-text-style-main">
-            I design and build websites that look good and get found. The kind that show up when someone nearby searches for what you sell, and turn that into phone calls.
+            Sites that show up when someone nearby searches for what you sell, and turn that traffic into phone calls.
           </p>
           <p class="about-body u-text-style-main">
             I also build AI systems that give your team back the hours they lose to busywork.
@@ -184,7 +184,10 @@
      section break mid-thought. Tighter between paragraphs, full gap restored
      on the last one below. */
   margin-bottom: var(--_spacing---space--2);
-  opacity: 0.55;
+  /* .7 matches .faq-answer, the only other body copy on this page. Was .55,
+     which at the same font size read as smaller and weaker than the FAQ text
+     rather than as the same paragraph style. */
+  opacity: 0.7;
   /* No-op at desktop (the 50%-wide column is already narrower than this),
      but caps line length for readability once the layout stacks full-width
      at ≤991px — lines were running edge-to-edge otherwise. */
@@ -196,12 +199,6 @@
   margin-bottom: var(--_spacing---space--4);
 }
 
-/* The opening line is the thesis. It carries more weight than the two
-   supporting paragraphs, which stay at 0.55 like the rest of the page's body
-   copy. */
-.about-body:first-of-type {
-  opacity: 0.85;
-}
 
 .about-cv-btn {
   display: inline-block;
