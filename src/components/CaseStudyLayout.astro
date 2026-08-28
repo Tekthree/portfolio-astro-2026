@@ -1,6 +1,7 @@
 ---
 import type { CaseStudy } from '../data/caseStudies';
 import CaseStudyGallery from './CaseStudyGallery.astro';
+import CaseStudyFullPage from './CaseStudyFullPage.astro';
 
 interface Props {
   study: CaseStudy;
@@ -73,6 +74,18 @@ const { study, prevStudy, nextStudy } = Astro.props;
 
         {study.galleryAfterSolution && <CaseStudyGallery images={study.galleryAfterSolution} />}
 
+        {study.fullPage && (
+          <>
+            <h2 id="fullpage" class="cs-heading u-text-style-h5">The Full Page</h2>
+            <CaseStudyFullPage
+              src={study.fullPage.src}
+              srcSmall={study.fullPage.srcSmall}
+              alt={study.fullPage.alt}
+              label={`${study.title} full page design`}
+            />
+          </>
+        )}
+
         {study.craft && (
           <>
             <h2 id="craft" class="cs-heading u-text-style-h5">Under the Hood</h2>
@@ -110,6 +123,7 @@ const { study, prevStudy, nextStudy } = Astro.props;
             <li><a href="#overview" data-toc-link>Overview</a></li>
             <li><a href="#problem" data-toc-link>The Problem</a></li>
             <li><a href="#solution" data-toc-link>The Solution</a></li>
+            {study.fullPage && <li><a href="#fullpage" data-toc-link>The Full Page</a></li>}
             {study.craft && <li><a href="#craft" data-toc-link>Under the Hood</a></li>}
             {study.timeline && <li><a href="#timeline" data-toc-link>Timeline</a></li>}
             <li><a href="#outcome" data-toc-link>The Outcome</a></li>

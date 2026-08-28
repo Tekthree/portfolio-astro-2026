@@ -1,0 +1,168 @@
+---
+/*
+  Full-page design comp shown inside a browser frame that scrolls internally,
+  so a 8,000px-tall image can live in the middle of an article without taking
+  over the page.
+
+  Two things this has to get right on this site specifically:
+
+  1. Lenis owns the page scroll. Without data-lenis-prevent on the scroller,
+     Lenis swallows the wheel event and the inner container never moves, which
+     is the same class of silent failure that made "Back to top" a no-op.
+  2. A scrollable region has to be reachable without a mouse, so the viewport
+     carries tabindex and a role/label and can be scrolled with the keyboard.
+*/
+interface Props {
+  src: string;
+  srcSmall?: string;
+  alt: string;
+  label?: string;
+}
+const { src, srcSmall, alt, label = 'Full page design' } = Astro.props;
+---
+
+<figure class="cs-fullpage">
+  <div class="cs-fullpage-frame">
+    <div class="cs-fullpage-chrome" aria-hidden="true">
+      <span class="cs-fullpage-dot"></span>
+      <span class="cs-fullpage-dot"></span>
+      <span class="cs-fullpage-dot"></span>
+      <span class="cs-fullpage-bar"></span>
+    </div>
+
+    <div
+      class="cs-fullpage-viewport"
+      data-lenis-prevent
+      data-fullpage-viewport
+      tabindex="0"
+      role="region"
+      aria-label={`${label}, scrollable`}
+    >
+      <img
+        src={src}
+        srcset={srcSmall ? `${srcSmall} 1100w, ${src} 1400w` : undefined}
+        sizes="(max-width: 700px) 100vw, 900px"
+        alt={alt}
+        class="cs-fullpage-img"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="cs-fullpage-hint" data-fullpage-hint aria-hidden="true">
+      <span>Scroll to explore</span>
+    </div>
+  </div>
+  <figcaption class="cs-fullpage-cap">{alt}</figcaption>
+</figure>
+
+<style>
+  .cs-fullpage {
+    margin: var(--_spacing---space--6) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--_spacing---space--3);
+  }
+
+  .cs-fullpage-frame {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--_theme---text) 16%, transparent);
+    border-radius: 0.9rem;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--_theme---text) 4%, transparent);
+  }
+
+  .cs-fullpage-chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--_theme---text) 12%, transparent);
+  }
+
+  .cs-fullpage-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--_theme---text) 22%, transparent);
+    flex: none;
+  }
+
+  .cs-fullpage-bar {
+    flex: 1;
+    height: 0.85rem;
+    margin-left: 0.5rem;
+    border-radius: 100vw;
+    background: color-mix(in srgb, var(--_theme---text) 9%, transparent);
+  }
+
+  .cs-fullpage-viewport {
+    height: min(70vh, 620px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* momentum scrolling on iOS, and stop the page from taking over at the ends */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .cs-fullpage-viewport:focus-visible {
+    outline: 2px solid var(--_theme---text);
+    outline-offset: -2px;
+  }
+
+  .cs-fullpage-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .cs-fullpage-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 0.9rem;
+    transform: translateX(-50%);
+    padding: 0.4rem 0.85rem;
+    border-radius: 100vw;
+    background: color-mix(in srgb, var(--_theme---text) 82%, transparent);
+    color: var(--_theme---background, #fff);
+    font-family: var(--_typography---font--primary-family);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    transition: opacity 250ms ease;
+  }
+
+  .cs-fullpage-hint[hidden] { opacity: 0; }
+
+  .cs-fullpage-cap {
+    font-family: var(--_typography---font--primary-family);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--_theme---text);
+    opacity: 0.5;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-fullpage-hint { transition: none; }
+  }
+</style>
+
+<script>
+  // Hide the "scroll to explore" affordance once someone has actually scrolled,
+  // so it stops covering the artwork. Uses [hidden] with a CSS transition rather
+  // than removing the node, so it can come back if they scroll back to the top.
+  document.querySelectorAll('[data-fullpage-viewport]').forEach((vp) => {
+    const hint = vp.parentElement?.querySelector('[data-fullpage-hint]');
+    if (!hint) return;
+    vp.addEventListener(
+      'scroll',
+      () => {
+        const scrolled = vp.scrollTop > 24;
+        hint.toggleAttribute('hidden', scrolled);
+      },
+      { passive: true }
+    );
+  });
+</script>

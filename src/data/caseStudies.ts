@@ -41,6 +41,9 @@ export interface CaseStudy {
      screenshots for now (see each project's comment below), to be swapped
      for real curated images later. */
   galleryAfterProblem?: CaseStudyGalleryImage[];
+  /* Full-page design comp, shown in a browser frame that scrolls internally.
+     Only worth it where the whole page is the deliverable. */
+  fullPage?: { src: string; srcSmall?: string; alt: string };
   stack?: CaseStudyStackGroup[];
   solution: {
     intro: string;
@@ -441,6 +444,11 @@ export const caseStudies: CaseStudy[] = [
       { src: '/assets/images/case-study/kobase/shot-1.jpg', alt: 'Kobase hero section: the Where Ideas Win headline over a grain-textured grid, beside a layered contour illustration' },
       { src: '/assets/images/case-study/kobase/shot-2.jpg', alt: 'Kobase explainer graphic showing how the idea marketplace works' },
     ],
+    fullPage: {
+      src: '/assets/images/case-study/kobase/fullpage-1400.jpg',
+      srcSmall: '/assets/images/case-study/kobase/fullpage-1100.jpg',
+      alt: 'The complete Kobase landing page, top to bottom: hero, explainer, the three-step onboarding, benefits, testimonials, features, membership pricing, FAQ, and closing call to action.',
+    },
     stack: [
       { label: 'Design', items: ['Figma', 'Illustrator'] },
       { label: 'Build', items: ['Webflow'] },
