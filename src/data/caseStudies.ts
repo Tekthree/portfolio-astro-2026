@@ -438,8 +438,8 @@ export const caseStudies: CaseStudy[] = [
       ],
     },
     galleryAfterProblem: [
-      { src: '/assets/images/case-study-temp/kobase/shot-1.jpg', alt: 'Kobase landing page — placeholder screenshot' },
-      { src: '/assets/images/case-study-temp/kobase/shot-2.jpg', alt: 'Kobase landing page — placeholder screenshot' },
+      { src: '/assets/images/case-study/kobase/shot-1.jpg', alt: 'Kobase hero section: the Where Ideas Win headline over a grain-textured grid, beside a layered contour illustration' },
+      { src: '/assets/images/case-study/kobase/shot-2.jpg', alt: 'Kobase explainer graphic showing how the idea marketplace works' },
     ],
     stack: [
       { label: 'Design', items: ['Figma', 'Illustrator'] },
@@ -461,17 +461,17 @@ export const caseStudies: CaseStudy[] = [
       ],
     },
     galleryAfterSolution: [
-      { src: '/assets/images/case-study-temp/kobase/shot-3.jpg', alt: 'Kobase landing page — placeholder screenshot' },
-      { src: '/assets/images/case-study-temp/kobase/shot-4.jpg', alt: 'Kobase landing page — placeholder screenshot' },
+      { src: '/assets/images/case-study/kobase/shot-3.jpg', alt: 'Kobase page section showing the custom illustration set and type scale in use' },
+      { src: '/assets/images/case-study/kobase/shot-4.jpg', alt: 'Kobase onboarding steps: subscribe, get matched with a team, and receive creative work' },
     ],
     craft: [
       {
         heading: 'Building a visual system from nothing',
-        body: "There was no existing brand to work from, so the grid, type scale, colour system, and component set were all built before a single section was designed. That order matters on a page this long: deciding spacing and type relationships once, up front, is what keeps nine stacked sections from drifting into nine different-looking pages.",
+        body: "There was no existing brand to work from, so the grid, type scale, colour system, and component set were all built before a single section was designed. The grid is a 1440px twelve-column system with 15px gutters, written out as its own stylesheet so the layout rules existed as code and not just as guides in a design file. That order matters on a page this long: deciding spacing and type relationships once, up front, is what keeps nine stacked sections from drifting into nine different-looking pages.",
       },
       {
         heading: 'Grain as the thing holding it together',
-        body: "A custom grain texture built in Illustrator sits under the whole page. On a landing page for a category nobody has heard of, flat colour reads as generic template, and the texture is what gives an otherwise clean layout a surface and a point of view.",
+        body: "A custom grain texture and a faint grid pattern sit under the whole page, both built in Illustrator, alongside a bespoke illustration set drawn for the four onboarding steps. On a landing page for a category nobody has heard of, flat colour reads as generic template, and the texture is what gives an otherwise clean layout a surface and a point of view.",
       },
       {
         heading: 'A narrative arc, not a feature list',
@@ -479,11 +479,11 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         heading: 'Motion tied to scroll position',
-        body: "Lottie animations fire on scroll, never on a loop. On a page this long, always-running animation competes with reading, and tying motion to scroll means each section animates once, when someone actually arrives at it.",
+        body: "The hero animation was built in After Effects and exported to Lottie, so it ships as vector JSON that stays sharp at any size and weighs a fraction of a video file. It fires on scroll, never on a loop. On a page this long, always-running animation competes with reading, and tying motion to scroll means each section animates once, when someone arrives at it.",
       },
     ],
     outcome:
-      'Shipped in 2023 as a paid landing-page engagement — the craft and structure are the story here; no launch metrics were tracked on this one.',
+      'Shipped in 2023 as a paid landing-page engagement. Every asset was original: the logo marks, the illustration set, the grain and grid textures, the twelve-column stylesheet, and the After Effects source for the hero animation. The craft and structure are the story here, no launch metrics were tracked on this one.',
   },
   {
     slug: 'house-cleaning-records',
