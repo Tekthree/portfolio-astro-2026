@@ -48,10 +48,6 @@ svg { max-width: 100%; }
   /* Section / component color tokens */
   --bg-contact: #d9cfe0;
   --bg-stats: #c7bbd0;
-  /* FAQ card. Same idea as --bg-stats (a panel lighter than its section) but
-     tuned for Contact's lighter light-200 base, so the cards still read as
-     raised rather than sunk. */
-  --bg-faq: color-mix(in srgb, var(--swatch--light-200), white 55%);
   --stat-divider-color: #baaac8;
   --faq-border: #9c8aaf;
   --label-plum: #5a337a;

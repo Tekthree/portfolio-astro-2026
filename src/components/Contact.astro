@@ -172,12 +172,12 @@ const stream = [
   max-width: 12.8em;
 }
 
-/* Was hairline dividers. Now each question is its own card, carrying the
-   same relationship the stats bar uses in About: a panel lighter than the
-   section it sits on. The hex differs because the sections differ (About
-   sits on light-100, Contact on the lighter light-200), so copying
-   --bg-stats here would have made these DARKER than their background and
-   inverted the effect. --bg-faq keeps the relationship instead of the value. */
+/* Was hairline dividers. Each question is its own card now, using the exact
+   same swatch as the stats bar in About so the two card treatments match
+   across the page. Note this section's background (light-200 #d9cfe0) is
+   lighter than About's (light-100 #c0b3cb), so the same #c7bbd0 card reads
+   slightly darker than its section here and slightly lighter there. That is
+   intentional: one card color sitewide beats one card relationship. */
 .faq-list {
   display: flex;
   flex-direction: column;
@@ -185,7 +185,7 @@ const stream = [
 }
 
 .faq-item {
-  background-color: var(--bg-faq);
+  background-color: var(--bg-stats);
   border-radius: var(--radius--main);
   padding-left: var(--_spacing---space--4);
   padding-right: var(--_spacing---space--4);
