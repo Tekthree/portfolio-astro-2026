@@ -2,15 +2,27 @@
 const faqs = [
   {
     q: 'What services do you offer?',
-    a: 'Full stack web development, UI/UX design, branding and logo design, print design, and event flyer creation. I work across the full project lifecycle from concept to shipped.',
+    a: 'Brand identity and logo design, UI and UX, full stack web development, print and event design, and the SEO and ad campaigns that bring people to the finished site. I work the whole project, concept through launch.',
   },
   {
-    q: 'How does your Air Force experience benefit projects?',
-    a: 'Six years in logistics taught me how to manage competing priorities, hit hard deadlines, and communicate clearly across all levels. That discipline carries into how I run projects.',
+    q: 'What does a project cost?',
+    a: 'It depends on scope, so I quote per project rather than by the hour. A single landing page and a multi page site with a CMS are very different jobs. Tell me what you need and I will give you a fixed number before any work starts, so there are no surprises later.',
   },
   {
-    q: 'What do you do in your free time?',
-    a: 'I DJ under the name Tek Jones at Shameless events around Seattle. I also build side projects, follow the AI space closely, and try to keep an N64 running.',
+    q: 'How long does a project take?',
+    a: 'A focused landing page is usually two to three weeks. A full site with custom design and a CMS runs four to eight. The biggest variable is not my end, it is how quickly content and feedback come back, so I set that expectation up front.',
+  },
+  {
+    q: 'Can you help my site show up on Google?',
+    a: 'Yes, and it is built in rather than bolted on afterward. Site structure, page speed, clean markup, and metadata all get handled during the build. From there I can take on ongoing SEO, Google Business Profile, and paid campaigns if you want someone maintaining it.',
+  },
+  {
+    q: 'How do you use AI in your work?',
+    a: 'Two ways. It makes me faster on the build, which is part of how one person handles a whole project. And I build AI systems for clients directly, the practical kind that take repetitive work off your team instead of adding another tool nobody opens.',
+  },
+  {
+    q: 'What happens after the site launches?',
+    a: 'You own everything, the code, the domain, the accounts. I hand over what you need to run it yourself, and if you would rather not, I offer ongoing support for updates, hosting, content, and performance.',
   },
 ];
 
@@ -160,13 +172,23 @@ const stream = [
   max-width: 12.8em;
 }
 
-/* Hairline top rule above the first item — each .faq-item below supplies
-   its own bottom rule, matching the accordion reference's evenly-spaced
-   divider lines (one above item 1, one after every item). */
-.faq-list { border-top: var(--border-width--main) solid var(--_theme---border); }
+/* Was hairline dividers. Now each question is its own card, carrying the
+   same relationship the stats bar uses in About: a panel lighter than the
+   section it sits on. The hex differs because the sections differ (About
+   sits on light-100, Contact on the lighter light-200), so copying
+   --bg-stats here would have made these DARKER than their background and
+   inverted the effect. --bg-faq keeps the relationship instead of the value. */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_spacing---space--2);
+}
 
 .faq-item {
-  border-bottom: var(--border-width--main) solid var(--_theme---border);
+  background-color: var(--bg-faq);
+  border-radius: var(--radius--main);
+  padding-left: var(--_spacing---space--4);
+  padding-right: var(--_spacing---space--4);
 }
 
 .faq-summary {
@@ -174,11 +196,13 @@ const stream = [
   justify-content: space-between;
   align-items: center;
   gap: var(--_spacing---space--3);
-  padding: var(--_spacing---space--4) 0;
+  padding: var(--_spacing---space--3) 0;
   cursor: pointer;
   list-style: none;
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--h5);
+  /* Was --font-size--h5, which ran noticeably larger than every other block
+     of copy on the page. Matches body text now. */
+  font-size: var(--_text-style---main-font-size);
   font-weight: 600;
   /* Matches the heading-dark convention used for prominent text elsewhere
      (About/Contact headings) — was plain _theme---text, inconsistent with
@@ -204,10 +228,12 @@ const stream = [
 
 .faq-answer {
   font-family: var(--_typography---font--primary-family);
-  font-size: var(--_typography---font-size--text-small);
+  /* Was --font-size--text-small. Same body size as the question and the
+     rest of the site. */
+  font-size: var(--_text-style---main-font-size);
   color: var(--_theme---text);
-  opacity: 0.55;
-  padding-bottom: var(--_spacing---space--5);
+  opacity: 0.7;
+  padding-bottom: var(--_spacing---space--4);
   line-height: 1.6;
   margin: 0;
 }
