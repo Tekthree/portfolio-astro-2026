@@ -23,15 +23,14 @@
       <div class="about-right">
         <div class="about-text-wrap">
           <h1 class="about-name-heading u-text-style-h3">hello, <br>my name is ryan</h1>
-          <p class="about-name-sub">most people call me tek</p>
           <p class="about-body u-text-style-main">
-            I design and build websites that look good and get found.
+            Most people know me by Tek. I've been doing this out of Seattle for fifteen years.
           </p>
           <p class="about-body u-text-style-main">
-            Fifteen years running Pixel Jones out of Seattle. Brand identity, UI and UX, the site front to back, then the local SEO, Google Business Profile, and AI SEO that get you found. It all stays in house.
+            I design and build websites that look good and get found. The kind that show up when someone nearby searches for what you sell, and turn that into phone calls.
           </p>
           <p class="about-body u-text-style-main">
-            I also build AI systems that take repetitive work off your team.
+            I also build AI systems that give your team back the hours they lose to busywork.
           </p>
           <a href="/ryan-jones-resume.pdf" target="_blank" rel="noopener" class="about-cv-btn" data-trigger="hover focus">my resume</a>
         </div>
@@ -173,30 +172,10 @@
   font-family: var(--_typography---font--heading-family);
   color: var(--swatch--heading-dark);
   text-transform: uppercase;
-  /* Zero, not a spacing token. The subline sits directly beneath the name and
-     carries the gap down to the body copy itself, so any margin here just
-     pushes the two apart. */
-  margin-bottom: 0;
+  margin-bottom: var(--_spacing---space--3);
   max-width: 12.8em;
 }
 
-/* Tek is the name most of his clients, his email, his GitHub, and his
-   LinkedIn handle use; Ryan is what the resume and every job-search surface
-   says. Naming both here, with Ryan primary, matches the meta description
-   this page already ships. */
-.about-name-sub {
-  font-family: var(--_typography---font--heading-family);
-  font-size: var(--_typography---font-size--text-small);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--swatch--heading-dark);
-  /* Set solid. h3's 1.1 still left visible air under a single uppercase line
-     at this size; there is no descender-heavy text here to protect. */
-  line-height: 1;
-  opacity: 0.8;
-  margin: 0 0 var(--_spacing---space--3);
-}
 
 .about-body {
   color: var(--_theme---text);
