@@ -173,10 +173,10 @@
   font-family: var(--_typography---font--heading-family);
   color: var(--swatch--heading-dark);
   text-transform: uppercase;
-  /* Was space--3, the gap down to the body copy. The subline sits directly
-     under the name now and carries that gap instead, so the two read as one
-     block rather than two separated lines. */
-  margin-bottom: var(--_spacing---space--1);
+  /* Zero, not a spacing token. The subline sits directly beneath the name and
+     carries the gap down to the body copy itself, so any margin here just
+     pushes the two apart. */
+  margin-bottom: 0;
   max-width: 12.8em;
 }
 
@@ -191,15 +191,19 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--swatch--heading-dark);
-  /* Shares the heading's line-height so the subline sits on the same
-     vertical rhythm as the two lines above it rather than opening a gap. */
-  line-height: var(--_text-style---h3-line-height);
+  /* Set solid. h3's 1.1 still left visible air under a single uppercase line
+     at this size; there is no descender-heavy text here to protect. */
+  line-height: 1;
   opacity: 0.8;
   margin: 0 0 var(--_spacing---space--3);
 }
 
 .about-body {
   color: var(--_theme---text);
+  /* One step down from the inherited main body size. This column sits beside
+     a large photo and a heading, and at main size the three paragraphs
+     competed with the name above them. */
+  font-size: var(--_typography---font-size--text-small);
   /* Copy is three paragraphs now, not one. space--4 was authored as the gap
      down to the CV button; repeated between every paragraph it reads as a
      section break mid-thought. Tighter between paragraphs, full gap restored
