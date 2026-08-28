@@ -13,6 +13,15 @@ export interface CaseStudyGalleryImage {
   alt: string;
 }
 
+/* Grouped so the stack reads as decisions ("Data: Neon, R2") rather than an
+   undifferentiated pile of logos. Only list what the project actually uses —
+   every entry here was verified against the repo's package.json or the live
+   site, never assumed from the project type. */
+export interface CaseStudyStackGroup {
+  label: string;
+  items: string[];
+}
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -32,10 +41,15 @@ export interface CaseStudy {
      screenshots for now (see each project's comment below), to be swapped
      for real curated images later. */
   galleryAfterProblem?: CaseStudyGalleryImage[];
+  stack?: CaseStudyStackGroup[];
   solution: {
     intro: string;
     blocks?: CaseStudyBlock[];
   };
+  /* The "how", kept separate from the Solution narrative on purpose. Solution
+     says what was built and why it mattered to the client; craft says how it
+     works and what the interface decisions were. Mixing them made both vague. */
+  craft?: CaseStudyBlock[];
   /* Second slider, after the Solution section — same placeholder status. */
   galleryAfterSolution?: CaseStudyGalleryImage[];
   timeline?: CaseStudyTimelineEntry[];
@@ -65,6 +79,11 @@ export const caseStudies: CaseStudy[] = [
       { src: '/assets/images/case-study-temp/butterfly-cfi/shot-1.jpg', alt: 'The Butterfly CFI site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/butterfly-cfi/shot-2.jpg', alt: 'The Butterfly CFI site — placeholder screenshot' },
     ],
+    stack: [
+      { label: 'Platform', items: ['Webflow'] },
+      { label: 'Delivery', items: ['Cloudflare'] },
+      { label: 'Marketing', items: ['Lead-magnet PDF', 'Single-CTA landing page', '7-email nurture sequence'] },
+    ],
     solution: {
       intro:
         'Built the brand from the ground up, then wrapped it in a full pre-launch marketing system instead of just a website.',
@@ -92,6 +111,20 @@ export const caseStudies: CaseStudy[] = [
       { label: 'Aug 2024', detail: 'Site and brand shipped' },
       { label: 'Nov 2024', detail: 'Logo published to social' },
     ],
+    craft: [
+      {
+        heading: 'A mark that reads at favicon size',
+        body: "The logo is a white butterfly whose wings are formed from headphone shapes, so nature and instruction sit in one negative-space mark. It is monochromatic and deliberately not illustrative, because a flight instructor's brand ends up on a business card, a social avatar, and a browser tab, and a detailed mark stops being legible at every one of those sizes.",
+      },
+      {
+        heading: 'Site architecture built around trust, not services',
+        body: "The page structure opens on the founder's own training story. A service list is the obvious move and the wrong one here, because the audience is people who were burned by a previous instructor or talked out of flying entirely. Home, About and Founder, What Sets Us Apart, Start Your Aviation Journey, and Learning Resources are ordered as an objection-handling sequence: who you are, why you are different, and only then what to do next.",
+      },
+      {
+        heading: 'One call to action per page',
+        body: "The lead-magnet landing page carries a single action and nothing else, no navigation competing for the click. The seven-email sequence that follows is ordered by objection: welcome and story, what it really costs, why a learning-style mismatch is usually the real problem, community, a student's outcome, and only then a consultation ask.",
+      },
+    ],
     outcome:
       "The full system — brand, site, lead magnet, and email sequence — shipped to production ahead of Jenn's certification, giving her an audience to launch to instead of starting from zero.",
   },
@@ -117,6 +150,14 @@ export const caseStudies: CaseStudy[] = [
       { src: '/assets/images/case-study-temp/spencer-grey-art/shot-1.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/spencer-grey-art/shot-2.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
     ],
+    stack: [
+      { label: 'Framework', items: ['Next.js 15 (App Router)', 'React', 'TypeScript'] },
+      { label: 'Data', items: ['Neon (serverless Postgres)', 'Cloudflare R2'] },
+      { label: 'Auth', items: ['iron-session (cookie-based)'] },
+      { label: 'Commerce', items: ['Stripe'] },
+      { label: 'Type', items: ['Cardinal Fruit', 'Suisse Intl'] },
+      { label: 'Hosting', items: ['Vercel'] },
+    ],
     solution: {
       intro:
         'A custom Next.js build instead of a page builder, with a full commerce layer underneath a deliberately quiet design.',
@@ -138,6 +179,24 @@ export const caseStudies: CaseStudy[] = [
     galleryAfterSolution: [
       { src: '/assets/images/case-study-temp/spencer-grey-art/shot-3.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/spencer-grey-art/shot-4.jpg', alt: 'Spencer Grey Art site — placeholder screenshot' },
+    ],
+    craft: [
+      {
+        heading: 'Migrating off Supabase mid-project',
+        body: "The store originally ran on Supabase for all three of database, auth, and file storage. That is convenient until the subscription is the largest line item on a small artist store. It moved to Neon for Postgres, iron-session for auth, and Cloudflare R2 for images, which removed the recurring cost entirely. The migration ran as two scripts: one to build the schema, one to move the data and re-upload every image into R2 under its own prefix. Three collections, eight artworks, ten content rows, eleven orders, and a blog post came across without downtime.",
+      },
+      {
+        heading: 'Auth without an identity provider',
+        body: "There is exactly one admin. Standing up a full identity provider for one person is the kind of decision that quietly adds a dependency, a bill, and an outage you do not control. Admin auth is an encrypted iron-session cookie instead, which is a few dozen lines and no third party in the login path.",
+      },
+      {
+        heading: 'Design rules that decide arguments in advance',
+        body: "The build runs on five written principles: the work commands the frame, intimacy over polish, black as gallery wall, earn the collector's patience, and every word of copy earns its place. They exist so layout questions have an answer before anyone debates them. In practice that produced a full-bleed 16/7 hero with the call to action tucked bottom-left so it never sits on top of the painting, a cream and near-black palette instead of pure white, and near-zero body copy anywhere near the work.",
+      },
+      {
+        heading: 'Alt text as writing, not compliance',
+        body: "Every image describes its real materials and subject in the artist's own register. The default is a filename or the phrase artwork image. That is an accessibility requirement and a search signal at the same time, and it is the difference between a screen reader describing a painting and announcing a placeholder.",
+      },
     ],
     outcome:
       'Live at spencergreyart.com, running on Next.js, Neon, and Cloudflare R2 after a mid-project infrastructure migration off Supabase.',
@@ -164,6 +223,13 @@ export const caseStudies: CaseStudy[] = [
       { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-1.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-2.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
     ],
+    stack: [
+      { label: 'Framework', items: ['Astro 4', '@astrojs/vercel'] },
+      { label: 'Data', items: ['Neon (serverless Postgres)', 'Cloudflare R2'] },
+      { label: 'Visualization', items: ['D3'] },
+      { label: 'Motion', items: ['GSAP', 'Lenis'] },
+      { label: 'Hosting', items: ['Vercel'] },
+    ],
     solution: {
       intro:
         'Rebuilt on Astro with a real backend underneath, while keeping the visual identity the family already recognized.',
@@ -186,6 +252,24 @@ export const caseStudies: CaseStudy[] = [
       { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-3.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/dsc-family-reunion/shot-4.jpg', alt: 'DSC Family Reunion site — placeholder screenshot' },
     ],
+    craft: [
+      {
+        heading: 'The family tree is the whole engineering problem',
+        body: "116 people across seven generations and four family branches does not fit on a screen, and it does not fit in a static image either. It renders with D3 as an interactive graph: drag to pan, zoom, expand and collapse a branch, search by name, and filter to one of the four families. The interaction design matters more than the rendering here, because the default state of a tree that size is an unreadable wall. It opens collapsed and lets people walk their own branch.",
+      },
+      {
+        heading: 'Photo uploads that do not touch the server',
+        body: "The guestbook takes photos from phones at a family event, which means large files over bad connections. Uploads never proxy through the app. The browser requests a short-lived presigned URL and sends the file straight to Cloudflare R2. The server only ever handles the resulting record. It never touches the bytes. Cards render portrait or landscape aware, so a vertical phone photo is not letterboxed into a horizontal frame.",
+      },
+      {
+        heading: 'Keeping the site the family already recognized',
+        body: "The 2025 reunion site was Webflow. Rebuilding on Astro could have meant a visual reset, and for an audience that is largely not technical, a site that suddenly looks like a different site reads as the wrong link. The existing Webflow CSS was ported forward as the base style layer instead of being rebuilt, so the identity stayed put and only the capability changed.",
+      },
+      {
+        heading: 'Motion that stays out of the way',
+        body: "GSAP handles reveals and Lenis smooths the scroll, both tuned well down. On a site people open to find a date and a hotel, animation that delays information is a cost, not a feature.",
+      },
+    ],
     outcome:
       'Live at dscfamilyreunion.com ahead of the July 2026 cruise, with the guestbook and family tree both fully interactive.',
   },
@@ -195,7 +279,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Joe Bellingham',
     tag: 'Print & Poster Design',
     heroImage: '/assets/images/69d55fe73960cc20e9554315_tremulant_poster_pixel_jones.jpg',
-    websiteUrl: 'https://tremulant.space',
+    websiteUrl: 'https://tremulant-2dd0f2a0e36f3f54c2f91acc0cc8d.webflow.io/',
     overview:
       'Tremulant is a Seattle underground electronic music series run by Joe Bellingham, hosting shows at Timbre Room and Cherry Seattle with a rotating lineup of touring and local acts.',
     problem: {
@@ -210,6 +294,11 @@ export const caseStudies: CaseStudy[] = [
     galleryAfterProblem: [
       { src: '/assets/images/case-study-temp/tremulant/shot-1.jpg', alt: 'Tremulant site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/tremulant/shot-2.jpg', alt: 'Tremulant site — placeholder screenshot' },
+    ],
+    stack: [
+      { label: 'Platform', items: ['Webflow'] },
+      { label: 'Interaction', items: ['Splide', 'Lottie'] },
+      { label: 'Print & artwork', items: ['Photoshop', 'Illustrator'] },
     ],
     solution: {
       intro:
@@ -237,6 +326,20 @@ export const caseStudies: CaseStudy[] = [
       { label: '2021', detail: 'Relationship begins' },
       { label: '2021–2024', detail: 'Recurring posters, album art, monthly series' },
     ],
+    craft: [
+      {
+        heading: 'Hand-drawn to vector, deliberately',
+        body: "The album cover started on paper and ran a full pipeline from there: pencil sketch, Photoshop cleanup, an Illustrator vector trace, a colour and shadow pass, then an oil-paint texture finish over the top. Tracing a real drawing keeps the line weight irregular in a way vector tools do not produce on their own, and the texture pass puts back the surface that vectorising strips out.",
+      },
+      {
+        heading: 'One system, many output sizes',
+        body: "Each show poster gets adapted across every dimension the event needs, print, square social, and vertical story, which is a different job from exporting one artwork at three sizes. Composition gets rebuilt per ratio so the type hierarchy survives the crop. A poster laid out for print becomes an unreadable square otherwise.",
+      },
+      {
+        heading: 'A throughline across four years of one-offs',
+        body: "Cosmic and earthly elements juxtaposed against vintage textural treatments is the constant, applied differently every time. That is what lets dozens of independent pieces still read as one series without any of them repeating another.",
+      },
+    ],
     outcome:
       'A four-year working relationship across posters, album art, and a website — the kind of repeat engagement that only happens when the work keeps landing.',
   },
@@ -261,6 +364,15 @@ export const caseStudies: CaseStudy[] = [
     galleryAfterProblem: [
       { src: '/assets/images/case-study-temp/shameless-productions/shot-1.jpg', alt: 'Shameless Productions site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/shameless-productions/shot-2.jpg', alt: 'Shameless Productions site — placeholder screenshot' },
+    ],
+    stack: [
+      { label: 'Framework', items: ['Next.js 14', 'React 18', 'TypeScript'] },
+      { label: 'Data', items: ['Neon (serverless Postgres)', 'Cloudflare R2'] },
+      { label: 'Commerce', items: ['Stripe'] },
+      { label: 'Messaging', items: ['Twilio'] },
+      { label: 'Interface', items: ['Radix UI', 'Tailwind CSS', 'Embla Carousel', 'Lucide'] },
+      { label: 'Testing', items: ['Jest', 'Testing Library', 'Playwright'] },
+      { label: 'Hosting', items: ['Vercel'] },
     ],
     solution: {
       intro:
@@ -288,6 +400,24 @@ export const caseStudies: CaseStudy[] = [
       { label: 'Apr 2026', detail: 'Scope cut from full ticketing to Partiful-style RSVP' },
       { label: 'Jul 2026', detail: 'Live at simplyshameless.com' },
     ],
+    craft: [
+      {
+        heading: 'Deciding not to build a ticketing system',
+        body: "The original scope was full ticketing: box office, QR scanning, ticket inventory, the lot. It got cut. What the events actually needed was an RSVP with a suggested cover amount, and building a ticketing platform to compete with Eventbrite would have meant owning payment disputes and door scanning for a promoter who already had both solved. Scope moved to RSVP plus payment links plus merch, which removed an entire class of failure and shipped months sooner. The Pay Cover button pointing at Eventbrite or a payment link is the design, not a placeholder.",
+      },
+      {
+        heading: 'Uploads bypass the app entirely',
+        body: "Event photography arrives in bulk and at full resolution. The browser requests a short-lived presigned URL and pushes files directly to Cloudflare R2 over the S3 API, so a gallery import never occupies a serverless function or counts against its execution limits. The app stores references, not bytes.",
+      },
+      {
+        heading: 'Primitives instead of a component kit',
+        body: "The interface is built on Radix primitives with Tailwind on top, with no prebuilt component library underneath. Radix supplies the behavior nobody should be reimplementing, focus trapping, keyboard handling, and correct ARIA on dialogs and toasts, while leaving the appearance completely open. For an events brand with a strong visual identity, a component kit would have meant fighting its defaults on every screen.",
+      },
+      {
+        heading: 'It has tests, which is the unusual part',
+        body: "Jest and Testing Library cover the unit and component layer, Playwright drives the real browser flows. Most freelance builds this size have no tests at all, and the reason to have them here is that events have hard dates. A regression discovered on the night of a show is a different category of problem than one found on a Tuesday.",
+      },
+    ],
     outcome:
       "Live and running, with one honest number worth naming: as of early July 2026, only 18 of 806 pages are indexed in Google Search Console — a crawl-budget problem still being worked, not a finished win. The scope-discipline call (cutting ticketing before it became a liability) is the actual result worth pointing at here.",
   },
@@ -311,6 +441,11 @@ export const caseStudies: CaseStudy[] = [
       { src: '/assets/images/case-study-temp/kobase/shot-1.jpg', alt: 'Kobase landing page — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/kobase/shot-2.jpg', alt: 'Kobase landing page — placeholder screenshot' },
     ],
+    stack: [
+      { label: 'Design', items: ['Figma', 'Illustrator'] },
+      { label: 'Build', items: ['Webflow'] },
+      { label: 'Motion', items: ['Lottie (scroll-triggered)'] },
+    ],
     solution: {
       intro:
         'A full landing page built section by section in Figma, then in Webflow, with a custom visual system underneath.',
@@ -328,6 +463,24 @@ export const caseStudies: CaseStudy[] = [
     galleryAfterSolution: [
       { src: '/assets/images/case-study-temp/kobase/shot-3.jpg', alt: 'Kobase landing page — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/kobase/shot-4.jpg', alt: 'Kobase landing page — placeholder screenshot' },
+    ],
+    craft: [
+      {
+        heading: 'Building a visual system from nothing',
+        body: "There was no existing brand to work from, so the grid, type scale, colour system, and component set were all built before a single section was designed. That order matters on a page this long: deciding spacing and type relationships once, up front, is what keeps nine stacked sections from drifting into nine different-looking pages.",
+      },
+      {
+        heading: 'Grain as the thing holding it together',
+        body: "A custom grain texture built in Illustrator sits under the whole page. On a landing page for a category nobody has heard of, flat colour reads as generic template, and the texture is what gives an otherwise clean layout a surface and a point of view.",
+      },
+      {
+        heading: 'A narrative arc, not a feature list',
+        body: "Sections are ordered as an argument: hero, the problem with a supporting video, three core benefits, testimonials, features, membership pricing, FAQ, and a closing call to action. A new category has to be explained before it can be sold, so proof sits deliberately between the benefit claim and the price. After the price is too late.",
+      },
+      {
+        heading: 'Motion tied to scroll position',
+        body: "Lottie animations fire on scroll, never on a loop. On a page this long, always-running animation competes with reading, and tying motion to scroll means each section animates once, when someone actually arrives at it.",
+      },
     ],
     outcome:
       'Shipped in 2023 as a paid landing-page engagement — the craft and structure are the story here; no launch metrics were tracked on this one.',
@@ -353,6 +506,12 @@ export const caseStudies: CaseStudy[] = [
       { src: '/assets/images/case-study-temp/house-cleaning-records/shot-1.jpg', alt: 'House Cleaning Records site — placeholder screenshot' },
       { src: '/assets/images/case-study-temp/house-cleaning-records/shot-2.jpg', alt: 'House Cleaning Records site — placeholder screenshot' },
     ],
+    stack: [
+      { label: 'Platform', items: ['Webflow'] },
+      { label: 'Audio', items: ['HTML5 Audio', 'Live stream endpoint'] },
+      { label: 'Interaction', items: ['Splide', 'Swiper'] },
+      { label: 'Custom code', items: ['Webflow Embed (radio bar)'] },
+    ],
     solution: {
       intro:
         'Started with real competitive research before touching design, then built a site meant to funnel bookings.',
@@ -374,6 +533,24 @@ export const caseStudies: CaseStudy[] = [
     timeline: [
       { label: 'Sep 2022', detail: 'Contracted' },
       { label: 'Jul 2023', detail: 'Delivered' },
+    ],
+    craft: [
+      {
+        heading: 'A persistent radio bar inside a page builder',
+        body: "The station needed audio that keeps playing while people move around the site, which is not something Webflow does natively. The bar is a native Designer component for structure and styling, with a single Embed carrying the audio logic. Keeping roughly twenty style classes as real Designer elements means the client can restyle it without touching JavaScript, which is the difference between a feature they own and a feature they have to call someone about.",
+      },
+      {
+        heading: 'Play state as a class on the document',
+        body: "No animated element tracks the audio object. Playback toggles a single class on the html element. Anything on the page can then react to it in pure CSS. That is how the turntable record on the homepage spins only while audio is playing, without the homepage and the nav bar needing to know about each other.",
+      },
+      {
+        heading: 'Motion that carries information',
+        body: "The live indicator pulses via a keyframed box-shadow, so at a glance it reads as broadcasting. The track title scrolls as a marquee only when it overflows its container, because permanently scrolling text is an accessibility problem and a distraction when it is not needed. Both are decoration doing a job.",
+      },
+      {
+        heading: 'Reduced motion actually respected',
+        body: "A prefers-reduced-motion block disables the spinning record, the pulsing dot, and the marquee outright. Slowing them down is not the same thing. For anyone with a vestibular sensitivity, a continuously rotating element on every page is the exact thing that setting exists to stop, and honoring it is a few lines that most builds skip.",
+      },
     ],
     outcome:
       'Shipped a dark-themed label site built around booking DJs attached to HCR — the discovery-first process is the throughline worth telling here.',
