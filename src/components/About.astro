@@ -24,7 +24,13 @@
         <div class="about-text-wrap">
           <h1 class="about-name-heading u-text-style-h3">hello, <br>my name is tek</h1>
           <p class="about-body u-text-style-main">
-            Whether it's building a website, creating a mobile app, or designing a logo, I have the skills and vision to bring your ideas to life. With a strong focus on user experience and a dedication to staying up-to-date on the latest industry trends, I'm confident in my ability to bring value to any project.
+            The model is the least interesting part of an AI system. I build the layer above it.
+          </p>
+          <p class="about-body u-text-style-main">
+            Designer, software and website developer, AI systems engineer. Fifteen years running a solo studio in Seattle, twenty concurrent clients, every project mine from brand through deployment.
+          </p>
+          <p class="about-body u-text-style-main">
+            I run the studio on an orchestration layer I built. Nothing ships without passing a check, and nothing executes without me saying yes.
           </p>
           <a href="/ryan-jones-resume.pdf" target="_blank" rel="noopener" class="about-cv-btn" data-trigger="hover focus">my resume</a>
         </div>
@@ -34,9 +40,9 @@
     <!-- stats bar -->
     <div class="about-stats">
       {[
-        { num: '12', suffix: '+', label: 'Years Crafting\nDigital Work', icon: '/assets/icons/screens.svg' },
+        { num: '15', suffix: '+', label: 'Years Crafting\nDigital Work', icon: '/assets/icons/screens.svg' },
         { num: '500', suffix: '+', label: 'Projects\nCompleted', icon: '/assets/icons/rockets.svg' },
-        { num: '100', suffix: '%', label: 'High-Impact\nDesign & Code', icon: '/assets/icons/dimonds.svg' },
+        { num: '100', suffix: '%', label: 'Work Built\nIn-House', icon: '/assets/icons/dimonds.svg' },
       ].map((stat, i) => (
         <>
           <div class="stat-item">
@@ -171,12 +177,28 @@
 
 .about-body {
   color: var(--_theme---text);
-  margin-bottom: var(--_spacing---space--4);
+  /* Copy is three paragraphs now, not one. space--4 was authored as the gap
+     down to the CV button; repeated between every paragraph it reads as a
+     section break mid-thought. Tighter between paragraphs, full gap restored
+     on the last one below. */
+  margin-bottom: var(--_spacing---space--2);
   opacity: 0.55;
   /* No-op at desktop (the 50%-wide column is already narrower than this),
      but caps line length for readability once the layout stacks full-width
      at ≤991px — lines were running edge-to-edge otherwise. */
   max-width: 36em;
+}
+
+/* Restores the authored gap between the copy block and the CV button. */
+.about-body:last-of-type {
+  margin-bottom: var(--_spacing---space--4);
+}
+
+/* The opening line is the thesis. It carries more weight than the two
+   supporting paragraphs, which stay at 0.55 like the rest of the page's body
+   copy. */
+.about-body:first-of-type {
+  opacity: 0.85;
 }
 
 .about-cv-btn {
