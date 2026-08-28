@@ -142,6 +142,13 @@ const stream = [
 
 <style>
 .contact-sec {
+  /* Matches .about-sec's light-100 rather than u-theme-light's lighter
+     light-200 default. Both sections share the --bg-stats card swatch
+     (#c7bbd0), and a card only reads as raised when its section is the
+     darker light-100. On light-200 the identical swatch read darker than
+     its background, which is why the FAQ cards and the stats bar did not
+     look like the same component. */
+  background-color: var(--swatch--light-100);
   padding-top: var(--_spacing---section-space--main);
   padding-bottom: var(--_spacing---section-space--main);
 }

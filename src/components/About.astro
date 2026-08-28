@@ -66,15 +66,11 @@
 
 <style>
 .about-sec {
-  /* Was overridden to light-100 (#c0b3cb), a darker base than Contact's
-     u-theme-light default (light-200 #d9cfe0). That meant the shared card
-     swatch (--bg-stats #c7bbd0) read lighter than its section here and
-     darker than its section in Contact, so the stats bar and the FAQ cards
-     never matched even with identical colors. Dropping the override puts
-     both sections on the same base, so a card looks like a card everywhere.
-     Side benefit: --_theme---text is dark-900 under u-theme-light, so the
-     lighter background raises body-copy contrast rather than lowering it. */
-  background-color: var(--_theme---background);
+  /* light-100 (#c0b3cb), darker than u-theme-light's light-200 default.
+     This is the reference design and it is the base the --bg-stats card
+     (#c7bbd0) was picked against, so the stats bar reads as a raised panel.
+     Contact matches this deliberately, see .contact-sec. */
+  background-color: var(--swatch--light-100);
   padding-top: var(--_spacing---section-space--main);
   padding-bottom: var(--_spacing---section-space--large);
   position: relative;
