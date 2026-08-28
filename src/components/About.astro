@@ -12,7 +12,7 @@
         <div class="about-photo-card">
           <img
             src="/assets/images/6881cb528375b87c1cf2b7e3_outline_tek_jones.avif"
-            alt="Tek Jones"
+            alt="Ryan Jones"
             class="about-photo"
             loading="lazy"
           />
@@ -22,7 +22,8 @@
       <!-- right: text -->
       <div class="about-right">
         <div class="about-text-wrap">
-          <h1 class="about-name-heading u-text-style-h3">hello, <br>my name is tek</h1>
+          <h1 class="about-name-heading u-text-style-h3">hello, <br>my name is ryan</h1>
+          <p class="about-name-sub">most people call me tek</p>
           <p class="about-body u-text-style-main">
             I design and build websites that look good and get found.
           </p>
@@ -172,8 +173,26 @@
   font-family: var(--_typography---font--heading-family);
   color: var(--swatch--heading-dark);
   text-transform: uppercase;
-  margin-bottom: var(--_spacing---space--3);
+  /* Was space--3, the gap down to the body copy. The subline sits directly
+     under the name now and carries that gap instead, so the two read as one
+     block rather than two separated lines. */
+  margin-bottom: var(--_spacing---space--1);
   max-width: 12.8em;
+}
+
+/* Tek is the name most of his clients, his email, his GitHub, and his
+   LinkedIn handle use; Ryan is what the resume and every job-search surface
+   says. Naming both here, with Ryan primary, matches the meta description
+   this page already ships. */
+.about-name-sub {
+  font-family: var(--_typography---font--heading-family);
+  font-size: var(--_typography---font-size--text-small);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--swatch--heading-dark);
+  opacity: 0.5;
+  margin: 0 0 var(--_spacing---space--3);
 }
 
 .about-body {
