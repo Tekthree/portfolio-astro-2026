@@ -23,14 +23,12 @@
       <div class="about-right">
         <div class="about-text-wrap">
           <h1 class="about-name-heading u-text-style-h3">hello, <br>my name is ryan</h1>
+          <p class="about-role u-text-style-main">Designer, Developer &amp; AI Systems Engineer</p>
           <p class="about-body u-text-style-main">
-            Most people know me by Tek, and for the last fifteen years I've been designing and building digital experiences that stand out and get businesses found.
+            For the last fifteen years, I've designed, built, and deployed end-to-end digital products, handling visual identity, full-stack web architecture, and organic search infrastructure entirely in-house.
           </p>
           <p class="about-body u-text-style-main">
-            Brand identity, UI and UX design, the site itself front to back, then the local SEO, Google Business Profile, and AI SEO that bring people to it. All of it stays in house, so nothing gets handed off to a subcontractor you never met.
-          </p>
-          <p class="about-body u-text-style-main">
-            I also build AI systems for businesses. Practical ones that take the repetitive work off your team and keep the busywork from eating the week.
+            Alongside product and web design, I architect custom AI systems and workflow orchestration tools that automate complex operations, eliminate operational drag, and keep teams focused on high-leverage work.
           </p>
           <a href="/ryan-jones-resume.pdf" target="_blank" rel="noopener" class="about-cv-btn" data-trigger="hover focus">my resume</a>
         </div>
@@ -176,6 +174,15 @@
   max-width: 12.8em;
 }
 
+
+/* Reads as body copy, not a small heading: the heading face, 600 weight, uppercase
+   and tight tracking are all dropped so u-text-style-main carries the typography,
+   exactly as it does for .about-body. Only the colour separates it, in accent. */
+.about-role {
+  color: var(--swatch--accent-500);
+  margin-top: 0;
+  margin-bottom: var(--_spacing---space--3);
+}
 
 .about-body {
   color: var(--_theme---text);
