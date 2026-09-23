@@ -259,6 +259,10 @@ document.addEventListener("DOMContentLoaded", function () {
   align-items: center;
   gap: 0.55em;
   white-space: nowrap;
+  /* the purple the About resume button used: accent-500, 20% darker off-hover */
+  background-color: color-mix(in hsl, var(--swatch--accent-500) calc(100% * var(--_trigger---on)), color-mix(in srgb, var(--swatch--accent-500), black 20%) calc(100% * var(--_trigger---off)));
+  border-color: color-mix(in hsl, var(--swatch--accent-500) calc(100% * var(--_trigger---on)), color-mix(in srgb, var(--swatch--accent-500), black 20%) calc(100% * var(--_trigger---off)));
+  color: var(--swatch--light-100);
 }
 
 .navbar_button_icon {
