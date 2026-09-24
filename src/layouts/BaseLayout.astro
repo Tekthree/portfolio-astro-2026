@@ -21,6 +21,15 @@ const {
 // this fix would have pulled its preview from that stale project, not the real site.
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(image, Astro.site);
+
+// Both IDs come from env vars (set in Vercel -> Settings -> Environment Variables) so
+// nothing renders until they're configured, and local dev never pollutes GA with
+// localhost hits. PUBLIC_ prefix is required for Astro to expose them at build time.
+// GA4 measurement ID looks like G-XXXXXXXXXX; the verification token is the `content`
+// value from Search Console's "HTML tag" verification method.
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const loadAnalytics = import.meta.env.PROD && gaId;
 ---
 
 <!doctype html>
@@ -49,6 +58,23 @@ const ogImageURL = new URL(image, Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+    {googleSiteVerification && (
+      <meta name="google-site-verification" content={googleSiteVerification} />
+    )}
+    {loadAnalytics && (
+      <>
+        <!-- Google Analytics 4. Plain full-page navigations (no view transitions), so
+             the default page_view on config is all the tracking this site needs. -->
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
     <!-- Splide carousel -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide-core.min.css" />
     <script is:inline src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>

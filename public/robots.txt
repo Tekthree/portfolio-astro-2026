@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /lumos-
 
 Sitemap: https://www.pixeljones.com/sitemap-index.xml
