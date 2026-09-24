@@ -155,6 +155,10 @@ const projects = [
   position: relative;
   border-radius: var(--radius--main);
   overflow: clip;
+  /* overflow + border-radius doesn't clip .work-card-blur's backdrop-filter in
+     Chromium, so the blur's square corners (and the scaled image under them)
+     showed through as light slivers at the bottom corners. clip-path does. */
+  clip-path: inset(0 round var(--radius--main));
   cursor: pointer;
   /* Splide sets each slide's width via inline style from its perPage/gap
      math, which keeps growing on very wide screens even past
@@ -195,6 +199,7 @@ const projects = [
   position: absolute;
   inset: auto 0 0 0;
   height: 40%;
+  border-radius: 0 0 var(--radius--main) var(--radius--main);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   /* Masking this element's own alpha (not the image) fades the blur's

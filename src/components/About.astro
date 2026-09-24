@@ -158,11 +158,19 @@
 
 .about-right {
   width: 50%;
+  /* matches .about-photo-card's margin-top, so align-items:center on the split
+     centers the text on the card itself, not on the card plus watermark gap */
+  margin-top: var(--_spacing---space--8);
 }
 
 .about-text-wrap {
   padding-left: var(--site--margin);
   padding-right: var(--site--margin);
+}
+
+/* no trailing gap under the last paragraph, or it skews the vertical centering */
+.about-text-wrap > :last-child {
+  margin-bottom: 0;
 }
 
 .about-name-heading {
@@ -299,6 +307,7 @@
 @container (width < 992px) {
   .about-left,
   .about-right   { width: 100%; }
+  .about-right   { margin-top: 0; }
   /* .about-split's align-items:center is for vertically centering the two
      columns in row layout — but once flex-direction flips to column here,
      "center" becomes the CROSS-axis (horizontal) alignment instead, which
