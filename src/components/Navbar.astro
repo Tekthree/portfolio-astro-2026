@@ -15,6 +15,9 @@
               <a href="/#work" class="navbar_links_link u-text-style-small">Work</a>
             </div>
             <div role="listitem" class="navbar_links_item">
+              <a href="/blog/" class="navbar_links_link u-text-style-small">Blog</a>
+            </div>
+            <div role="listitem" class="navbar_links_item">
               <a href="/#about" class="navbar_links_link u-text-style-small">About</a>
             </div>
             <div role="listitem" class="navbar_links_item">
@@ -76,6 +79,9 @@
           <a href="/#work" class="navbar_mobile_link u-text-style-h4">Work</a>
         </div>
         <div role="listitem" class="navbar_links_item">
+          <a href="/blog/" class="navbar_mobile_link u-text-style-h4">Blog</a>
+        </div>
+        <div role="listitem" class="navbar_links_item">
           <a href="/#about" class="navbar_mobile_link u-text-style-h4">About</a>
         </div>
         <div role="listitem" class="navbar_links_item">
@@ -107,10 +113,33 @@ document.addEventListener("DOMContentLoaded", function () {
     toggle?.addEventListener("click", () => {
       const open = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", String(!open));
+      if (!open) requestAnimationFrame(() => closeBtn?.focus());
     });
 
     closeBtn?.addEventListener("click", () => {
       toggle?.setAttribute("aria-expanded", "false");
+      toggle?.focus();
+    });
+
+    component.addEventListener("keydown", (event) => {
+      if (toggle?.getAttribute("aria-expanded") !== "true") return;
+      if (event.key === "Escape") {
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !menu) return;
+
+      const focusable = Array.from(menu.querySelectorAll("a[href], button:not([disabled])"));
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     });
 
     menu?.querySelectorAll(".navbar_mobile_link, .navbar_button").forEach((link) => {
@@ -308,9 +337,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .navbar_menu_btn {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: var(--_spacing---space--1);
   padding: var(--_spacing---space--2);
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .navbar_menu_line {

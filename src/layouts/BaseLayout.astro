@@ -5,12 +5,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  type?: 'website' | 'article';
 }
 
 const {
   title = 'Pixel Jones — Creative Developer & Designer',
   description = 'Ryan "Tek" Jones. Full stack developer and designer based in Seattle, WA.',
   image = '/og-image.jpg',
+  type = 'website',
 } = Astro.props;
 
 // Astro.site comes from `site:` in astro.config.mjs (https://www.pixeljones.com). Building
@@ -37,7 +39,7 @@ const ogImageURL = new URL(image, Astro.site);
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <title>{title}</title>
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />

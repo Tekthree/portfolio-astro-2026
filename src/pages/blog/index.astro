@@ -1,0 +1,87 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft || import.meta.env.DEV))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+
+<BaseLayout
+  title="Field Notes | Pixel Jones"
+  description="Notes on building thoughtful websites, brands, and digital tools for independent businesses."
+>
+  <div class="design-grain"></div>
+  <Navbar />
+  <main class="blog-page">
+    <header class="blog-intro">
+      <h1>Good work.<span>Thought through.</span></h1>
+      <p class="blog-deck">Stories and practical notes from the work: the choices behind a site, the systems underneath it, and what we learned along the way.</p>
+    </header>
+
+    {posts.length > 0 ? (
+      <section class="blog-grid" aria-label="Articles">
+        {posts.map((post) => (
+          <article class="blog-card">
+            <a class="blog-card-link" href={`/blog/${post.slug}/`}>
+              <img class="blog-card-image" src={post.data.cover} alt={post.data.coverAlt} loading="lazy" />
+              <div class="blog-card-copy">
+                <div class="blog-card-meta"><span>{post.data.category}</span><time datetime={post.data.publishedAt.toISOString()}>{post.data.publishedAt.toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric' })}</time></div>
+                <h2>{post.data.title}</h2>
+                <p>{post.data.description}</p>
+                <span class="blog-read-more">Read the story <span aria-hidden="true">↗</span></span>
+              </div>
+            </a>
+          </article>
+        ))}
+      </section>
+    ) : (
+      <p class="blog-empty">New stories are on the way. Check back soon.</p>
+    )}
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-page {
+    width: 100%;
+    max-width: var(--max-width--main);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 5vw, 4rem) var(--site--margin) var(--_spacing---section-space--small);
+  }
+  .blog-intro { max-width: 58rem; margin-bottom: var(--_spacing---space--8); }
+  .blog-intro h1 {
+    max-width: 100%;
+    font-family: var(--_typography---font--heading-family);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 4.4vw, 3.5rem);
+    line-height: 1.02;
+    letter-spacing: -.035em;
+    text-wrap: balance;
+    margin: 0;
+  }
+  .blog-intro h1 span { display: block; color: var(--swatch--highlight-500); }
+  .blog-deck { color: var(--swatch--light-100); max-width: 42rem; font-size: 1.0625rem; line-height: 1.65; margin-top: var(--_spacing---space--4); }
+  .blog-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 3rem); }
+  .blog-card { min-width: 0; }
+  .blog-card-link { display: block; color: inherit; text-decoration: none; height: 100%; border: 1px solid color-mix(in srgb, var(--swatch--light-100), transparent 84%); border-radius: var(--radius--small); overflow: hidden; background: color-mix(in srgb, var(--swatch--dark-800), transparent 18%); transition: transform .25s ease, border-color .25s ease; }
+  .blog-card-link:hover { transform: translateY(-4px); border-color: var(--swatch--brand-500); }
+  .blog-card-link:focus-visible { outline: 3px solid var(--swatch--highlight-500); outline-offset: 4px; }
+  .blog-card-image { display: block; width: 100%; aspect-ratio: 1.75; object-fit: cover; }
+  .blog-card-copy { padding: clamp(1rem, 2.5vw, 2rem); }
+  .blog-card-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; color: color-mix(in srgb, var(--swatch--light-100), transparent 28%); font-size: .8rem; }
+  .blog-card-meta span { color: var(--swatch--highlight-500); }
+  .blog-card h2 { font-family: var(--_typography---font--heading-family); font-weight: 800; font-size: clamp(1.35rem, 2vw, 1.75rem); line-height: 1.12; margin: 1rem 0 .75rem; }
+  .blog-card-copy > p { color: color-mix(in srgb, var(--swatch--light-100), transparent 15%); line-height: 1.65; margin: 0; }
+  .blog-read-more { display: inline-flex; gap: .5rem; margin-top: 1.5rem; color: var(--swatch--highlight-500); }
+  .blog-grid > :only-child { grid-column: 1 / -1; width: 100%; max-width: 54rem; justify-self: center; }
+  .blog-empty { color: var(--swatch--light-100); }
+  @media (max-width: 700px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-intro { margin-bottom: var(--_spacing---space--7); }
+    .blog-intro h1 { font-size: clamp(1.75rem, 7.5vw, 2.75rem); }
+    .blog-deck { max-width: 36rem; font-size: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .blog-card-link { transition: none; } .blog-card-link:hover { transform: none; } }
+</style>
